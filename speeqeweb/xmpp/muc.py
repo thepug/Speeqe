@@ -29,7 +29,9 @@ class RoomQuery:
 
         if response.getType() == 'result':
             for node in response.getQueryPayload():
-                self.rooms.append(node.getAttr('name'))
+                room_jid = node.getAttr('jid')
+                room_name = room_jid.split('@')[0]
+                self.rooms.append(room_name)
 
     def queryRooms(self):
         jid=xmpp.protocol.JID(speeqeweb.settings.XMPP_USER+"/listrooms")
