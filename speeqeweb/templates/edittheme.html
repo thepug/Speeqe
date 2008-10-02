@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}
+Speeqe - Edit Theme
+{% endblock %}
+{% block content %}
+<div id="createnewtheme" >
+<form action="." method="POST">
+<div>
+{{form.name.label}}:{{form.name}}
+</div>
+<div>
+{{form.content.label}}:{{form.content}}
+</div>
+<input type='image' src='/images/go.png' />
+</form>
+</div>
+
+{% endblock %}

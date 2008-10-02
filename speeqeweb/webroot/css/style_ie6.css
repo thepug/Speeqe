@@ -1,0 +1,6 @@
+.avataroverlay {
+    display:none;
+}
+.avataroverlay_ie6 {
+    display:inline;
+}

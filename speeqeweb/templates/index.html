@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}
+Speeqe - Create Your Chat Room
+{% endblock %}
+
+
+{% block content %}
+<div class="createleft">
+<h2>Create your room now!</h2>
+<h3>...and be speeqing in seconds</h3>
+
+<div class="clear"></div>
+<div id="createroom">
+<form action="" method="get">
+<strong>http://</strong><input id="formroomname" name="room" value="room" size="15" onclick="this.value='';" ><strong>.speeqe.com</strong>
+</div>
+<input type='image' src='/images/go.png' id="go" class="go" />
+
+</form>
+</div>
+
+<div class="createright">
+<a href="/accounts/login/">
+<h3>works with...</h3>
+
+<ul class="workswith">
+<li><img src="/images/gtalk.png" alt="gtalk">google talk</li>
+<li><img src="/images/jabber.png" alt="jabber">jabber</li>
+
+</ul>
+</a>
+</div>
+
+{% endblock %}

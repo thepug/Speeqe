@@ -1,0 +1,267 @@
+body {
+
+    background:#f9f9f9 url("/images/bg.jpg") repeat-x;
+
+    font-family:arial,sans,helvetica,clean,sans-serif;
+    margin:30px 3px 3px 3px;
+}
+
+#container {
+    width:599px;
+    margin:auto;
+}
+
+.box  {
+    width:569px;
+    background:#d0d0d0;
+    padding:15px;
+    font-size:.85em;
+}
+
+#top img {
+    border:0px;
+}
+
+#top a {
+    text-decoration:none;
+    display:block;
+}
+
+.topround  {
+    background:url("/images/roundtop.png") no-repeat;
+    height:5px;
+    width:599px;
+    font-size:1px;
+}
+
+.bottomround  {
+    background:url("/images/roundbottom.png") no-repeat;
+    height:5px;
+    width:599px;
+    padding:0px 0px 10px 0px;
+    font-size:1px;
+}
+
+#menu  {
+    float:right;
+    padding:0px 10px 0px 0px;
+    margin:-10px 0px 0px 0px;
+}
+
+.tabs  {
+    padding:0px;
+    margin:0px;
+    list-style:none;
+    height:25px;
+    width:170px;
+    font-size:5px;
+    margin-bottom:-1px;
+}
+
+.tabs li  {
+    padding:0px;
+    margin:0px;
+    display:inline;
+}
+
+.tabs img {
+    border:0px;
+}
+
+.tabs li .leftcorner  {
+    height:24px;
+    background:url("/images/leftcorner.png") no-repeat 0px -24px;
+    width:6px;
+    float:left;
+}
+
+.tabs li .middle  {
+    height:17px;
+    background:#dcdcdc;
+    float:left;
+    padding:5px 1px 2px 1px;
+}
+
+.tabs li .rightcorner  {
+    height:24px;
+    background:url("/images/rightcorner.png") no-repeat 0px -24px;
+    width:6px;
+    float:left;
+    margin:0px 2px 0px 0px;
+}
+
+
+
+.tabs li .leftcorneractive {
+    height:24px;
+    background:url("/images/leftcorner.png") no-repeat;
+    width:6px;
+    float:left;
+}
+
+.tabs li .middleactive  {
+    height:17px;
+    background:#d0d0d0;
+    float:left;
+    padding:5px 1px 2px 1px;
+}
+
+.tabs li .rightcorneractive  {
+    height:24px;
+    background:url("/images/rightcorner.png") no-repeat;
+    width:6px;
+    float:left;
+    margin:0px 2px 0px 0px;
+}
+
+#rooms {
+    float:left;
+    padding:0px 0px 0px 10px;
+}
+
+.createleft  {
+    width:330px;
+    float:left;
+}
+.createright  {
+    width:120px;
+    float:left;
+}
+
+.createright h3 {
+    margin:10px 0px 3px 0px;
+}
+
+.workswith  {
+    list-style:none;
+    padding:0px;
+    margin:0px;
+}
+.workswith li {
+    padding:1px 0px 4px 0px;
+}
+
+.createleft h2 {
+    font-size:1.5em;
+    margin:10px 0px 3px 0px;
+}
+.createleft h3 {
+    font-size:1em;
+    margin:1px 0px 10px 0px;
+    font-weight:normal;
+}
+
+#createroom  {
+    float:left;
+    padding:1px 0px 0px 0px;
+}
+.go {
+    background:none;
+    border:0px;
+    float:left;
+    padding:0px 0px 0px 3px;
+}
+.rightcol {
+    margin-left:15px;
+}
+.leftcol {
+    display:block;
+    float:left;
+    width:116px;
+    margin-top:5px;
+}
+#loginform {
+    margin-top:50px;
+}
+input {
+    background:url("/images/inputbg.png") no-repeat;
+    border:1px solid #666;
+    padding:4px;
+    margin:1px;
+    color:#666;
+}
+
+.avatar {
+    width:93px;
+    height:88px;
+    position:relative;
+    float:left;
+    margin:5px;
+}
+.avataroverlay {
+    position:absolute;
+}
+.avataroverlay_ie6 {
+    position:absolute;
+    display:none;
+}
+.avatarimg {
+    padding:6px 0px 0px 11px;
+}
+.avatar h4  {
+    margin:10px 0px 5px 0px;
+    text-align:center;
+}
+
+#footer {
+    text-align:right;
+    font-size:.70em;
+    padding:10px 10px 0px 0px;
+}
+#activerooms {
+    display:none;
+}
+.clear{clear:both;}
+
+#signup{}
+
+#signup1{
+
+    width:270px;
+    float:left;
+
+}
+#signup1 h1{
+    margin:0px 0px 0px 0px;
+    padding:28px 0px 0px 0px;
+    font-size:1.6em;
+}
+#signup1 ul{padding:13px 13px 13px 2px;margin:0px;list-style:none;}
+#signup1 ul li{font-size:1.1em;padding:3px 0px 4px 16px;
+background:url("/images/bullet.png") no-repeat;}
+
+#signup2{
+    width:500px;
+    float:left;
+    padding:20px 0px 0px 0px;
+}
+
+.signupimg{
+    border:none;
+}
+
+#featured{line-height:1.2em;}
+
+.error {
+    color:red;
+}
+.clear{clear:both;}
+
+#validusername {
+    background:url("/images/bullet.png") no-repeat;
+    width:16px;
+    height:16px;
+    display:inline;
+}
+
+#validpassword, #validemail {
+    background:url("/images/bullet.png") no-repeat;
+    width:16px;
+    height:16px;
+    display:inline;
+}
+
+#id_content {
+    width:550px;
+    height:600px;
+}

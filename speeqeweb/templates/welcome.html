@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}
+Welcome to Speeqe!
+{% endblock %}
+
+{% block content %}
+<div id="roomcreationform">
+<p>Welcome!</p>
+
+<form id="joincreate" action="/client/" method="get">
+<label>Join or Create a room.</label>
+<input type="text" name="room" value="room name" onclick="this.value='';" />
+<input type="submit" value="Go" />
+</form>
+</div>
+{% endblock %}

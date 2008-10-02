@@ -1,0 +1,342 @@
+/* ==================================================
+
+Structure
+
+================================================== */
+
+
+
+/* body and General Rules
+-------------------------------------------------- */
+
+body
+{
+	font-size: 100%;
+	font-family: "Lucida Grande", "Lucida Sans", Verdana, sans-serif;
+	color: #555;
+	background: #555;
+}
+
+
+
+/* bannerAndMeat
+-------------------------------------------------- */
+
+#bannerAndMeat 
+{
+	padding: 10px 0;
+	margin: 0 auto;
+	width: 900px;
+}
+
+
+
+/* beta-registration
+-------------------------------------------------- */
+
+#beta-registration
+{
+	padding: 10px 0 30px 0;
+}
+
+#beta-registration form 
+{
+	width: 415px;
+	margin: 0 auto;
+}
+
+
+
+/* level-1
+-------------------------------------------------- */
+
+#level-1
+{
+	padding: 30px 0;
+	margin: 0;
+}
+
+#level-1 .description
+{
+	float: left;
+	width: 270px;
+}
+
+* html #level-1 .description { width: 269px; }
+
+#level-1 #column-1 { padding-right: 30px; }
+#level-1 #column-2 { padding: 0 15px; }
+#level-1 #column-3 { padding-left: 30px; }
+
+
+
+/* level-2
+-------------------------------------------------- */
+
+#level-2 { padding: 30px 0; }
+
+#level-2 .theme
+{
+	float: left;
+	width: 270px;
+}
+
+#level-2 #theme-1 { margin-right: 30px; }
+#level-2 #theme-2 { margin: 0 15px; }
+#level-2 #theme-3 { margin-left: 30px; }
+
+
+
+/* footer
+-------------------------------------------------- */
+
+#footer p
+{
+	width: 900px;
+	margin: 0 auto;
+	padding: 15px;
+}
+
+#footer a
+{
+	color: #fff;
+	text-decoration: none;
+}
+
+#footer a:hover { text-decoration: underline; }
+
+
+
+/* Self-clearing rules 
+-------------------------------------------------- */
+
+/* :after rules force elements to self-clear in standards-compliant browsers */
+#level-1:after,
+#level-2:after,
+#beta-registration:after 
+{
+    content:".";
+    display:block;
+    visibility:hidden;
+    clear:both;
+    height:0;
+}
+
+/* These rules force layout in IE 6 & 7, which in turn forces the elements to self-clear */
+* html #level-1,
+* html #level-2,
+* html #beta-registration 
+{
+	height:1px;
+}
+
+#level-1,
+#level-2,
+#beta-registration
+{ 
+	min-height:1px; /* this one works in IE 7 */ 
+}
+
+
+
+
+
+/* ==================================================
+
+Style
+
+================================================== */
+
+
+
+/* body and general 
+-------------------------------------------------- */
+
+h2 { font-size: 1.2em; }
+
+
+
+/* wrapper
+-------------------------------------------------- */
+
+#wrapper { background: #fff; }
+
+
+
+/* banner
+-------------------------------------------------- */
+
+#banner h1 a 
+{
+	display: block;
+	width: 455px;
+	height: 136px;
+	background: url("/images/demo/logo.gif") top left no-repeat; 
+	margin: 0 auto;
+}
+
+#banner h1 a span
+{
+	position: absolute;
+	left: -9999px;
+}
+
+
+
+/* beta-registration
+-------------------------------------------------- */
+
+#beta-registration
+{
+	background: url("/images/demo/level-1_shadow.jpg") bottom left repeat-x;
+}
+
+#beta-registration form input
+{
+	float: left;
+	font-size: .85em;
+}
+
+#beta-registration form input#email
+{
+	padding: 6px 10px;
+	color: #999;
+	border: 1px solid #eee;
+	border-right: none;
+	height: 18px;
+	width: 300px;
+	background: url("/images/demo/signup-button-left.gif") top right no-repeat #fff;
+}
+
+#beta-registration form input#emailsubmit
+{
+	height: 30px;
+	width: 92px;
+	margin-top: 1px;
+	margin-left: -1px; /* fixes a bug in camino */
+}
+
+
+
+/* meat
+-------------------------------------------------- */
+
+#meat
+{
+	font-size: .8em;
+	line-height: 2em;
+}
+
+
+
+/* level-1
+-------------------------------------------------- */
+
+#level-1
+{
+	border-top: 1px solid #eee;
+	border-bottom: 1px solid #eee;
+}
+
+#level-1 p 	
+{ 
+	padding-bottom: .5em; 
+	line-height: 1.75em;
+}
+
+#level-1 em	{ color: #999; }
+
+#level-1 .description h2
+{
+	padding: 5px 15px; 
+	display: block;
+	width: 200px;
+	height: 40px;
+	background: url("/images/demo/blue_bubble.gif") top left no-repeat;
+	color: #fff;
+}
+
+#level-1 .description h2 span { background: #00aaee; }
+
+#level-1 .description ul
+{
+	list-style-image: url("/images/demo/check_mark.gif");
+	list-style-position: outside;
+	margin-left: 18px;
+}
+
+#level-1 .description ol
+{
+	list-style: decimal;
+	list-style-position: outside;
+	color: #ee55aa;
+	font-weight: bold;
+	font-size: 100%;
+	margin-left: 20px;
+}
+
+#level-1 .description ul li,
+#level-1 .description ol li
+{
+	margin-bottom: .5em;
+	line-height: 1.75em;
+}
+
+* html #level-1 .description ol { margin-left: 25px; }
+
+#level-1 .description ol p 		
+{ 
+	color: #555; 
+	font-weight: normal;
+	padding-bottom: 0;
+}
+
+
+
+/* level-2
+-------------------------------------------------- */
+
+#level-2
+{
+	background: url("/images/demo/level-1_shadow.jpg") top left repeat-x;
+}
+
+#level-2 h2
+{
+	padding: 5px 15px; 
+	display: block;
+	width: 250px;
+	height: 40px;
+	background: url("/images/demo/gray_bubble.gif") top left no-repeat;
+	color: #fff;
+}
+
+#level-2 h2 span { background: #555; }
+
+#level-2 .theme img
+{
+	background: #fff;
+	padding: 10px;
+	border: 1px solid #eee;
+}
+
+#level-2 .theme a:hover img
+{
+	background: #ee55aa;
+	border: 1px solid #dd4499;
+}
+
+
+
+/* footer
+-------------------------------------------------- */
+
+#footer
+{
+	border-top: 1px solid #444;
+	text-align: center;
+	font-size: .75em;
+	line-height: 1.5em;
+	color: #999;
+	background: url("/images/demo/footer_shadow.jpg") top left repeat-x #555;
+}

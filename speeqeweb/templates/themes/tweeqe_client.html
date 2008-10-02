@@ -1,0 +1,409 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+    <style type="text/css">
+      body {
+          color: #000;
+          margin: 0px;
+          background: #fff url( "/images/tweeqe_theme/bg.jpg" ) repeat-x fixed;
+          font-family: arial, sans, helvetica, clean, sans-serif;
+      }
+
+      #container {
+
+          font-size: .85em;
+          margin: auto;
+          width: 100%;
+      }
+
+      #container a {
+          color: #45c3e3;
+      }
+
+      #header {
+          color: #000;
+          background: #fff url( "/images/tweeqe_theme/bg.jpg" ) repeat-x fixed;
+          z-index: 1;
+          height: 160px;
+          position: fixed;
+          top: 39px;
+          left: 0px;
+          width: 100%;
+          margin: 0px 40px 0px 0px;
+      }
+
+      #header h1 {
+          font-family: arial, helvetica;
+          font-size: 1.2em;
+          padding: 10px 10px 10px 60px;
+      }
+
+      #header img {
+          padding: 10px 10px 10px 60px;
+      }
+
+      #header #menu {
+          padding: 15px;
+          margin: 0px;
+          float: right;
+          list-style: none;
+      }
+
+      #header #menu li {
+          float: left;
+          margin: 3px;
+      }
+
+      #header #menu li a {
+          color: #000;
+          font-weight: bold;
+          text-decoration: none;
+      }
+
+      #sidebar {
+          border: 1px solid #000;
+          background: #fff;
+          width: 187px;
+          padding: 5px;
+          position: fixed;
+          top: 80px;
+          right: 20px;
+          z-index: 3;
+          overflow: auto;
+      }
+
+      #sidebar h2 {
+          font-family: arial, helvetica;
+          font-size: 1.2em;
+      }
+
+      #chat {
+          padding: 210px 0px 0px 0px;
+          margin: 0px 240px 0px 20px;
+      }
+
+      #messagepost {
+          margin: 0px 100px 0px 0px;
+      }
+
+      #message_user_name,
+      #message_user_domain {
+          color: #45c3e3;
+          font-weight: bold;
+          font-size: 1.1em;
+      }
+
+      #message_time_stamp {
+          font-size: .9em;
+          color: #ccc;
+      }
+
+      #chatbox {
+          z-index: 2;
+          background: #fff;
+          border: 1px solid #000;
+          position: fixed;
+          left: 60px;
+          top: 120px;
+          padding: 10px;
+          margin: 0px 240px 0px 0px;
+          width: 470px;
+      }
+
+      #send_chat_message {
+          display: block;
+          width: 400px;
+          height: 50px;
+          border: 1px solid #000;
+          background: #fff url( "/images/tweeqe_theme/inputbg.png" );
+          float: left;
+      }
+
+      #roster_name {
+          width: 120px;
+          overflow: hidden;
+      }
+
+      .clear {
+          clear: both;
+      }
+
+      #roster_item {
+          padding: 1px 0px;
+          margin: 1px 0px;
+          list-style-type: none;
+      }
+
+      #send_chat {
+          float: left;
+          background: #444;
+          padding: 7px;
+          font-weight: bold;
+          color: #ccc;
+          border: 1px solid #222;
+          text-decoration: none;
+          display: block;
+          width: 30px;
+          margin: 10px;
+      }
+
+      .post {
+          position: relative;
+      }
+
+      .postbox {
+          padding: 5px;
+          border: 1px solid #000;
+          margin: 5px 0px 0px 40px;
+          background: #fff;
+          position: relative;
+      }
+
+      .quoteleft {
+          position: absolute;
+          bottom: 5px;
+          left: -5px;
+          background: url( "/images/tweeqe_theme/quoteleft.png" ) no-repeat;
+          width: 5px;
+          height: 8px;
+      }
+
+      .avatar {
+          position: absolute;
+          bottom: 0px;
+          left: 0px;
+      }
+
+      #status_disconnected,
+      #status_authentication_failed,
+      #status_connect_failed {
+          color: red;
+      }
+
+      #status_connected,
+      #status_authenticating {
+          color: green;
+      }
+
+      #online ul li {
+          padding: 0px 0px 3px 0px;
+      }
+
+      .useronline img {
+          border: 1px solid #ccc;
+          margin: 0px 3px 0px 0px;
+          float: left;
+      }
+
+      .rostername {
+          float: left;
+          padding: 7px 0px 0px 0px;
+      }
+      #layer1, #debug_log_layer1, #room_password_dialog {
+        position: absolute;
+        left: 200px;
+        top: 100px;
+        width: 280px;
+
+        font-size: 90%;
+        background-color: #999;
+        border: 1px solid #000;
+        z-index: 50;
+      }
+
+      #layer1_handle, #debug_log_layer1_handle,#room_password_dialog_handle {
+        background-color: #5588bb;
+        padding: 2px;
+        text-align: center;
+        font-size: 80%;
+        color: #FFFFFF;
+        vertical-align: middle;
+      }
+
+      #layer1_content, #debug_log_layer1_content,#room_password_dialog_content {
+        padding: 5px;
+      }
+      #close, #debug_log_close, #room_password_dialog_close {
+        float: right;
+        text-decoration: none;
+        color: #FFFFFF;
+      }
+
+      .action_indicator {
+        display: none;
+      }
+
+      .me_command {
+        font-style: italic;
+      }
+
+      .me_command .action_indicator {
+        display: inline;
+      }
+
+      .me_command .nick_suffix {
+        display: none;
+      }
+      #status_disconnected img,
+      #online img,
+      #header a img {
+          border: none;
+      }
+    </style>
+    <title>Speeqe</title>{% block getcred %} {% endblock %}
+  </head>
+  <body>
+    <div id="layer1">
+      <div id="layer1_handle">
+        <a id="close" href="#">[ x ]</a>
+        Login As Another User
+      </div>
+      <div id="layer1_content">
+        <form id="layer1_form" action="/accounts/ajax_login/" method="post">
+          <div>
+            <div>
+              <div class="leftinput">Login:</div>
+              <input class="rightinput" name="username" type="text" />
+            </div>
+            <div>
+              <div class="leftinput">Password:</div>
+              <input class="rightinput" name="password" type="password" />
+            </div>
+          </div>
+          <input id="layer1_form_submit" type="submit" value="login" />
+        </form>
+        <div id='form_message' class='error'>
+        </div>
+      </div>
+    </div>
+    <div id="debug_log_layer1">
+      <div id="debug_log_layer1_handle">
+        <a href="#" id="debug_log_close">[ x ]</a>
+        Submit a problem report.
+      </div>
+      <div id="debug_log_layer1_content">
+        <form id="debug_log_layer1_form" method="post" action="/submit_log/">
+          Problem:
+          <input type="text" name="description" />
+          <input id="debug_log_form_submit_data" value="no log" type="hidden" name="debuglog" />
+          <input id="debug_log_layer1_form_submit" type="submit" value="submit" />
+        </form>
+        <div class='error' id='debug_log_form_message' ></div>
+      </div>
+    </div>
+    <div id="room_password_dialog" style="display:none;">
+      <div id="room_password_dialog_handle">
+        <a id="room_password_dialog_close" href="#">[ x ]</a>
+        Enter the room password.
+      </div>
+      <div id="room_password_dialog_content">
+        <form id="room_password_dialog_form" action="." method="post">
+          <div>
+            <div>
+              <div class="leftinput">Password:</div>
+              <input class="rightinput" id="room_password_dialog_password" name="password" type="password" />
+            </div>
+          </div>
+          <input id="room_password_dialog_form_submit" type="submit" value="enter room" />
+        </form>
+        <div id='room_password_dialog_form_message' class='error'>
+        </div>
+      </div>
+    </div>    
+    <div id="container">
+      <div id="configure_room_form">
+        <form action="">
+        </form>
+      </div>
+      <div id="header">
+        <ul id="menu">
+          <li></li>
+        </ul>
+        <a href="http://www.speeqe.com" target="_blank"><img alt="tweeqe" src="/images/tweeqe_theme/tweeqe.png" /></a>
+        <div class="clear">
+        </div>
+      </div>
+      <div id="chatbox">
+        <textarea id="send_chat_message" cols="45" rows="2"> type and hit enter </textarea>
+        <a href="#post" id="send_chat">post</a>
+        <div class="clear">
+        </div>
+      </div>
+      <div id="chat">
+        <div id="chatWindow_chatpane" class='direction-down'>
+          <div id="post_template" style="display: none;">
+            <!-- This div is used to post messages. They will always show in the
+                 chatWindow_chatpan div. Leave it hidden. -->
+            <div id="chatpane_post" class="post">
+              <div class="avatar">
+                <img alt="avatar" src="/avatar-service/lookup/?sha1=f2f8ab835b10d66f9233518d1047f3014b3857cf" />
+              </div>
+              <div class="postbox">
+                <div class="quoteleft">
+                </div>
+                <div class="postmark">
+                  <span id="message_user_name">
+                    <!--User name -->
+                  </span>@<span id="message_user_domain"><!--User domain --></span>
+                  <span id="message_time_stamp" class="date">01/01/08
+                    <!--Message Time Stamp (don't change id)-->
+                  </span>
+                  <div class="message_block">
+                    <p>
+                      <span id='messagepost'>
+                        <!--The message-->
+                      </span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p id="debug" style="display: none;">
+          DEBUG:
+        </p>
+      </div>
+      <div id="sidebar">
+        <div>
+          <span id="room_topic"></span>
+        </div>
+        <div id="chatstatus">
+          <h2>status</h2>
+          welcome, <strong id="login_username"></strong>
+          <br />
+          <span id="status_disconnected"><a href="javascript:this.location.reload();"><img
+            src="/images/tweeqe_theme/disconnected.png" alt="disconnected" /></a>
+            disconnected</span>
+          <span id="status_authentication_failed">authentication failed</span>
+          <span id="status_connect_failed">connection failed</span>
+          <span id="status_connected"><img src="/images/tweeqe_theme/connected.png" alt="connected" />
+            connected</span>
+          <span id="status_authenticating">authenticating..</span>
+        </div>
+        <div id="online" class="following">
+          <h2>speeqers</h2>
+          <ul id="roster_item">
+            <!--This li is used to list users in the room. Leave it hidden. -->
+            <li id="rosteritemtemplate" style="display: none;"><div class="useronline">
+              <!--User Avatar -->
+              <img src="" id="onlineavatar" alt="displaynick" />
+              <div class="rostername">
+                <span id="roster_user_name"></span>
+              </div>
+              <div class="clear">
+              </div>
+            </div>
+            </li>
+          </ul>
+          <p>
+            <a href="http://www.speeqe.com" target="_blank"><img alt="speeqe" src="/images/tweeqe_theme/speeqepowered.png" /></a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

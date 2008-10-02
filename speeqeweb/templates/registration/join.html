@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+
+{% block title %}
+Create a speeqe account.
+{% endblock %}
+{% block head %}
+
+
+<script type="text/javascript">
+        $(document).ready(function(){
+
+	    $("#validusername").hide();
+	    $("#validpassword").hide();
+	    $("#validemail").hide();	    
+	    //validate username input before submission
+
+	    $("#username").focus(function() {
+	        if($("#username").attr("value") == "pick your name")
+		{
+		    $("#username").attr("value","");
+		}
+	    });
+
+	    $("#email").focus(function() {
+	    	if($("#email").attr("value") == "your email")
+                {
+		     $("#email").attr("value","");
+		}     
+	    });	    
+	    
+	    $("#username").blur(function() {
+	       //send ajax get
+	       $.get("/join/validate/username/",
+	             {'username':$("#username").attr("value")},
+		     function(data){
+		         $("#usernameerror").empty();
+		         if ($(data).text() == 'valid')
+			 {
+			    //add check next to username
+			    $("#validusername").show();
+			 }
+			 else
+			 {
+			    //display error message
+			    $("#usernameerror").append($(data).attr("msg"));
+
+			 }
+		     });
+	    
+	    });
+	    $("#password").blur(function() {
+                $("#passworderror").empty();
+	        if( $("#password").attr("value").length > 0)
+		{
+	            $("#validpassword").show();
+		}
+		else
+		{
+		    $("#passworderror").append("Must provide a password.");
+		}
+	    });
+	    $("#email").blur(function() {
+	        $.get("/join/validate/email/",
+	             {'email':$("#email").attr("value")},
+		     function(data){
+		         $("#emailerror").empty();
+		         if ($(data).text() == 'valid')
+			 {
+			    //add check next to username
+			    $("#validemail").show();
+			 }
+			 else
+			 {
+			    //display error message
+			    $("#emailerror").append($(data).attr("msg"));
+
+			 }
+		     });
+	    });	    
+	    
+	});
+</script>
+{% endblock %}
+
+
+{% block content %}
+
+<div id="signup">
+
+<div id="signup1">
+<h1>sign up in 10 seconds</h1>
+<ul><li>your own chat room</li>
+<li>your own subdomain</li>
+<li>you'll be chatting in seconds</li>
+</ul>
+</div>
+
+<div id="signup2">
+{% if form.errors %}
+<p class="error">Please correct the following error{{ form.errors|pluralize }}:</p>
+{% endif %}
+<form id="joinform" action="/join/" method="post">
+
+<div class="leftcol"><div id="validusername" >&nbsp;&nbsp;&nbsp;&nbsp;</div><label>Username:</label></div>
+<input id='username' name='username' value="pick your name" />
+<span>
+@speeqe.com
+</span>
+<p class='error' id="usernameerror">
+{% if form.errors.username %}
+{{ form.errors.username|join:", " }}
+{% endif %}
+</p>
+<div class="leftcol"><div id="validemail" >&nbsp;&nbsp;&nbsp;&nbsp;</div><label>Email:</label></div>
+<input id='email' name='email' value="your email" />
+<p class='error' id="emailerror">
+{% if form.errors.email %}
+{{ form.errors.email|join:", " }}
+{% endif %}
+</p>
+<div class="leftcol"><div id="validpassword" >&nbsp;&nbsp;&nbsp;&nbsp;</div><label>Password:</label></div>
+<input id='password' name='password' type='password' />
+<p class='error' id='passworderror'>
+{% if form.errors.password %}
+{{ form.errors.password|join:", " }}
+{% endif %}
+</p>
+<input type="image" class="signupimg" src="/images/go.png" alt="join" onClick="javascript:document.getElementById('joinform').submit();"  />
+</form>
+
+</div>
+</div>
+
+{% endblock %}

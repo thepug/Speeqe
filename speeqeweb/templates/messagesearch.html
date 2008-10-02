@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}
+Speeqe - Search Conversations
+{% endblock %}
+
+{% block head %}
+<link href="/css/messagesearch.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="/js/jqcouch/jqcouch.src.js" </script>
+<script type="text/javascript" src="/js/jquery.form.js" </script>
+<script type="text/javascript" src="/js/jquery.json-1.1.js" </script>
+<script type="text/javascript" src="/js/search.js" </script>
+
+{% endblock %}
+
+{% block content %}
+<form id="search_form" action="." method="get">
+<label>Filter:</label>
+<input name="q" type="text" id="search_query" />
+<label>Room name</label>
+{% if room %}
+<input name="room" type="text" id="search_room" value="{{room}}" disabled="disabled"/>
+{% else %}
+<input name="room" type="text" id="search_room" />
+{% endif %}
+<div><input id="searchbutton" type="image" src="/images/go.png" /></div>
+</form>
+<div id="pager">
+<div id="search_results_pager"></div>
+<div id="search_results_pager_next"></div>
+</div>
+<div id="search_results">
+</div>
+
+{% endblock %}

@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+{% block title %}
+Speeqe - Your Themes
+{% endblock %}
+
+{% block head %}
+<style type="text/css">
+
+#layer1 
+{
+	position: absolute;
+	left:200px;
+	top:100px;
+	width:250px;
+	background-color:#f0f5FF;
+	border: 1px solid #000;
+	z-index: 50;
+}
+#layer1_handle 
+{
+	background-color:#5588bb;
+	padding:2px;
+	text-align:center;
+	font-weight:bold;
+	color: #FFFFFF;
+	vertical-align:middle;
+}
+#layer1_content 
+{
+	padding:5px;
+}
+#close
+{
+	float:right;
+	text-decoration:none;
+	color:#FFFFFF;
+}
+
+</style>
+
+<script type="text/javascript" src="/js/interface.js"></script> 
+<script type="text/javascript" src="/js/jquery.form.js"></script> 
+<script type="text/javascript">
+
+$(document).ready(function(){
+    $('#layer1').Draggable({
+				zIndex: 	20,
+				ghosting:	false,
+				opacity: 	0.7,
+				handle:	'#layer1_handle'
+			});
+    $('#layer1_form').ajaxForm({
+	                        target: '#link_message',
+				dataType: 'xml',
+				success: function(responseXML) 
+				{
+				        var error = $('themelink',responseXML).attr("msg");
+					if (error)
+					{
+					    $("#link_message").append("Error: ");
+					    
+					    $("#link_message").append(error);					
+
+					}
+					else
+					{
+					    $("#link_message").append("Saved.");
+
+					}
+
+					$("#layer1").hide();
+				},
+				error: function(req,error)
+				{
+				        $("#form_message").append("Error saving preferences. "+error);
+				}				
+			});			
+    $("#layer1").hide();
+						
+    $('.preferences').click(function()
+			{
+			        //find theme name
+				var theme_name = $(this).attr("id");
+				$("#theme_name").attr("value",theme_name);
+				$("#layer1").show();
+			});
+			
+    $('#close').click(function()
+			{
+				$("#layer1").hide();
+			});
+});
+	
+</script>
+{% endblock %}
+
+{% block content %}
+<div id="link_message" class="error">
+</div>
+<div id="createtheme" >
+<a href="/themes/new/">Create Theme</a>
+</div>
+{% for theme in themes %}
+<div id="themename" />
+{{theme.name}}
+</div>
+<div id="edittheme{{theme.name}}" >
+<a href="/themes/edit/{{theme.id}}">Edit</a> 
+</div>
+<div id="linktheme">
+<a href="#" class="preferences" id="{{theme.id}}">Link to Room
+
+</a>
+</div>
+{% endfor %}
+<div id="layer1">
+	<div id="layer1_handle">			
+		<a href="#" id="close">[ x ]</a>
+		Preferences
+	</div>
+	<div id="layer1_content">
+		<form id="layer1_form" method="post" action="/themes/link/">
+		        <div class='error' id='form_message' ></div>
+			Link theme to room:<br />
+			<input type="text" name="room" />
+			<input type="image" src="/images/go.png" />
+			<input type="hidden" id="theme_name" name="theme" value="" />
+		</form>
+	</div>
+</div>
+
+{% endblock %}

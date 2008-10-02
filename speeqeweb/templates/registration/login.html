@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block head %}
+{{ block.super }}
+<style>
+#loginform {
+   margin:auto;
+}
+</style>
+
+{% endblock %}
+{% block title %}
+Login to Speeqe.
+{% endblock %}
+
+{% block content %}
+<div>
+<p>Login to speeqe with an existing account or a speeqe account. </p>
+<div class="createright">
+<h3>works with...</h3>
+
+<ul class="workswith">
+<li><img src="/images/gtalk.png" alt="gtalk">google talk</li>
+<li><img src="/images/jabber.png" alt="jabber">jabber</li>
+
+</ul>
+</div>
+</div>
+  <form id='loginform' class="form" method="post" action=".">
+{% if errors %}
+    <div id='loginerror'>
+      Login failed.<br />
+      {% for error in errors.itervalues %}
+        {{ error|join:", " }}<br />
+      {% endfor %}
+      <br />If you need assistance, please contact <a href='mailto:help@speeqe.com'>help@speeqe.com</a><br />
+      <br />
+    </div>
+{% endif %}
+
+<div>
+    <div class="leftcol" for="id_username"><label>Username:</label></div>
+    <input class="rightcol" type="text" id="id_username" class="vTextField required" name="username" size="22" value="" maxlength="128" />
+</div>
+<div>
+    <div class="leftcol" for="id_password"><label>Password:</label></div>
+    <input class="rightcol" type="password" id="id_password" class="vPasswordField required" name="password" size="22" value="" maxlength="128" /><br />
+    <input class="go" type="image" src="/images/go.png" />
+</div>
+
+    <input type="hidden" name="next" value="{{ next|urlencode }}">
+
+  </form>
+  <div>
+    <p>
+      <a {% if next %}href="/join/?next={{next}}"{% else %}href="/join/"{% endif %}>Don't have an account?</a>
+    </p>
+  </div>
+{% endblock %}

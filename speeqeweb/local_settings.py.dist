@@ -1,0 +1,48 @@
+DOMAIN = "speeqe.com"
+
+EXACT_BAD_WORDS = ['crap']
+
+MATCH_BAD_WORDS = ['crap']
+
+
+DATABASE_ENGINE = 'postgresql_psycopg2'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'ado_mssql'.
+DATABASE_NAME = 'speeqe'             # Or path to database file if using sqlite3.
+DATABASE_USER = 'speeqe'             # Not used with sqlite3.
+DATABASE_PASSWORD = ''         # Not used with sqlite3.
+DATABASE_HOST = 'localhost'             # Set to empty string for localhost. Not used with sqlite3.
+DATABASE_PORT = '5432'             # Set to empty string for default. Not used with sqlite3.
+
+MEDIA_ROOT = '/lib/python/speeqeweb/webroot'
+DOCUMENT_ROOT = '/lib/python/speeqeweb/webroot'
+
+XMPP_USER = 'thepug@speeqe.com'
+XMPP_PASS = 'password'
+XMPP_CHAT = 'chat.speeqe.com'
+PUNJAB_HOST = "www.speeqe.com"
+
+FEATURED_ROOMS = {'Speeqers':'http://speeqers@chat.speeqe.com',
+                  'Central Park':'/room/centralpark@chat.chesspark.com/',
+    }
+
+TEMPLATE_DIRS = (
+    '/usr/local/lib/python2.5/site-packages/speeqeweb/templates',
+    '/lib/python/speeqeweb/templates',    
+    '/var/www/speeqewebclient',
+    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
+    # Always use forward slashes, even on Windows.
+    # Don't forget to use absolute paths, not relative paths.
+)
+
+
+SMTP_SERVER = ''
+SMTP_USERNAME = ''
+SMTP_PASSWORD = ''
+SMTP_PORT = 2525
+
+HELP_EMAIL = 'help@speeqe.com'
+
+AVATAR_DEFAULT_SHA1 = 'f2f8ab835b10d66f9233518d1047f3014b3857cf'
+AVATAR_DEFAULT_IE6 = 'b04b0e215af8ce2b7d620aaef32492c8bfc06ed5'
+AVATAR_DEFAULT_DIMENSIONS = '30|30'
+AVATAR_CACHE_TIMEOUT = 6000
+

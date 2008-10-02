@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en"><head>
+
+	
+		<title>speeqe is group chat, simplified</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<link rel="shortcut icon" href="favicon.ico">
+		<link href="/css/reset.css" type="text/css" rel="stylesheet">
+		<link href="/css/styles.css" type="text/css" rel="stylesheet">
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js"></script>
+		<script type="text/javascript">
+		<!--
+		$(document).ready(function() 
+		{
+        	$("#validemail").hide();
+	  		$("#emailerror").hide();
+	  
+          	$("#beta-registration > form").submit(function() 
+          	{
+	        	if($("#email").attr("value") != "email" ) 
+	        	{
+					$("#email").hide();
+		    		$("#emailsubmit").hide();
+	         	    $("#signup").hide();
+	            	$("#emailerror").hide();		    		  
+	          		$.get("/demo_email/send/",
+	             	{'email':$("#email").attr("value")},
+		     		function(data)
+		     		{
+		        		if ($(data).text() == 'valid')
+			 			{
+			    			//add check next to username
+			    			$("#validemail").show();
+						}
+			 			else
+			 			{
+			    			//display error message
+			    			$("#emailerror").show();
+			    			$("#emailerror").empty();
+			    			$("#emailerror").append("Please enter a valid email.");
+		            		$("#email").show();
+		            		$("#emailsubmit").show();
+	                    	$("#signup").show();
+			 			}
+		     		});
+                }
+		   		else
+		   		{
+		       		$("#emailerror").show();
+		       		$("#emailerror").empty();
+		       		$("#emailerror").append("Please enter a valid email.");
+		   		}
+		     	return false;
+	  		});
+      	});  
+      	-->
+		</script>
+	</head><body>
+		<div id="wrapper">
+			<div id="bannerAndMeat">
+				<div id="banner">
+					<h1><a href="http://www.speeqe.com"><span>speeqe</span></a></h1>
+					<div id="beta-registration">
+					
+							<p id="validemail">Thanks for signing up for speeqe. </p>
+
+						 
+					</div>
+				</div>
+				<div id="meat">
+					<div id="level-1">
+						<div id="column-1" class="description">
+							<h2><span>What is speeqe?</span></h2>
+							<p>Speeqe is <strong>group chat, simplified</strong>.</p>
+							<p>Talk to friends or co-workers in real time, or search past conversations to see what you missed.</p>
+						</div>
+						<div id="column-2" class="description">
+							<h2><span>Why use speeqe?</span></h2>
+							<ul>
+								<li>It's easy.</li>
+								<li>No signup required.</li>
+								<li>Chat right in your browser or with your favorite program.</li>
+								<li>Personalize with themes and vanity domains.</li>
+							</ul>
+						</div>
+						<div id="column-3" class="description">
+							<h2><span>How does it work?</span></h2>
+							<ol>
+								<li><p>Create a chat room by thinking of a name. <em>For example: politics.</em></p></li>
+								<li><p>Share the room's Web page with anyone. <em>For the above example, the URL would be politics.speeqe.com.</em></p></li>
+								<li><p>Start talking.</p></li>
+							</ol>
+						</div>
+					</div>
+					<div id="level-2">
+						<h2><span>Try one of these themes</span></h2>
+						<div id="theme-1" class="theme">
+							<a href="http://chatroom.speeqe.com/"><img src="/images/chat_snapshot.jpg" alt="Standard Chat" width="228" height="228"></a>
+						</div>
+						<div id="theme-2" class="theme">
+							<a href="http://iphone.speeqe.com/"><img src="/images/iphone_snapshot.jpg" alt="iPhone Chat" width="228" height="228"></a>
+						</div>
+						<div id="theme-3" class="theme">
+							<a href="http://tweeqe.speeqe.com/"><img src="/images/tweeqe_snapshot.jpg" alt="Tweeqe Chat" width="228" height="228"></a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="footer">
+				 <p>We're still finishing speeqe, but please explore the demo room through these three themes. <br> If you have ideas or suggestions for speeqe, please <a href="mailto:help@speeqe.com">share them with us</a>.</p>
+			</div>
+		</div>
+	</body></html>

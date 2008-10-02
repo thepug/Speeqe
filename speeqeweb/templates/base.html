@@ -1,0 +1,148 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+{% load splib %}
+<head>
+<title>{% block title %}{% endblock %}</title>
+<link rel="stylesheet" href="/css/style.css" type="text/css" media="screen" />
+<!--[if lt IE 7]>
+<link rel="stylesheet" href="/css/style_ie6.css" type="text/css" media="screen" />
+<![endif]-->
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js"></script>
+
+<script type="text/javascript">
+      $(document).ready(function(){
+
+          $("#toggleactiverooms").click(function() {
+              $("#featuredrooms").hide();
+              $("#activerooms").show();
+              return false;
+          });
+
+          $("#togglefeaturedrooms").click(function() {
+              $("#activerooms").hide();
+              $("#featuredrooms").show();
+              return false;
+          });
+
+          $("#activerooms").hide();
+
+          $("#createroom > form").submit(function() {
+              new_loc = ["http://",
+                         $("#formroomname").attr("value"),
+                         ".",
+                         "{% current_domain %}"];
+              window.location = new_loc.join("");
+              return false;
+          });
+      });
+
+</script>
+{% block head %}{% endblock %}
+</head>
+<body>
+<div id="container">
+
+<div id="top">
+<a href="/"><img src="/images/homelogo.png" alt="speeqe" /></a>
+<div id="menu">
+<ul class="tabs">
+<li>
+<div class="leftcorneractive"></div>
+<div class="middleactive"><a href="/"><img alt="chat" src="/images/chat.png" /></a></div>
+<div class="rightcorneractive"></div>
+</li>
+<li>
+<div class="leftcorner"></div>
+{% if user.is_authenticated %}
+<div class="middle">
+<a href="/accounts/logout/"><img alt="logout" src="/images/logout.png" /></a></div>
+{% else %}
+<div class="middle">
+<a href="https://{% current_domain %}/accounts/login/?next=http://{% current_domain %}/"><img alt="login" src="/images/login.png" /></a>
+</div>
+{% endif %}
+<div class="rightcorner"></div>
+</li>
+<li>
+<div class="leftcorneractive"></div>
+<div class="middleactive"><a href="/messagesearch/"><img alt="search" src="/images/search.png" /></a></div>
+<div class="rightcorneractive"></div>
+</li>
+</ul>
+</div>
+<div class="clear"></div>
+
+
+<div class="topround"></div>
+<div class="box">
+{% block content %}
+{% endblock %}
+<div class="clear"></div>
+</div>
+<div class="bottomround"></div>
+
+
+<div id="rooms">
+<ul class="tabs">
+<li>
+<div class="leftcorneractive"></div>
+<div class="middleactive">
+<a href="#featuredrooms" id="togglefeaturedrooms" class="togglerooms">
+<img alt="featured" src="/images/featured.png" />
+</a>
+</div>
+<div class="rightcorneractive"></div>
+</li>
+<li>
+<div class="leftcorner"></div>
+<div class="middle">
+<a href="#activerooms" id="toggleactiverooms" class="togglerooms">
+<img alt="active" src="/images/active.png" />
+</a>
+</div>
+<div class="rightcorner"></div>
+</li>
+</ul>
+</div>
+<div class="clear"></div>
+
+<div class="topround"></div>
+<div class="box" id="featuredrooms">
+{% show_featured_rooms %}
+{% for room in featuredrooms %}
+<div class="avatar">
+<a href="{{room.url}}">
+<img alt="chatroom" src="/images/avatar_overlay.png" class="avataroverlay" />
+<img alt="chatroom" src="/images/avatar_overlay_ie6.png" class="avataroverlay_ie6" />
+<img alt="avatar" src="/images/avatar.jpg" class="avatarimg" />
+<h4>{{room.name}}</h4>
+</a>
+</div>
+{% endfor %}
+<div class="clear"></div>
+</div>
+
+<div class="box" id="activerooms">
+{% show_rooms %}
+{% for room in rooms %}
+<div class="avatar">
+<a href="http://{{room}}.{% current_domain %}/">
+<img alt="chatroom" src="/images/avatar_overlay.png" class="avataroverlay" />
+<img alt="chatroom" src="/images/avatar_overlay_ie6.png" class="avataroverlay_ie6" />
+<img alt="avatar" src="/images/avatar.jpg" class="avatarimg" />
+<h4>{{room}}</h4>
+</a>
+</div>
+{% endfor %}
+
+<div class="clear"></div>
+</div>
+
+<div class="bottomround"></div>
+
+<div id="footer">
+help &#8226; blog &#8226; privacy
+</div>
+</div>
+</body>
+</html>

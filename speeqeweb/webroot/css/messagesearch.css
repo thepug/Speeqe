@@ -1,0 +1,38 @@
+.room_name {
+    display:inline;
+    padding-left:10px;
+}
+.message {
+    display:inline;
+
+    padding-left:10px;
+}
+.timestamp {
+    display:inline;
+    padding-left:10px;
+
+}
+#search_results {
+    padding-top:10px;
+}
+#search_results_pager {
+    display:inline;
+    padding-top:50px;
+
+}
+#search_results_pager_next {
+    display:inline;
+    padding-left:400px;
+}
+#searchbutton {
+    border:0px;
+}
+.mn {
+    color:blue;
+}
+.message br {
+   display:none;
+}
+#pager {
+    padding-top:25px;
+}
