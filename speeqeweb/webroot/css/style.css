@@ -208,6 +208,9 @@ input {
     font-size:.70em;
     padding:10px 10px 0px 0px;
 }
+#footer a {
+	display:inline;
+}
 #activerooms {
     display:none;
 }
