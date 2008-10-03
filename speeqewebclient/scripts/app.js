@@ -102,7 +102,7 @@ Speeqe.Application.prototype = {
 				       null);
 	    //join the chat room
 	    app.joinchat(app._chatroom)
-	    app._chatroom_view.show(app._chatroom,app._chat._nick);
+
 	}
 	else if (status == Strophe.Status.DISCONNECTED)
 	{
@@ -343,6 +343,12 @@ Speeqe.Application.prototype = {
 
 			if(room == my_app._chatroom)
 			{
+			    var nick = $(stanza).attr("from").split("/")[1];
+			    if(my_app._chat._nick == nick)
+			    {
+				my_app._chatroom_view.show(my_app._chatroom,
+							   my_app._chat._nick);
+			    }
 			    my_app._chatroom_view.hideJoiningStatus();
 			    my_app._statusview.toggleStatusElement("#status_connected");	    
 			}

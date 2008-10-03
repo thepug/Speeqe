@@ -1,2 +1,3 @@
 Speeqe.DOMAIN = "speeqe.com";
 Speeqe.CHAT_SERVER = "chat.speeqe.com";
+Speeqe.ENABLE_NICK_CHANGE = true;

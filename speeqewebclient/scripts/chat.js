@@ -125,6 +125,13 @@ Speeqe.Chat.prototype = {
 		    this.unBanUser(cmdtext);
 		    cmd_activated = true;
 		}
+
+	    if ("/nick" == cmd && Speeqe.ENABLE_NICK_CHANGE)
+		{
+		    //remove user from ban list
+		    this.changeNick(cmdtext);
+		    cmd_activated = true;
+		}
 	    
 	}
 	else if (cmd.charAt(0) == '@')
@@ -286,6 +293,20 @@ Speeqe.Chat.prototype = {
 	iq.appendChild(query);
 	this._connection.send(iq);
 	
+    },
+
+    changeNick: function(user) {
+	this._nick = user;
+		   
+	var msg = Strophe.xmlElement("presence", [
+						  ["from", this._connection.jid + "/" + this._connection.resource],
+						  ["to", this._from + "/" + this._nick]
+				     ]);
+	var x = Strophe.xmlElement("x", [["xmlns", "http://jabber.org/protocol/muc"]]);
+    
+	msg.appendChild(x);
+	
+	this._connection.send(msg);
     },
 
     unBanUser: function(user) {

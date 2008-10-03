@@ -40,6 +40,7 @@ Speeqe.ChatRoomView.prototype = {
 	
 	$("#roomname").html(roomdomain[0]);
 	$("#roomdomainname").html(room_domain_name.join(""));
+	$("#login_username").empty();
 	$("#login_username").append(nick.replace("@"+Speeqe.DOMAIN,""));
 	$("#dashboard_user").empty();	
 	$("#dashboard_user").append(nick);	
