@@ -13,9 +13,9 @@ Speeqe.MessageView.prototype = {
 
     /*Translate new lines into <br /> Handle the /me display. Turn
      * links into live links and inline images. */
-    translateMessage: function(message) {
+    translateMessage: function(message,auto_inline) {
 	//match and replace a link with html
-	message = this.htmlLink(message);
+	message = this.htmlLink(message,auto_inline);
 	message = message.replace(/^\/me/,"");
 	message = message.replace(/\n/g,"<br />");
 
@@ -110,7 +110,7 @@ Speeqe.MessageView.prototype = {
 	    
 	    if (!Speeqe.testSupportedTags(message))
 		{
-		    message = this.translateMessage(message);
+		    message = this.translateMessage(message,true);
 		}
 	    else
 		{
@@ -123,7 +123,7 @@ Speeqe.MessageView.prototype = {
 	}
 	else
 	{
-	    message = this.translateMessage(message);
+	    message = this.translateMessage(message,true);
 	}
 	
 	if(message.length > 0)
@@ -274,6 +274,7 @@ Speeqe.MessageView.prototype = {
     displayTopic: function(stanza) {
 	//set the topic
 	var topic = $(stanza).find('subject').text();
+	topic = this.translateMessage(topic,false);
 	$("#room_topic").empty();
 	$("#room_topic").append(topic);
 	$("#outer_room_topic").show();
@@ -409,7 +410,7 @@ Speeqe.MessageView.prototype = {
 	
     },
     
-    htmlLink: function(text) {
+    htmlLink: function(text,auto_inline) {
 	var imgurl = /((?:ht|f)tps?:\/\/.+\.(png|jpeg|jpg|gif|bmp)$)/ig;
 	var mp3url = /((?:ht|f)tps?:\/\/.+\.(mp3)$)/ig;
 	var linksReg = /((?:ht|f)tps?:\/\/[\S|\?]+)/g;
@@ -420,9 +421,15 @@ Speeqe.MessageView.prototype = {
 	jQuery.each(text_words, function(i,text_val) {
 	    var amatch = text_val.match(ahtmlReg);
 	    var match = text_val.match(linksReg);
-	    var imgmatch = text_val.match(imgurl);
-	    var mp3match = text_val.match(mp3url);
 
+	    var imgmatch = false;
+	    var mp3match = false;
+		
+	    if(auto_inline)
+	    {
+		imgmatch = text_val.match(imgurl);
+		mp3match = text_val.match(mp3url);
+	    }
 	    if (match && !amatch && !imgmatch &&!mp3match)
 	    {
 		var urltext = text_val;
