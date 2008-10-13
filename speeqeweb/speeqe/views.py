@@ -33,9 +33,6 @@ def index(request):
 	
 	if request.user.is_anonymous():
 		request.session.set_test_cookie()
-		if settings.PRIVATE_BETA:
-			index_template = "demo_index.html"
-	
 	
 	return render_response(request, index_template,context)
 
@@ -73,8 +70,6 @@ def validate_email(request):
 
 
 def join(request):
-	if settings.PRIVATE_BETA:
-		raise Http404
 	
 	"""create a speeqe account"""
 	context = {}
@@ -238,11 +233,6 @@ def login(request):
 					     {'errors': errors,
 					      'next': redirect_to})
 	return ret_response
-
-def demo_client(request,theme_name):
-	"""Special view for demo. """
-
-	return client(request,room_name="speeqers",theme_name=theme_name)
 
 def client(request,room_name=None,theme_name=None):
 	"""Start up the chat client with the requested room """
@@ -432,41 +422,6 @@ def link_theme_to_room(request):
 		retval += "<themelink>invalid</themelink>"
 	return HttpResponse(retval,mimetype="text/xml")
 
-
-def send_confirmation(request):
-	"""Sends a confirmation email to those signing up to learn
-	more about speeqe.  Used for the first demo version of speeqe."""
-
-	
-	email = request.GET.get('email',None)
-	retval = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>"
-
-	try:
-		message_t = EmailMessageTemplate.objects.get(name="demo_confirmation_email")
-		#generate uniq url
-		url = "http://"+settings.DOMAIN+"/demo_email/?url="
-		code = generate_code(6)
-		url += code 
-		t = Template(message_t.template)
-		c = Context({'email':email,
-			     'url':url})
-		message = t.render(c)
-		email_confirmation,created = EmailConfirmation.objects.get_or_create(email=email)
-
-		if created:
-			send_email(email,
-				   'Speeqe Email Confirmation',
-				   message,
-				   sender=settings.HELP_EMAIL,
-				   frm=settings.HELP_EMAIL)
-			email_confirmation.code = code
-			email_confirmation.save()
-		
-		retval += "<emailconfirmation>valid</emailconfirmation>"
-	except Exception, ex:
-		retval += "<emailconfirmation msg='"+str("Error sending email.")+"'>invalid</emailconfirmation>"
-		  
-	return HttpResponse(retval,mimetype="text/xml")
 
 
 def confirm_email(request):
