@@ -277,7 +277,7 @@ Speeqe.Application.prototype = {
 		//Handle only MUC user protocol
 		var xmlns = $(xquery).attr("xmlns");
 
-		if (xmlns && xmlns.match("http://jabber.org/protocol/muc"))
+		if (xmlns && xmlns.match(Strophe.NS.MUC))
 		{
 
 		    var error = $(stanza).find("error");

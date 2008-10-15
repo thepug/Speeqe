@@ -6,8 +6,8 @@ See LICENSE.txt
 */
 
 Speeqe.CHAT_MESSAGE_HISTORY     = 1000;
-
-
+Speeqe.NS_MUC_OWNER = Speeqe.NS.MUC + "#owner";
+Speeqe.NS_MUC_ADMIN = Speeqe.NS.MUC + "#admin";
 
 //class used to send xmpp chat specific requests via libstrophe
 Speeqe.Chat.prototype = {
@@ -26,7 +26,7 @@ Speeqe.Chat.prototype = {
 						     ["from", this._connection.jid + "/" + this._connection.resource],
 						     ["to", this._from + "/" + this._nick]
 					]);
-	var x = Strophe.xmlElement("x", [["xmlns", "http://jabber.org/protocol/muc"]]);
+	var x = Strophe.xmlElement("x", [["xmlns", Strophe.NS.MUC]]);
 	if(password)
 	{
 	    var password_elem = Strophe.xmlElement("password", [],password);
@@ -140,7 +140,8 @@ Speeqe.Chat.prototype = {
 					      ["type", "get"]
 				       ]);
 	var query = Strophe.xmlElement("query", [
-						    ["xmlns", "http://jabber.org/protocol/muc#owner"]
+						    ["xmlns", 
+						     Speeqe.NS_MUC_OWNER]
 					  ]);
 
 	iq.appendChild(query);
@@ -157,7 +158,8 @@ Speeqe.Chat.prototype = {
 					      ["type", "set"]
 				       ]);
 	var query = Strophe.xmlElement("query", [
-						    ["xmlns", "http://jabber.org/protocol/muc#owner"]
+						    ["xmlns", 
+						     Speeqe.NS_MUC_OWNER]
 					  ]);
 	var x = Strophe.xmlElement("x", [["xmlns", "jabber:x:data"],
 					    ["type","cancel"]]);
@@ -176,7 +178,8 @@ Speeqe.Chat.prototype = {
 					      ["type", "set"]
 				       ]);
 	var query = Strophe.xmlElement("query", [
-						    ["xmlns", "http://jabber.org/protocol/muc#owner"]
+						    ["xmlns", 
+						     Speeqe.NS_MUC_OWNER]
 					  ]);
 	//attach configured form
 	var x = Strophe.xmlElement("x", [["xmlns", "jabber:x:data"],
@@ -206,7 +209,8 @@ Speeqe.Chat.prototype = {
 					      ["type", "set"]
 				       ]);
 	var query = Strophe.xmlElement("query", [
-						    ["xmlns", "http://jabber.org/protocol/muc#owner"]
+						    ["xmlns", 
+						     Speeqe.NS_MUC_OWNER]
 					  ]);
 	var x = Strophe.xmlElement("x", [["xmlns", "jabber:x:data"],
 					    ["type","submit"]]);
@@ -253,7 +257,7 @@ Speeqe.Chat.prototype = {
 				       ]);
 	var query = Strophe.xmlElement("query", [
 						    ["xmlns",
-						     "http://jabber.org/protocol/muc#admin"]
+						     Speeqe.NS_MUC_ADMIN]
 					  ]);
 	var item = Strophe.xmlElement("item", [
 						  ["nick", nick]
@@ -286,7 +290,7 @@ Speeqe.Chat.prototype = {
 						      ["from", this._connection.jid + "/" + this._connection.resource],
 						      ["to", this._from + "/" + this._nick]
 					 ]);
-	    var x = Strophe.xmlElement("x", [["xmlns", "http://jabber.org/protocol/muc"]]);
+	    var x = Strophe.xmlElement("x", [["xmlns", Strophe.NS.MUC]]);
 	    
 	    msg.appendChild(x);
 	    
@@ -303,7 +307,8 @@ Speeqe.Chat.prototype = {
 					      ["type", "set"]
 				       ]);
 	query = Strophe.xmlElement("query", [
-                                                ["xmlns", "http://jabber.org/protocol/muc#admin"]
+                                                ["xmlns", 
+						 Speeqe.NS_MUC_ADMIN]
 				      ]);
 	item = Strophe.xmlElement("item", [
 					      ["affiliation", "none"],
