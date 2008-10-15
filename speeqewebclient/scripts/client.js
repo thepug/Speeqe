@@ -524,7 +524,7 @@ var Speeqe = {
     /*Application controller.  See app.js for implemenation.*/
     Application: function() {
 	
-	this._connection = new Strophe.Connection("/xmpp-httpbind");
+	this._connection = new Strophe.Connection(Speeqe.BOSH_URL);
 	
 	this._connected= false;
 	this._authFailed= false;
