@@ -23,7 +23,11 @@ urlpatterns = patterns('',
     (r'^submit_log/', 'speeqeweb.speeqe.views.submit_log'),
     # Uncomment this for admin:
     (r'^admin/', include('django.contrib.admin.urls')),
-                       
+
     (r'^$','speeqeweb.speeqe.views.index'),
-    (r'^(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.DOCUMENT_ROOT }),                      
+
 )
+
+if settings.SERVE_STATIC_URLS:
+    urlpatterns += patterns( (r'^(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.DOCUMENT_ROOT }),
+                            )
