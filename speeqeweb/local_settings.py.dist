@@ -20,7 +20,7 @@ XMPP_PASS = 'password'
 XMPP_CHAT = 'chat.speeqe.com'
 PUNJAB_HOST = "www.speeqe.com"
 
-FEATURED_ROOMS = {'Speeqers':'http://speeqers@chat.speeqe.com',
+FEATURED_ROOMS = {'Speeqers':'http://speeqers.speeqe.com',
                   'Central Park':'/room/centralpark@chat.chesspark.com/',
     }
 
