@@ -86,10 +86,17 @@ Speeqe.Chat.prototype = {
 	
 	this._connection.send(msg);
     },    
-    
+
     //send a chat message to the multi user chat room
     sendMessage: function(text)
     {
+	var command_map = {"/topic":this.setTopic,
+			   "/kick":this.kickUser,
+			   "/ban":this.banUser,
+			   "/unban":this.unBanUser,
+			   "/nick":this.changeNick
+	};
+
 	var cmdArray = text.split(" ");
 	var cmd = cmdArray[0];
 	var cmdtext = cmdArray.splice(1, cmdArray.length).join(" ");
@@ -99,39 +106,13 @@ Speeqe.Chat.prototype = {
 	{
 	    //looks like a command so lets kick off the
 	    //appropriate command action
-	    
-	    if ("/topic" == cmd)
-		{
-		    //set the room subject
-		    this.setTopic(cmdtext);
-		    cmd_activated = true;
-		}
-	    
-	    if ("/kick" == cmd)
-		{
-		    //kick the user
-		    this.kickUser(cmdtext);
-		    cmd_activated = true;
-		}
-	    if ("/ban" == cmd)
-		{
-		    //ban user
-		    this.banUser(cmdtext);
-		    cmd_activated = true;
-		}
-	    if ("/unban" == cmd)
-		{
-		    //remove user from ban list
-		    this.unBanUser(cmdtext);
-		    cmd_activated = true;
-		}
+	    var callme = command_map[cmd];
 
-	    if ("/nick" == cmd && Speeqe.ENABLE_NICK_CHANGE)
-		{
-		    //remove user from ban list
-		    this.changeNick(cmdtext);
-		    cmd_activated = true;
-		}
+	    if(callme)
+	    {
+		callme.apply(this,[cmdtext]);
+		cmd_activated = true;
+	    }
 	    
 	}
 	else if (cmd.charAt(0) == '@')
@@ -296,17 +277,21 @@ Speeqe.Chat.prototype = {
     },
 
     changeNick: function(user) {
-	this._nick = user;
+
+	if(Speeqe.ENABLE_NICK_CHANGE)
+	{
+	    this._nick = user;
 		   
-	var msg = Strophe.xmlElement("presence", [
-						  ["from", this._connection.jid + "/" + this._connection.resource],
-						  ["to", this._from + "/" + this._nick]
-				     ]);
-	var x = Strophe.xmlElement("x", [["xmlns", "http://jabber.org/protocol/muc"]]);
-    
-	msg.appendChild(x);
-	
-	this._connection.send(msg);
+	    var msg = Strophe.xmlElement("presence", [
+						      ["from", this._connection.jid + "/" + this._connection.resource],
+						      ["to", this._from + "/" + this._nick]
+					 ]);
+	    var x = Strophe.xmlElement("x", [["xmlns", "http://jabber.org/protocol/muc"]]);
+	    
+	    msg.appendChild(x);
+	    
+	    this._connection.send(msg);
+	}
     },
 
     unBanUser: function(user) {
