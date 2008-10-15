@@ -21,7 +21,12 @@ Speeqe.RosterItem.prototype =  {
 						    ["xmlns", "vcard-temp"]
 					  ]);
 	iq.appendChild(vcard);
-	this._connection.addHandler("_onVCardResult", this, null, "iq", null, iqid);
+	this._connection.addHandler(this._onVCardResult, 
+				    null, 
+				    "iq", 
+				    null, 
+				    iqid,
+				    null);
 	this._connection.send(iq);
     },
 
@@ -32,25 +37,31 @@ Speeqe.RosterItem.prototype =  {
 	    var type = $(stanza).find("TYPE").text();
 	    try
 		{
-		    elemid = ["#onlineavatar",this.id];
+		    var lu_nick = $(stanza).attr("from").split("/")[1];
+
+		    roster_item = app._roster[lu_nick];
+		    nick = roster_item._nick;
+
+		    elemid = ["#onlineavatar",roster_item.id];
 		    
 		    app.avatars.get(elemid.join(""),
 				    binval,
 				    type,
-				    this);
-		    if(this._nick != "")
-			{
-			    var cleannick = this._nick.replace("@","at");
-			    cleannick = cleannick.replace(new RegExp(".","g"),
-							  "dot");
+				    roster_item);
 
+		    if(nick && nick != "")
+			{
+			    var cleannick = nick.replace("@","at");
+			    cleannick = cleannick.replace(/\./g,"dot");
+			    
 			    
 			    var nickid = [".avatar",
 					  cleannick];
+
 			    app.avatars.get(nickid.join(""),
 					    binval,
 					    type,
-					    this);
+					    roster_item);
 			    
 			}
 		}

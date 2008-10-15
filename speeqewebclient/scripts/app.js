@@ -357,6 +357,7 @@ Speeqe.Application.prototype = {
 			{
 			    var jid = fulljid.split("/")[0];
 			    var nick = $(stanza).attr("from").split("/")[1];
+			    var fullnick = $(stanza).attr("from");
 			    if((!$(stanza).attr("type")) || ("available" == $(stanza).attr("type")))
 			    {
 					
@@ -364,7 +365,7 @@ Speeqe.Application.prototype = {
 				if(!roster_item)
 				{
 				    roster_item = new Speeqe.RosterItem(my_app._connection,
-									jid,
+									fullnick,
 									nick);
 				    my_app._roster[nick] = roster_item;
 				    
@@ -406,12 +407,12 @@ Speeqe.Application.prototype = {
 				    var roster_item = my_app._roster[nick];
 				    if(!roster_item)
 				    {
-					var roster_item = new Speeqe.RosterItem(my_app._connection,
+					roster_item = new Speeqe.RosterItem(my_app._connection,
 										fullnick,
 										nick);
 					
 					my_app._roster[nick] = roster_item;
-					
+
 					my_app._rosteritemview.show(roster_item,nick);
 					
 				    }

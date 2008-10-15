@@ -33,7 +33,6 @@ Speeqe.AvatarService.prototype = {
 	    var data = {'mime':mime, 'base64':base64};
 	    var _me = this;
 		
-
 	    jQuery.post(this.service,data,function(retdata) {
 		_me._avatar_cb(retdata,elemID,jid);
 	    });
