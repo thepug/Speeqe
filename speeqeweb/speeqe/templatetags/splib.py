@@ -9,12 +9,9 @@ register = Library()
 def current_domain():
     return settings.DOMAIN
     
-
+#return all active muc rooms
 class ActiveRoomsNode(Node):
-
-    def __init__(self):
-        """do I need this?"""
-        pass
+    """ return all active muc rooms """
 
     def render(self, context):
         try:
@@ -51,8 +48,21 @@ class FeaturedRoomsNode(Node):
 def show_featured_rooms(parser,token):
     return FeaturedRoomsNode()
 
-
 @register.simple_tag
 def help_email():
     return settings.HELP_EMAIL
+
+
+class DnsRoomNamesNode(Node):
+    """ return setting that the dns trick for room names is being used """
+    def render(self, context):
+        try:
+            context['dns_room_names'] = settings.DNS_ROOM_NAMES
+        except:
+            pass
+        return ''
+    
+@register.tag(name="use_dns_room_names")
+def use_dns_room_names(parser,token):
+    return DnsRoomNamesNode()
 

@@ -1,6 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 {% load splib %}
+{% use_dns_room_names %}
 <head>
 <title>{% block title %}{% endblock %}</title>
 <link rel="stylesheet" href="/css/style.css" type="text/css" media="screen" />
@@ -27,11 +28,16 @@
           $("#activerooms").hide();
 
           $("#createroom > form").submit(function() {
+	      {% if dns_room_names %}
               new_loc = ["http://",
                          $("#formroomname").attr("value"),
                          ".",
                          "{% current_domain %}"];
-              window.location = new_loc.join("");
+              {% else %}
+	      new_loc = ["http://{% current_domain %}/room/",
+                         $("#formroomname").attr("value")];
+	      {% endif %}		 
+	      window.location = new_loc.join("");
               return false;
           });
       });
