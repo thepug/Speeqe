@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load splib %}
 {% block head %}
 {{ block.super }}
 <style>
@@ -32,7 +33,7 @@ Login to Speeqe.
       {% for error in errors.itervalues %}
         {{ error|join:", " }}<br />
       {% endfor %}
-      <br />If you need assistance, please contact <a href='mailto:help@speeqe.com'>help@speeqe.com</a><br />
+      <br />If you need assistance, please contact <a href='mailto:{% help_email %}'>{% help_email %}</a><br />
       <br />
     </div>
 {% endif %}

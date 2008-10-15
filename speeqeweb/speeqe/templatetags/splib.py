@@ -7,10 +7,8 @@ register = Library()
 
 @register.simple_tag
 def current_domain():
-    try:
-        return Site.objects.get_current().domain
-    except:
-        return 'www.speeqe.com'
+    return settings.DOMAIN
+    
 
 class ActiveRoomsNode(Node):
 
@@ -52,3 +50,9 @@ class FeaturedRoomsNode(Node):
 @register.tag(name="show_featured_rooms")
 def show_featured_rooms(parser,token):
     return FeaturedRoomsNode()
+
+
+@register.simple_tag
+def help_email():
+    return settings.HELP_EMAIL
+

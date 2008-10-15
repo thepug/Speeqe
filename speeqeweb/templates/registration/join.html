@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load splib %}
 {% block title %}
 Create a speeqe account.
 {% endblock %}
@@ -104,7 +104,7 @@ Create a speeqe account.
 <div class="leftcol"><div id="validusername" >&nbsp;&nbsp;&nbsp;&nbsp;</div><label>Username:</label></div>
 <input id='username' name='username' value="pick your name" />
 <span>
-@speeqe.com
+@{% current_domain %}
 </span>
 <p class='error' id="usernameerror">
 {% if form.errors.username %}

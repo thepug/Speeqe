@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load splib %}
 {% block title %}
 Speeqe - Create Your Chat Room
 {% endblock %}
@@ -13,7 +13,7 @@ Speeqe - Create Your Chat Room
 <div class="clear"></div>
 <div id="createroom">
 <form action="" method="get">
-<strong>http://</strong><input id="formroomname" name="room" value="room" size="15" onclick="this.value='';" ><strong>.speeqe.com</strong>
+<strong>http://</strong><input id="formroomname" name="room" value="room" size="15" onclick="this.value='';" ><strong>.{% current_domain %}</strong>
 </div>
 <input type='image' src='/images/go.png' id="go" class="go" />
 

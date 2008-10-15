@@ -532,7 +532,7 @@ var Speeqe = {
 	this._roster= {};
 	this.avatars= new Speeqe.AvatarService();
 	//use a default chat room
-	this._chatroom = "speeqers@chat.speeqe.com"    
+	this._chatroom = Speeqe.DEFAULT_CHAT_ROOM;    
 	
 	this._message_view = new Speeqe.MessageView();
 	this._chatroom_view = new Speeqe.ChatRoomView();
