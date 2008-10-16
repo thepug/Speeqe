@@ -6,8 +6,8 @@ See LICENSE.txt
 */
 
 Speeqe.CHAT_MESSAGE_HISTORY     = 1000;
-Speeqe.NS_MUC_OWNER = Speeqe.NS.MUC + "#owner";
-Speeqe.NS_MUC_ADMIN = Speeqe.NS.MUC + "#admin";
+Speeqe.NS_MUC_OWNER = Strophe.NS.MUC + "#owner";
+Speeqe.NS_MUC_ADMIN = Strophe.NS.MUC + "#admin";
 
 //class used to send xmpp chat specific requests via libstrophe
 Speeqe.Chat.prototype = {
