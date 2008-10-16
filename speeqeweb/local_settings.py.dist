@@ -18,7 +18,9 @@ DOCUMENT_ROOT = '/lib/python/speeqeweb/webroot'
 XMPP_USER = 'thepug@speeqe.com'
 XMPP_PASS = 'password'
 XMPP_CHAT = 'chat.speeqe.com'
-PUNJAB_HOST = "www.speeqe.com"
+BOSH_HOST = "www.speeqe.com"
+BOSH_PORT = "5280"
+BOSH_URL = "/xmpp-httpbind"
 
 FEATURED_ROOMS = {'Speeqers':'http://speeqers.speeqe.com',
                   'Central Park':'/room/centralpark@chat.chesspark.com/',

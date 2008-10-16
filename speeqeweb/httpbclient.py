@@ -17,7 +17,7 @@ SESSION_XMLNS = 'urn:ietf:params:xml:ns:xmpp-session'
 
 class PunjabClient:
 
-    def __init__(self, jabberid, secret, host=None):
+    def __init__(self, jabberid, secret, host=None, port=None, url=None):
         self.jid = None
         self.resource = None
         self.rid = random.randint(0,10000000)
@@ -27,7 +27,15 @@ class PunjabClient:
         else:
             self.host = self.myJid.host
         self.jabberid = jabberid
-        
+        if port:
+            self.port = str(port)
+        else:
+            self.port = "5280"
+        if url:
+            self.url = str(url)
+        else:
+            self.url = "/xmpp-httpbind"
+            
         self.secret = secret
         self.authid = None
         self.sid = None
@@ -61,8 +69,8 @@ class PunjabClient:
         # start new session
         bxml = b.toXml()
         
-        conn = httplib.HTTPConnection(self.host+":5280")
-        conn.request("POST", "/xmpp-httpbind", bxml, self.headers)
+        conn = httplib.HTTPConnection(self.host+":"+self.port)
+        conn.request("POST", self.url, bxml, self.headers)
         response = conn.getresponse()
         if response.status == 200:
             data = response.read()
@@ -202,7 +210,8 @@ if __name__ == '__main__':
     USERNAME = sys.argv[1]
     PASSWORD = sys.argv[2]
     HOST     = sys.argv[3]
-    c = PunjabClient(USERNAME, PASSWORD, HOST)
+    PORT     = sys.argv[4]
+    c = PunjabClient(USERNAME, PASSWORD, HOST, PORT)
 
     c.startSessionAndAuth()
     print c.logged_in

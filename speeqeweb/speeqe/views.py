@@ -131,7 +131,9 @@ def xmpp_auth(request):
 	try:
 		pc = PunjabClient(fullusername+random_resource(),
 				  password,
-				  host=settings.PUNJAB_HOST)
+				  host=settings.BOSH_HOST,
+				  port=settings.BOSH_PORT,
+				  url=settings.BOSH_URL)
 		headers =  {'Content-type': 'text/xml',
 			    'X-Forwarded-For': ip_address,
 			    'User-Agent': request.META.get('HTTP_USER_AGENT'),
