@@ -94,7 +94,8 @@ Speeqe.Chat.prototype = {
 			   "/kick":this.kickUser,
 			   "/ban":this.banUser,
 			   "/unban":this.unBanUser,
-			   "/nick":this.changeNick
+			   "/nick":this.changeNick,
+			   "/join":this.newRoom,
 	};
 
 	var cmdArray = text.split(" ");
@@ -279,7 +280,16 @@ Speeqe.Chat.prototype = {
 	this._connection.send(iq);
 	
     },
+    //open up a new window for the new chat room.
+    newRoom: function(room) {
+	var url = ["http://",
+		   Speeqe.DOMAIN,
+		   "/room/",
+		   room,
+		   "/"];
 
+	window.open(url.join(""));
+    },
     changeNick: function(user) {
 
 	if(Speeqe.ENABLE_NICK_CHANGE)
