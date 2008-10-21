@@ -4,6 +4,7 @@ EXACT_BAD_WORDS = ['crap']
 
 MATCH_BAD_WORDS = ['crap']
 
+SESSION_COOKIE_DOMAIN = ".speeqe.com"
 
 DATABASE_ENGINE = 'postgresql_psycopg2'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'ado_mssql'.
 DATABASE_NAME = 'speeqe'             # Or path to database file if using sqlite3.

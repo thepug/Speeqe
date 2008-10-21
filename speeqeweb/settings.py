@@ -84,7 +84,6 @@ INSTALLED_APPS = (
     'speeqeweb.avatars',
 )
 
-SESSION_COOKIE_DOMAIN = ".speeqe.com"
 
 try:
     from local_settings import *
