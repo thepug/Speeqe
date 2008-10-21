@@ -41,12 +41,12 @@ Speeqe.ChatRoomView.prototype = {
 	$("#roomname").html(roomdomain[0]);
 	$("#roomdomainname").html(room_domain_name.join(""));
 	$("#login_username").empty();
-	$("#login_username").append(nick.replace("@"+Speeqe.DOMAIN,""));
+	$("#login_username").append(nick.replace("@"+Speeqe.XMPP_DOMAIN,""));
 	$("#dashboard_user").empty();	
 	$("#dashboard_user").append(nick);	
-	$("#login").append("<br />Welcome "+nick.replace("@"+Speeqe.DOMAIN,"")+".");
+	$("#login").append("<br />Welcome "+nick.replace("@"+Speeqe.XMPP_DOMAIN,"")+".");
 	room_search_url = ["http://",
-			   Speeqe.DOMAIN,
+			   Speeqe.XMPP_DOMAIN,
 			   "/messagesearch/?room=",
 			   roomdomain[0]];
 	

@@ -1,4 +1,7 @@
-DOMAIN = "speeqe.com"
+#Domain for your website
+HTTP_DOMAIN = "speeqe.com"
+#Domain for your jabber server
+XMPP_DOMAIN = "speeqe.com"
 
 EXACT_BAD_WORDS = ['crap']
 

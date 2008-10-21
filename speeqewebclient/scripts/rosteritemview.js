@@ -14,7 +14,7 @@ Speeqe.RosterItemView.prototype =  {
      */
     show: function(roster_item,nick) {
 	//if nick has our domain, erase
-	var displaynick = nick.replace("@"+Speeqe.DOMAIN,
+	var displaynick = nick.replace("@"+Speeqe.XMPP_DOMAIN,
 				       "");
 	var usernamedomain = displaynick.split('@');
 	var username = displaynick;

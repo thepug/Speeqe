@@ -86,9 +86,9 @@ Speeqe.MessageView.prototype = {
 	cleannick = cleannick.replace(new RegExp(".","g"),"dot");
 	
 	//remove domain
-	if (Speeqe.DOMAIN !== null)
+	if (Speeqe.XMPP_DOMAIN !== null)
 	{
-	    user = user.replace("@"+Speeqe.DOMAIN,"");
+	    user = user.replace("@"+Speeqe.XMPP_DOMAIN,"");
 	}
 	//First search for an html based message and use it.
 	var message = $(stanza).find("html").find("body").text();

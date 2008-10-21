@@ -7,7 +7,7 @@ register = Library()
 
 @register.simple_tag
 def current_domain():
-    return settings.DOMAIN
+    return settings.HTTP_DOMAIN
     
 #return all active muc rooms
 class ActiveRoomsNode(Node):

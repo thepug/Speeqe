@@ -22,7 +22,7 @@ def send_email(to,
                to_list=None,
                files=None,
                port=587,
-               sender='noreply@'+settings.DOMAIN,
+               sender='noreply@'+settings.HTTP_DOMAIN,
                frm=None):
 
     sender_from = 'Speeqe <%s>' % sender

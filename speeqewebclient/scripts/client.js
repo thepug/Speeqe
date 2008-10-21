@@ -164,7 +164,7 @@ var Speeqe = {
 		});
 
 		$("#search_room").click(function() {
-		    window.open('http://'+Speeqe.DOMAIN+'/messagesearch/'+app.getChatroom()+'/');
+		    window.open('http://'+Speeqe.HTTP_DOMAIN+'/messagesearch/'+app.getChatroom()+'/');
 		});
 		/*
 		  Start the XMPP Client with the given username and password.
@@ -225,13 +225,13 @@ var Speeqe = {
 		});
 
 		$("#changeuser").click(function() {
-		    var new_url = "https://"+Speeqe.DOMAIN+"/accounts/login/";
+		    var new_url = "https://"+Speeqe.HTTP_DOMAIN+"/accounts/login/";
 		    if (app._chatroom)
 			{
 			    new_url_array = ["?next=http://",
 					     app._chatroom.split("@")[0],
 					     ".",
-					     Speeqe.DOMAIN
+					     Speeqe.HTTP_DOMAIN
 			    ];
 			    new_url += new_url_array.join("");
 			}

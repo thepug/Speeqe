@@ -1,4 +1,8 @@
-Speeqe.DOMAIN = "speeqe.com";
+//domain for your website
+Speeqe.HTTP_DOMAIN = "speeqe.com";
+//domain for your jabber server
+Speeqe.XMPP_DOMAIN = "speeqe.com";
+//domain for your multi user chat server
 Speeqe.CHAT_SERVER = "chat.speeqe.com";
 Speeqe.ENABLE_NICK_CHANGE = true;
 Speeqe.DEFAULT_CHAT_ROOM = "speeqers@chat.speeqe.com";

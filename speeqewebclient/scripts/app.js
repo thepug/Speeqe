@@ -48,7 +48,7 @@ Speeqe.Application.prototype = {
 	//if username and password are not specified log in anonymously
 	if(!username && !password)
 	{
-	    username = Speeqe.DOMAIN;
+	    username = Speeqe.XMPP_DOMAIN;
 	    password = "password";
 
 	}
@@ -149,8 +149,8 @@ Speeqe.Application.prototype = {
 	var jid = this._connection.jid;
 	if(!this._connection.jid || this._connection.jid.split("@").length == 1)
 	{
-	    nickname = Speeqe.generate_anonymous_nick()+"@"+Speeqe.DOMAIN;
-	    jid = Speeqe.DOMAIN;
+	    nickname = Speeqe.generate_anonymous_nick()+"@"+Speeqe.XMPP_DOMAIN;
+	    jid = Speeqe.XMPP_DOMAIN;
 	}
 	if (!this._chat)
 	{

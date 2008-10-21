@@ -20,7 +20,7 @@ Speeqe.Chat.prototype = {
 	{
 	    password = arguments[0];
 	}
-	this._nick = this._nick.replace("@"+Speeqe.DOMAIN,"");
+	this._nick = this._nick.replace("@"+Speeqe.XMPP_DOMAIN,"");
 	
 	var msg = Strophe.xmlElement("presence", [
 						     ["from", this._connection.jid + "/" + this._connection.resource],
@@ -283,7 +283,7 @@ Speeqe.Chat.prototype = {
     //open up a new window for the new chat room.
     newRoom: function(room) {
 	var url = ["http://",
-		   Speeqe.DOMAIN,
+		   Speeqe.HTTP_DOMAIN,
 		   "/room/",
 		   room,
 		   "/"];
