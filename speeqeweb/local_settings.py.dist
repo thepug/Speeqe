@@ -3,12 +3,19 @@ HTTP_DOMAIN = "speeqe.com"
 #Domain for your jabber server
 XMPP_DOMAIN = "speeqe.com"
 
+#names you dont want your users to have. When signing up for an
+#account and the user name is one of these exact words, it will be
+#rejected.
 EXACT_BAD_WORDS = ['crap']
+#words you don't want in your user's names.  When signing up for an
+#account and the username has one of these words in it, the name will
+#be rejected.
+MATCH_BAD_WORDS = ['crap'] 
 
-MATCH_BAD_WORDS = ['crap']
 
 SESSION_COOKIE_DOMAIN = ".speeqe.com"
 
+#type of database you want to use for django
 DATABASE_ENGINE = 'postgresql_psycopg2'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'ado_mssql'.
 DATABASE_NAME = 'speeqe'             # Or path to database file if using sqlite3.
 DATABASE_USER = 'speeqe'             # Not used with sqlite3.
@@ -16,20 +23,37 @@ DATABASE_PASSWORD = ''         # Not used with sqlite3.
 DATABASE_HOST = 'localhost'             # Set to empty string for localhost. Not used with sqlite3.
 DATABASE_PORT = '5432'             # Set to empty string for default. Not used with sqlite3.
 
+#where all your media , intended to be served via django, lives
 MEDIA_ROOT = '/lib/python/speeqeweb/webroot'
+#where all your static documents are.
 DOCUMENT_ROOT = '/lib/python/speeqeweb/webroot'
 
+#the user used to list active rooms on the website. the speeqe website
+#needs a user and password to connect and run disco requests. This is
+#to gather a list of active rooms from the muc component.
 XMPP_USER = 'thepug@speeqe.com'
 XMPP_PASS = 'password'
+#your multi user chat server name. used to gather a list of active rooms
 XMPP_CHAT = 'chat.speeqe.com'
+#the name of your bosh server. Bosh is used to authenticate users to
+#the website and then they are auto logged in to each chat room.
 BOSH_HOST = "www.speeqe.com"
+#the port your bosh server listens on
 BOSH_PORT = "5280"
+#the url used to proxy to your bosh server
 BOSH_URL = "/xmpp-httpbind"
 
+#multi user chat rooms listed on the front page.  This list contains
+#the rooms that will be displayed on the speeqe web pages. The first
+#entry is the title, followed by the room url.  You can use /room/ or
+#the dns trick if you have that setup.
 FEATURED_ROOMS = {'Speeqers':'http://speeqers.speeqe.com',
                   'Central Park':'/room/centralpark@chat.chesspark.com/',
     }
 
+#where all your django templates live.  make sure to have the location
+#of your themes and client.html, test_client.html in this config
+#option
 TEMPLATE_DIRS = (
     '/usr/local/lib/python2.5/site-packages/speeqeweb/templates',
     '/lib/python/speeqeweb/templates',    
@@ -39,19 +63,26 @@ TEMPLATE_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
 )
 
-
+#mail server used to send email
 SMTP_SERVER = ''
+#username and password if using smtp auth
 SMTP_USERNAME = ''
 SMTP_PASSWORD = ''
 SMTP_PORT = 2525
-
+#email used when someone clicks on a help email link
 HELP_EMAIL = 'help@speeqe.com'
 
+#default sha1 for your default avatar image
 AVATAR_DEFAULT_SHA1 = 'f2f8ab835b10d66f9233518d1047f3014b3857cf'
+#default avatar sha1 when an IE6 user comes to the website
 AVATAR_DEFAULT_IE6 = 'b04b0e215af8ce2b7d620aaef32492c8bfc06ed5'
+#change the size of the images returned. first is height, followed by width.
 AVATAR_DEFAULT_DIMENSIONS = '30|30'
+#the amount of time the image is cached
 AVATAR_CACHE_TIMEOUT = 6000
 
-
+#allows django to serve all unknown urls as static data
 SERVE_STATIC_URLS = True
+#tells speeqe that you have the dns trick configured. (ie. you can use
+#http://roomname.yourdomain.com). False if dns names are not configured.
 DNS_ROOM_NAMES = True
