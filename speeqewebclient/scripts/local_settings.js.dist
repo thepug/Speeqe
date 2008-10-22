@@ -3,7 +3,17 @@ Speeqe.HTTP_DOMAIN = "speeqe.com";
 //domain for your jabber server
 Speeqe.XMPP_DOMAIN = "speeqe.com";
 //domain for your multi user chat server
+//multi user chat server name. This is the default chat server used if
+//none is provided. If you connect to a room, the room will be
+//room@Speeqe.CHAT_SERVER.
 Speeqe.CHAT_SERVER = "chat.speeqe.com";
+//allows users to use the /nick command to change their muc name
 Speeqe.ENABLE_NICK_CHANGE = true;
+//the default chat room if none is specified. If a muc room is not
+//provided, and the user connects, this will be the default room.
 Speeqe.DEFAULT_CHAT_ROOM = "speeqers@chat.speeqe.com";
+
+//the url used to proxy to your BOSH server.  Used by speeqe to
+//communicate with the bosh server.
 Speeqe.BOSH_URL =  "/xmpp-httpbind";
+
