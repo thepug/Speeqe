@@ -34,6 +34,8 @@ var Speeqe = {
 
     Client: function() {
 
+	this._last_key = null;
+
 	this.handle_blur = function () {
 	    //if browser is internet explorer and this isn't
 	    //the active element, then return.
@@ -83,7 +85,7 @@ var Speeqe = {
 		*/
 		$("#send_chat_message").keypress( function(key) {
 		    var retval = false;
-		    
+
 		    if(Speeqe._clear_text)
 			{
 			    $("#send_chat_message").empty();
@@ -91,12 +93,49 @@ var Speeqe = {
 			    Speeqe._clear_text = false;
 			}
 
-		    if (key.which == 13)
+		    if (key.which == 13) //enter key
 			{
 			    Speeqe.sendmessage();
+			    this._last_key = null;
+			}
+		    else if(key.which == 0)
+			{
+			    //tab key, detect username and try to auto complete
+			    var alpha_numeric = this._last_key;
+			    if(alpha_numeric)
+			    {
+				var match = alpha_numeric.match(/\w/g);
+				if(match)
+				{
+				    var username = app.findRosterItem(alpha_numeric);
+				    if(username)
+				    {
+					var msg_text=$("#send_chat_message").attr("value");
+					var new_msg = msg_text.replace(alpha_numeric,username);
+					$("#send_chat_message").attr("value",new_msg);
+					this._last_key = null;
+				    }
+				}
+			    }
 			}
 		    else
 			{
+			    var keyval = String.fromCharCode(key.which);
+			    if(keyval && keyval.match(/\w/g))
+			    {
+				if(this._last_key)
+				{
+				    this._last_key += keyval;
+				}
+				else
+				{
+				    this._last_key = keyval;
+				}
+			    }
+			    else
+			    {
+				this._last_key = null;
+			    }
 			    retval = true;
 			}
 		    return retval;

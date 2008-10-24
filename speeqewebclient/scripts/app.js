@@ -371,7 +371,11 @@ Speeqe.Application.prototype = {
 				    
 				    my_app._rosteritemview.show(roster_item,
 								nick);
-						
+				    $(".roster_user_name").click(function() {
+					my_app.completeNick($(this).text());
+				    });
+
+
 				    
 				}
 				else
@@ -414,7 +418,11 @@ Speeqe.Application.prototype = {
 					my_app._roster[nick] = roster_item;
 
 					my_app._rosteritemview.show(roster_item,nick);
-					
+					$(".roster_user_name").click(function() {
+					    my_app.completeNick($(this).text());
+					});
+
+
 				    }
 				    roster_item.getAvatar();
 				    
@@ -437,7 +445,12 @@ Speeqe.Application.prototype = {
 	}
 	return true;
     },
-
+    completeNick: function(nick_elem) {
+	var msg_text = $("#send_chat_message").attr("value");
+	msg_text += nick_elem;
+	$("#send_chat_message").attr("value",msg_text);
+	$("#send_chat_message").focus();
+    },
     connected: function () {
 	return this._connected;
     },
@@ -524,6 +537,22 @@ Speeqe.Application.prototype = {
 
 	}
 
+    },
+    //find a username based on partial name, returns actual username
+    findRosterItem: function(partial_name) {
+	var retval = null;
+	if(app._roster)
+	{
+	    for(var x in app._roster)
+	    {
+		if(x.match(partial_name))
+		{
+		    return x;
+		}
+	    }
+	    
+	}
+	return retval;
     }
 };
 
