@@ -17,3 +17,59 @@ Speeqe.DEFAULT_CHAT_ROOM = "speeqers@chat.speeqe.com";
 //communicate with the bosh server.
 Speeqe.BOSH_URL =  "/xmpp-httpbind";
 
+
+/* 
+
+use this function to replace the anonymous nick selection. The default
+function picks from a list of president names ,Speeqe.NAMES. See
+anonymous.js for more details.
+
+*/
+/* list of anonymous nicks
+Speeqe.NAMES = ["bush",
+		"cheney",
+		"ford",
+		"nixon",
+		"reagan",
+		"clinton",
+		"carter",
+		"washington",
+		"taft",
+		"madison",
+		"anonymous",
+		"coward",
+		"lurker",
+		"lincoln",
+		"adams",
+		"jefferson",
+		"monroe",
+		"quincyadams",
+		"jackson",
+		"vanburen",
+		"harrison",
+		"tyler",
+		"polk",
+		"taylor",
+		"fillmore",
+		"pierce",
+		"buchanan",
+		"johnson",
+		"grant",
+		"hayes",
+		"garfield",
+		"arthur",
+		"cleveland",
+		"mckinley",
+		"roosevelt",
+		"wilson",
+		"harding",
+		"coolidge",
+		"hoover",
+		"truman",
+		"eisenhower",
+		"kennedy"	     
+		];
+Speeqe.generate_anonymous_nick = function() {
+
+};
+*/
