@@ -50,7 +50,7 @@ Speeqe.Application.prototype = {
 	{
 	    username = Speeqe.XMPP_DOMAIN;
 	    password = "password";
-
+	    this.anonymous = true;
 	}
 
 	this._connection.connect(username,
@@ -147,13 +147,15 @@ Speeqe.Application.prototype = {
     {
 	var nickname = this._connection.jid;
 	var jid = this._connection.jid;
-	if(!this._connection.jid || this._connection.jid.split("@").length == 1)
+
+	if(this.anonymous)
 	{
 	    nickname = Speeqe.generate_anonymous_nick()+"@"+Speeqe.XMPP_DOMAIN;
 	    jid = Speeqe.XMPP_DOMAIN;
 	}
 	if (!this._chat)
 	{
+
 	    this._chat = new Speeqe.Chat(jid,
 					 chatname,
 					 this._connection,

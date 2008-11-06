@@ -1,7 +1,6 @@
 /*
-    This program is distributed under the terms of the GNU General Public
-    License as published by the Free Software Foundation; either version 2
-    of the License, or any later version.
+    This program is distributed under the terms of the MIT license.
+    Please see the LICENSE file for details.
 
     Copyright 2006-2008, OGG, LLC
 */
@@ -34,12 +33,13 @@
  *  Returns:
  *    The bound function.
  */
-// TODO: make sure we don't clobber someone else's 
-Function.prototype.bind = function (obj)
-{
-    var func = this;
-    return function () { return func.apply(obj, arguments); };
-};
+if (!Function.prototype.bind) {
+    Function.prototype.bind = function (obj)
+    {
+	var func = this;
+	return function () { return func.apply(obj, arguments); };
+    };
+}
 
 /** PrivateFunction: Function.prototype.prependArg
  *  Prepend an argument to a function.
@@ -64,17 +64,54 @@ Function.prototype.bind = function (obj)
  *  Returns:
  *    A new Function which calls the original with the prepended argument.
  */
-Function.prototype.prependArg = function (arg)
-{
-    var func = this;
-
-    return function () { 
-	var newargs = [arg];
-	for (var i = 0; i < arguments.length; i++)
-	    newargs.push(arguments[i]);
-	return func.apply(this, newargs); 
+if (!Function.prototype.prependArg) {
+    Function.prototype.prependArg = function (arg)
+    {
+	var func = this;
+	
+	return function () { 
+	    var newargs = [arg];
+	    for (var i = 0; i < arguments.length; i++)
+		newargs.push(arguments[i]);
+	    return func.apply(this, newargs); 
+	};
     };
-};
+}
+
+/** PrivateFunction: Array.prototype.indexOf
+ *  Return the index of an object in an array.
+ *
+ *  This function is not supplied by some JavaScript implementations, so
+ *  we provide it if it is missing.  This code is from:
+ *  http://developer.mozilla.org/En/Core_JavaScript_1.5_Reference:Objects:Array:indexOf
+ *
+ *  Parameters:
+ *    (Object) elt - The object to look for.
+ *    (Integer) from - The index from which to start looking. (optional).
+ * 
+ *  Returns:
+ *    The index of elt in the array or -1 if not found.
+ */
+if (!Array.prototype.indexOf)
+{
+    Array.prototype.indexOf = function(elt /*, from*/)
+    {
+	var len = this.length;
+	
+	var from = Number(arguments[1]) || 0;
+	from = (from < 0) ? Math.ceil(from) : Math.floor(from);
+	if (from < 0)
+	    from += len;
+	
+	for (; from < len; from++) {
+	    if (from in this && this[from] === elt)
+		return from;
+	}
+
+	return -1;
+    };
+}
+
 
 /** Function: $build
  *  Create a Strophe.Builder.
@@ -483,10 +520,9 @@ Strophe = {
      */
     getNodeFromJid: function (jid)
     {
-
 	if (jid.indexOf("@") < 0)
 	    return null;
-	return this.escapeJid(jid).split("@")[0];
+	return Strophe.escapeJid(jid).split("@")[0];
     },
 
     /** Function: getDomainFromJid
@@ -500,13 +536,11 @@ Strophe = {
      */
     getDomainFromJid: function (jid)
     {
-
-	if( jid.split("@").length == 1 )
-	{
-	    return this.getBareJidFromJid(jid);
-	}
-
-	return this.escapeJid(this.getBareJidFromJid(jid)).split("@")[1];
+	var bare = Strophe.escapeJid(Strophe.getBareJidFromJid(jid));
+	if (bare.indexOf("@") < 0)
+	    return bare;
+	else
+	    return bare.split("@")[1];
     },
 
     /** Function: getResourceFromJid
@@ -520,7 +554,7 @@ Strophe = {
      */
     getResourceFromJid: function (jid)
     {
-	var s = this.escapeJid(jid).split("/");
+	var s = Strophe.escapeJid(jid).split("/");
 	if (s.length < 2) return null;
 	return s[1];
     },
@@ -937,15 +971,8 @@ Strophe.Handler.prototype = {
      */
     isMatch: function (elem)
     {
-	//test for valid argument (text and comment nodes don't have
-	//attributes, so getAttribute will fail.)
-	if (!elem || elem.nodeType == 3 || elem.nodeType == 8)
-	{
-	    return false;
-	}
-
 	var nsMatch, i;
-	
+
 	nsMatch = false;
 	if (!this.ns) {
 	    nsMatch = true;
@@ -1232,8 +1259,6 @@ Strophe.Connection = function (service)
     this.service = service;
     /* The connected JID. */
     this.jid = "";
-    /* The connected JID's resource. */
-    this.resource = null;
     /* request id for body tags */
     this.rid = Math.floor(Math.random() * 4294967295);
     /* The current session ID. */
@@ -1384,7 +1409,7 @@ Strophe.Connection.prototype = {
      *
      *  Parameters:
      *    (String) jid - The user's JID.  This may be a bare JID,
-     *      or a full JID.  If a node is not supplied SASL ANONYMOUS
+     *      or a full JID.  If a node is not supplied, SASL ANONYMOUS
      *      authentication will be attempted.
      *    (String) pass - The user's password.
      *    (Function) callback The connect callback function.
@@ -1400,7 +1425,7 @@ Strophe.Connection.prototype = {
      */
     connect: function (jid, pass, callback, wait, hold, wind)
     {
-	this.jid = Strophe.getBareJidFromJid(jid);
+	this.jid = jid;
 	this.pass = pass;
 	this.connect_callback = callback;
 	this.disconnecting = false;
@@ -1414,8 +1439,6 @@ Strophe.Connection.prototype = {
 
 	// parse jid for domain and resource
 	this.domain = Strophe.getDomainFromJid(this.jid);
-	var res = Strophe.getResourceFromJid(jid);
-	if (res) this.resource = res;
 
 	// build the body tag
 	var body = this._buildBody().attrs({
@@ -1437,8 +1460,35 @@ Strophe.Connection.prototype = {
 				this._onRequestStateChange.bind(this)
 				    .prependArg(this._connect_cb.bind(this)),
 				body.tree().getAttribute("rid")));
-
 	this._throttledRequestHandler();
+    },
+
+    /** Function: attach
+     *  Attach to an already created and authenticated BOSH session.
+     *
+     *  This function is provided to allow Strophe to attach to BOSH
+     *  sessions which have been created externally, perhaps by a Web
+     *  application.  This is often used to support auto-login type features
+     *  without putting user credentials into the page.
+     *
+     *  Parameters:
+     *    (String) jid - The full JID that is bound by the session.
+     *    (String) sid - The SID of the BOSH session.
+     *    (String) rid - The current RID of the BOSH session.  This RID
+     *      will be used by the next request.
+     *    (Function) callback The connect callback function.
+     */
+    attach: function (jid, sid, rid, callback)
+    {
+	this.jid = jid;
+	this.sid = sid;
+	this.rid = rid;
+	this.connect_callback = callback;
+
+	this.domain = Strophe.getDomainFromJid(this.jid);
+	
+	this.authenticated = true;
+	this.connected = true;
     },
 
     /** Function: rawInput
@@ -1642,7 +1692,6 @@ Strophe.Connection.prototype = {
      */
     _buildBody: function ()
     {
-
 	var bodyWrap = $build('body', {
 	    rid: this.rid++,
 	    xmlns: Strophe.NS.HTTPBIND
@@ -1744,9 +1793,12 @@ Strophe.Connection.prototype = {
 						    req.origFunc, 
 						    req.rid, 
 						    req.sends);
+	    req = this._requests[i];
 	}
 
 	if (req.xhr.readyState === 0) {
+	    Strophe.debug("request id " + req.id + 
+			  "." + req.sends + " posting");
 
 	    req.date = new Date();
 	    try {
@@ -1888,6 +1940,7 @@ Strophe.Connection.prototype = {
 		    if (reqStatus >= 400 && reqStatus < 500) {
 			this.connect_callback(Strophe.Status.DISCONNECTING, 
 					      null);
+			this._doDisconnect();
 		    }
 		}
 	    }
@@ -2014,28 +2067,26 @@ Strophe.Connection.prototype = {
 	while (this.addHandlers.length > 0) {
 	    this.handlers.push(this.addHandlers.pop());
 	}
-
-	var child, j, newList;
-	if (elem.hasChildNodes()) {
-	    for (i = 0; i < elem.childNodes.length; i++) {
-		child = elem.childNodes[i];
-
-		// process handlers
-		newList = this.handlers;
-		this.handlers = [];
-		for (j = 0; j < newList.length; j++) {
-		    hand = newList[j];
-		    if (hand.isMatch(child) && 
-			(this.authenticated || !hand.user)) {
-			if (hand.run(child)) {
-			    this.handlers.push(hand);
-			}
-		    } else {
-			this.handlers.push(hand);
+	
+	// send each incoming stanza through the handler chain
+	var self = this;
+	Strophe.forEachChild(elem, null, function (child) {
+	    var i, newList;
+	    // process handlers
+	    newList = self.handlers;
+	    self.handlers = [];
+	    for (i = 0; i < newList.length; i++) {
+		var hand = newList[i];
+		if (hand.isMatch(child) && 
+		    (self.authenticated || !hand.user)) {
+		    if (hand.run(child)) {
+			self.handlers.push(hand);
 		    }
+		} else {
+		    self.handlers.push(hand);
 		}
 	    }
-	}
+	});
     },
 
     /** PrivateFunction: _sendTerminate
@@ -2054,8 +2105,7 @@ Strophe.Connection.prototype = {
 	if (this.authenticated) {
 	    body.c('presence', {
 		xmlns: Strophe.NS.CLIENT,
-		type: 'unavailable',
-		from: Strophe.escapeJid(this.jid) + "/" + this.resource
+		type: 'unavailable'
 	    });
 	}
 
@@ -2140,7 +2190,7 @@ Strophe.Connection.prototype = {
 		}
 	    }
 	}
-
+	
 	if (Strophe.getNodeFromJid(this.jid) === null && 
 	    do_sasl_anonymous) {
 	    this.connect_callback(Strophe.Status.AUTHENTICATING, null);
@@ -2294,7 +2344,7 @@ Strophe.Connection.prototype = {
 	}).t(encode64(responseText)).tree());
 
 	return false;
-     },
+    },
 
     /** PrivateFunction: _sasl_challenge2_cb
      *  _Private_ handler for second step of DIGEST-MD5 SASL authentication.
@@ -2361,13 +2411,13 @@ Strophe.Connection.prototype = {
 	} else {
 	    iq.up().c('password', {}).t(this.pass);
 	}
-	if (!this.resource) {
+	if (!Strophe.getResourceFromJid(this.jid)) {
 	    // since the user has not supplied a resource, we pick
 	    // a default one here.  unlike other auth methods, the server
 	    // cannot do this for us.
-	    this.resource = "strophe";
+	    this.jid = Strophe.getBareJidFromJid(this.jid) + '/strophe';
 	}
-	iq.up().c('resource', {}).t(this.resource);
+	iq.up().c('resource', {}).t(Strophe.getResourceFromJid(this.jid));
 
 	this._addSysHandler(this._auth2_cb.bind(this), null, 
 			    null, null, "_auth_2");
@@ -2438,10 +2488,11 @@ Strophe.Connection.prototype = {
 	    this._addSysHandler(this._sasl_bind_cb.bind(this), null, null, 
 				null, "_bind_auth_2");
 	    
-	    if (this.resource)
+	    var resource = Strophe.getResourceFromJid(this.jid);
+	    if (resource)
 		this.send($iq({type: "set", id: "_bind_auth_2"})
 		          .c('bind', {xmlns: Strophe.NS.BIND})
-		          .c('resource', {}).t(this.resource).tree());
+		          .c('resource', {}).t(resource).tree());
 	    else
 		this.send($iq({type: "set", id: "_bind_auth_2"})
 		          .c('bind', {xmlns: Strophe.NS.BIND})
@@ -2470,15 +2521,12 @@ Strophe.Connection.prototype = {
 
 	// TODO - need to grab errors
 	var bind = elem.getElementsByTagName("bind");
-	var jidNode, full_jid, jid;
+	var jidNode;
 	if (bind.length > 0) {
 	    // Grab jid
 	    jidNode = bind[0].getElementsByTagName("jid");
 	    if (jidNode.length > 0) {
-		full_jid = Strophe.getText(jidNode[0]);
-		
-		jid = full_jid.split("/");
-		this.resource = jid[jid.length - 1];
+		this.jid = Strophe.getText(jidNode[0]);
 		
 		if (this.do_session) {
 		    this._addSysHandler(this._sasl_session_cb.bind(this), 
@@ -2709,7 +2757,6 @@ Strophe.Connection.prototype = {
 		}
 		delete this._data;
 		this._data = [];
-
 		this._requests.push(
 		    new Strophe.Request(body.toString(),
 					this._onRequestStateChange.bind(this)

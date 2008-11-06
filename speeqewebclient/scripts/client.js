@@ -579,7 +579,7 @@ var Speeqe = {
 	this._statusview = new Speeqe.StatusView();
 	this._roomconfigview = new Speeqe.RoomConfigurationView();
 	this.winFocus = true;
-	
+	this.anonymous = false;
     },
     /*Default dashboard. Init does nothing. Its redefined if
      * dashboard.js is loaded.*/
