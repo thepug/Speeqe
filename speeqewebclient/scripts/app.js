@@ -156,6 +156,10 @@ Speeqe.Application.prototype = {
 	if (!this._chat)
 	{
 
+	    if(nickname.split("/").length > 0)
+	    {
+		nickname = nickname.split("/")[0];
+	    }
 	    this._chat = new Speeqe.Chat(jid,
 					 chatname,
 					 this._connection,
