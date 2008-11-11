@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load splib %}
+{% use_dns_room_names %}
 {% block title %}
 Speeqe - Create Your Chat Room
 {% endblock %}
@@ -13,7 +14,7 @@ Speeqe - Create Your Chat Room
 <div class="clear"></div>
 <div id="createroom">
 <form action="" method="get">
-{% if use_dns_room_names %}
+{% if dns_room_names %}
 <strong>http://</strong><input id="formroomname" name="room" value="room" size="15" onclick="this.value='';" ><strong>.{% current_domain %}</strong>
 {% else %}
 <strong>http://{% current_domain %}/room/</strong><input id="formroomname" name="room" value="room" size="15" onclick="this.value='';"> 
