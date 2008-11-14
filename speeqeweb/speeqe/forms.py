@@ -4,7 +4,7 @@
 #
 
 
-from django import newforms as forms
+from django import forms
 from speeqeweb.speeqe.models import Member
 from speeqeweb.settings import HTTP_DOMAIN,XMPP_DOMAIN,EXACT_BAD_WORDS,MATCH_BAD_WORDS
 
@@ -32,12 +32,12 @@ class RegisterForm(forms.Form):
                                max_length=30)
 
     def save(self):
-        username,realm = self.clean_data['username'].split("@")
-        fullusername = self.clean_data['username'].strip()
+        username,realm = self.cleaned_data['username'].split("@")
+        fullusername = self.cleaned_data['username'].strip()
         try:
             mem = Member(username=username,
                          realm=realm,
-                         password=self.clean_data['password'])
+                         password=self.cleaned_data['password'])
 
             mem.save()
         except Exception, ex:
@@ -46,12 +46,12 @@ class RegisterForm(forms.Form):
         return mem
     
     def clean_email(self):
-        email = self.clean_data['email'].strip()
+        email = self.cleaned_data['email'].strip()
         return validate_email(email)
 
     def clean_username(self):
         """Validates username"""
-        username = self.clean_data['username'].strip()
+        username = self.cleaned_data['username'].strip()
         return validate_username(username)
 
 class ThemeForm(forms.Form):

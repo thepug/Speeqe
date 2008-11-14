@@ -14,7 +14,6 @@ from django.contrib import auth
 from django.conf import settings
 import datetime
 import socket,random,string
-from django.core.paginator import ObjectPaginator, InvalidPage
 from django.template.loader import get_template
 from django.shortcuts import get_object_or_404
 from django.http import Http404
@@ -83,8 +82,8 @@ def join(request):
 
 			username = new_member.username + "@" + new_member.realm
 			user = auth.authenticate(username=username,
-						       password=new_member.password)
-			request.session['user_password']= register_form.clean_data['password']
+						 password=new_member.password)
+			request.session['user_password']= register_form.cleaned_data['password']
 			if user is not None:
 				auth.login(request,user)
 
@@ -332,8 +331,8 @@ def new_theme(request):
 		#Validate and save the theme
 		theme_form = ThemeForm(request.POST)
 		if theme_form.is_valid():
-			name = theme_form.clean_data['name']
-			content = theme_form.clean_data['content']
+			name = theme_form.cleaned_data['name']
+			content = theme_form.cleaned_data['content']
 			owner = request.user
 			theme = Theme(name=name,
 				      content=content,
@@ -372,8 +371,8 @@ def edit_theme(request,theme_id=None):
 		#Validate and save the theme
 		theme_form = ThemeForm(request.POST)
 		if theme_form.is_valid():			
-			theme.name=theme_form.clean_data['name']
-			theme.content=theme_form.clean_data['content']
+			theme.name=theme_form.cleaned_data['name']
+			theme.content=theme_form.cleaned_data['content']
 			theme.owner=request.user
 			theme.save()
 

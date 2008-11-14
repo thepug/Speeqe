@@ -1,8 +1,6 @@
-from cpweb.chesspark.groups import send_group_invite
-from cpweb.chesspark.models import Member, Vcard, Membertype, Account, String, Prefix
-from cpweb.chesspace.models import RosterItems
-from cpweb.avatars.models import Avatar
-from cpweb.avatars import views
+
+from speeqeweb.avatars.models import Avatar
+from speeqeweb.avatars import views
 from django.conf import settings
 from django.test.client import Client
 from django.http import HttpRequest
@@ -42,81 +40,7 @@ class TestAvatars(unittest.TestCase):
 
         request.FILES['avatar'].close()
 
-    def testMemberAvatar(self):
-        sha1='55890c9b2e992ada2f05cb07792f3f49347db1b5'
-        s = String(id=1, string_id=1)
-        s.save()
-        mt = Membertype(id=1, name=s)
-        mt.save()
-        mt = Membertype(id=4, name=s)
-        mt.save()
-        a = Account(id=1,
-                    account_type_id=1)
-        a.save()
-        p = Prefix(id=5, prefix='na')
-        p.save()
-        member = None
-        try:
-            member = Member.objects.get(username='tofu@chesspark.com')
-        except Member.DoesNotExist:
-            member = Member(username='tofu@chesspark.com', password='test', account_id=1)
-        exp_date = datetime.date(*time.strptime(settings.MEMBER_EXP_DATE, "%Y-%m-%d")[0:3])
-        member.expire = exp_date
-        member.save()
 
-        self.createAvatar()
-
-        # save a vcard
-        vcard = Vcard(owner=member.username,
-                      vcard=self.vcard_text)
-        vcard.save()
-
-        av = member.getAvatar()
-
-        self.failUnless(av==sha1, 'Wrong avatar')
-
-    def testReplaceAvatar(self):
-        sha1='55890c9b2e992ada2f05cb07792f3f49347db1b5'
-        s = String(id=1, string_id=1)
-        s.save()
-        mt = Membertype(id=1, name=s)
-        mt.save()
-        mt = Membertype(id=4, name=s)
-        mt.save()
-        a = Account(id=1,
-                    account_type_id=1)
-        a.save()
-        p = Prefix(id=5, prefix='na')
-        p.save()
-        member = None
-        try:
-            member = Member.objects.get(username='tofu@chesspark.com')
-        except Member.DoesNotExist:
-            member = Member(username='tofu@chesspark.com', password='test', account_id=1)
-        exp_date = datetime.date(*time.strptime(settings.MEMBER_EXP_DATE, "%Y-%m-%d")[0:3])
-        member.expire = exp_date
-        member.save()
-
-        self.createAvatar()
-
-        # save a vcard
-        vcard = Vcard(owner=member.username,
-                      vcard=self.vcard_text)
-        vcard.save()
-        vcard.setPhoto(self.avatar_data,
-                       'image/png')
-        photo_dom = vcard._photoDOM()
-        if photo_dom:
-            bv_el  = photo_dom[0].getElementsByTagName("BINVAL")
-            if bv_el:
-                self.failUnless(len(bv_el) == 1,'Incorrectly replaced photo.')
-            tv_el  = photo_dom[0].getElementsByTagName("TYPE")
-            if tv_el:
-                self.failUnless(len(tv_el) == 1,'Incorrectly replaced photo.')
-
-        av = member.getAvatar()
-
-        self.failUnless(av==sha1, 'Wrong avatar')
 
 
 class TestAvatarViews(unittest.TestCase):

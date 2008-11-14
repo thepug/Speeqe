@@ -10,11 +10,11 @@ from django.contrib.auth.models import User
 # Create your models here.
 class Member(models.Model):
 	"""Create a speeqe user."""
-	username = username = models.CharField(maxlength=255,
+	username = username = models.CharField(max_length=255,
 					       primary_key=True)
-	password = models.CharField(maxlength=30)
-	realm = models.CharField(maxlength=255)
-	email = models.CharField(maxlength=255)
+	password = models.CharField(max_length=30)
+	realm = models.CharField(max_length=255)
+	email = models.CharField(max_length=255)
 	unique_together = (("username","realm"),)
 	
 	class Meta:
@@ -56,19 +56,19 @@ class Theme(models.Model):
 	#theme creator/owner
 	owner = models.ForeignKey(User)
 	#name of theme
-	name = models.CharField(maxlength=255)
+	name = models.CharField(max_length=255)
 
 
 class EmailMessageTemplate(models.Model):
 
-	name = models.CharField(maxlength=255)
+	name = models.CharField(max_length=255)
 	template = models.TextField()
 
 
 class EmailConfirmation(models.Model):
 
-	code = models.CharField(maxlength=255)
+	code = models.CharField(max_length=255)
 	confirmed = models.BooleanField(default=False)
-	email = models.CharField(maxlength=255)
+	email = models.CharField(max_length=255)
 
 	
