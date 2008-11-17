@@ -17,6 +17,10 @@ Speeqe.DEFAULT_CHAT_ROOM = "speeqers@chat.speeqe.com";
 //communicate with the bosh server.
 Speeqe.BOSH_URL =  "/xmpp-httpbind";
 
+//This is used to add additional help information to the help
+//dialog. It will be displayed right before the instructions to close
+//the dialog.
+Speeqe.helpDialogHtml = "";
 
 /* 
 

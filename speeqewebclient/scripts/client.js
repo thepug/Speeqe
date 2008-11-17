@@ -92,7 +92,11 @@ var Speeqe = {
 			    $("#send_chat_message").attr("value","");
 			    Speeqe._clear_text = false;
 			}
-
+		    if(key.keyCode == 112) //F1
+			{
+			    Speeqe.loadHelpDialog();
+			    return false;	 
+			}
 		    if (key.which == 13) //enter key
 			{
 			    Speeqe.sendmessage();
@@ -175,7 +179,7 @@ var Speeqe = {
 		});	  
 	  	  	   
 		Speeqe.dashBoardInit();
-
+	       
 		var menus = $("#dashboard ul li.button");
 		
 		menus.each(function(i)
@@ -201,7 +205,8 @@ var Speeqe = {
 		    $(this).parent("ul").hide();
 		    window.location.reload();
 		});
-
+		Speeqe.helpDialogInit();
+		
 		$("#search_room").click(function() {
 		    window.open('http://'+Speeqe.HTTP_DOMAIN+'/messagesearch/'+app.getChatroom()+'/');
 		});
@@ -233,6 +238,10 @@ var Speeqe = {
 
 
 		    return false;
+		});
+
+		$("#show_help_dialog").click(function() {
+		    Speeqe.loadHelpDialog();
 		});
 
 		$("#configure_chat").click(function() {
@@ -586,4 +595,5 @@ var Speeqe = {
     dashBoardInit: function() {
 	
     }
+    
 };

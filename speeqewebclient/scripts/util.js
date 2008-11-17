@@ -59,7 +59,12 @@ Speeqe.zeroPad = function(num,width) {
 };
 
 //displays a draggable jquery item in the visible area
-Speeqe.showDraggable = function(selector) {
+Speeqe.showDraggable = function(selector,offset) {
+    if(! offset)
+    {
+	offset = 100;
+    }
+    console.log(offset);
     var scrollTop = document.body.scrollTop;
     var scrollLeft = document.body.scrollLeft;
     
@@ -81,7 +86,7 @@ Speeqe.showDraggable = function(selector) {
     $(selector).css("top",
 		    (topOffset+scrollTop)+"px");
     $(selector).css("left",
-		    (leftOffset-100)+"px");
+		    (leftOffset-offset)+"px");
     $(selector).show();
 }
 

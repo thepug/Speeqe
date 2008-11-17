@@ -96,6 +96,7 @@ Speeqe.Chat.prototype = {
 			   "/unban":this.unBanUser,
 			   "/nick":this.changeNick,
 			   "/join":this.newRoom,
+			   "/help":this.helpDialog,
 	};
 
 	var cmdArray = text.split(" ");
@@ -289,6 +290,9 @@ Speeqe.Chat.prototype = {
 		   "/"];
 
 	window.open(url.join(""));
+    },
+    helpDialog: function() {
+	Speeqe.loadHelpDialog();
     },
     changeNick: function(user) {
 
