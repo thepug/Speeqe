@@ -57,8 +57,8 @@ var Speeqe = {
 	    return true;
 	};
 
-
 	this.init = function () {
+	    
 	    var my_client = this;
 	    $(document).ready(function(){
           

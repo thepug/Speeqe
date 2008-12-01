@@ -101,7 +101,7 @@ Speeqe.Application.prototype = {
 				       null,
 				       null);
 	    //join the chat room
-	    app.joinchat(app._chatroom)
+	    app.joinchat(app._chatroom);
 
 	}
 	else if (status == Strophe.Status.DISCONNECTED)
@@ -166,6 +166,7 @@ Speeqe.Application.prototype = {
 					 nickname);
 	    
 	}
+
 	this._chat.join();
 	this._chatroom_view.displayJoiningStatus();
 
@@ -280,6 +281,7 @@ Speeqe.Application.prototype = {
 	    var my_app = app;
 
 	    $(stanza).find("x").each( function(i,xquery) {
+		
 		//Handle only MUC user protocol
 		var xmlns = $(xquery).attr("xmlns");
 

@@ -21,7 +21,6 @@ Speeqe.Chat.prototype = {
 	    password = arguments[0];
 	}
 	this._nick = this._nick.replace("@"+Speeqe.XMPP_DOMAIN,"");
-	
 	var msg = Strophe.xmlElement("presence", [
 						     ["from", this._connection.jid + "/" + this._connection.resource],
 						     ["to", this._from + "/" + this._nick]
@@ -42,16 +41,16 @@ Speeqe.Chat.prototype = {
     leave: function ()
     {
 	presence = Strophe.xmlElement("presence", [
-						      ["type",
-						       "unavailable"],
-						      ["from",
-						       this._connection.jid + "/" + this._connection.resource],
-						      ["to",
-						       this._from + "/" + this._nick]
-					 ]);
+						   ["type",
+						    "unavailable"],
+						   ["from",
+						    this._connection.jid + "/" + this._connection.resource],
+						   ["to",
+						    this._from + "/" + this._nick]
+				      ]);
 	x = Strophe.xmlElement("x", [
-					["xmlns", Strophe.NS.MUC]
-				  ]);
+				     ["xmlns", Strophe.NS.MUC]
+			       ]);
 	presence.appendChild(x);
 	this._connection.send(presence);
 	
@@ -96,7 +95,7 @@ Speeqe.Chat.prototype = {
 			   "/unban":this.unBanUser,
 			   "/nick":this.changeNick,
 			   "/join":this.newRoom,
-			   "/help":this.helpDialog,
+			   "/help":this.helpDialog
 	};
 
 	var cmdArray = text.split(" ");

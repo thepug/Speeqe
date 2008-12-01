@@ -97,11 +97,12 @@ Speeqe.centerHelpDialog = function() {
     var windowHeight = document.documentElement.clientHeight;  
     var popupHeight = $("#popupContact").height();  
     var popupWidth = $("#popupContact").width();  
+
     //centering  
     $("#popupContact").css({  
-	    "position": "absolute",  
+	"position": "absolute",  
 	    "top": (windowHeight/2-popupHeight/2)+scrollTop,  
-		"left": windowWidth/2-popupWidth/2  
-		});  
+	    "left": windowWidth/2-popupWidth/2  
+	    });  
 
 };  
