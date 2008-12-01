@@ -102,7 +102,7 @@ var Speeqe = {
 			    Speeqe.sendmessage();
 			    this._last_key = null;
 			}
-		    else if(key.which == 0)
+		    else if(key.keyCode == 9)
 			{
 			    //tab key, detect username and try to auto complete
 			    var alpha_numeric = this._last_key;
