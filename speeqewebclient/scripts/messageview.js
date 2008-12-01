@@ -275,6 +275,7 @@ Speeqe.MessageView.prototype = {
 	//set the topic
 	var topic = $(stanza).find('subject').text();
 	topic = this.translateMessage(topic,false);
+	topic = $.trim(topic);
 	$("#room_topic").empty();
 	$("#room_topic").append(topic);
 	$("#outer_room_topic").show();
