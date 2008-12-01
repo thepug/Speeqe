@@ -379,10 +379,11 @@ Speeqe.Application.prototype = {
 				    
 				    my_app._rosteritemview.show(roster_item,
 								nick);
-				    $(".roster_user_name").click(function() {
+				    
+				    var roster_item_id = "#rosteritem" + roster_item.id + " .roster_user_name";
+				    $(roster_item_id).click(function() {
 					my_app.completeNick($(this).text());
 				    });
-
 
 				    
 				}
@@ -426,7 +427,11 @@ Speeqe.Application.prototype = {
 					my_app._roster[nick] = roster_item;
 
 					my_app._rosteritemview.show(roster_item,nick);
-					$(".roster_user_name").click(function() {
+					
+					var roster_item_selector = "#rosteritem" + roster_item.id;
+					roster_item_selector += "  .roster_user_name";
+
+					$(roster_item_selector).click(function() {
 					    my_app.completeNick($(this).text());
 					});
 
