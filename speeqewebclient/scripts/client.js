@@ -598,6 +598,8 @@ var Speeqe = {
      * dashboard.js is loaded.*/
     dashBoardInit: function() {
 	
+    },
+    helpDialogInit: function() {
+
     }
-    
 };
