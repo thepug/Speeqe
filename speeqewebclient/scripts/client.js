@@ -85,14 +85,18 @@ var Speeqe = {
 		*/
 		$("#send_chat_message").keypress( function(key) {
 		    var retval = false;
-
+		    var f1_keycode = 112;
+		    if(jQuery.browser.safari)
+			{
+			    f1_keycode = 63236;
+			}
 		    if(Speeqe._clear_text)
 			{
 			    $("#send_chat_message").empty();
 			    $("#send_chat_message").attr("value","");
 			    Speeqe._clear_text = false;
 			}
-		    if(key.keyCode == 112) //F1
+		    if(key.keyCode == f1_keycode) //F1
 			{
 			    Speeqe.loadHelpDialog();
 			    return false;	 
