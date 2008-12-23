@@ -38,11 +38,15 @@ Speeqe.Chat.prototype = {
     },
 
     //leave a multi user chat room by sending unavailable presence
-    leave: function ()
+    leave: function (call_back)
     {
+
+	var presenceid = this._connection.getUniqueId();
 	presence = Strophe.xmlElement("presence", [
 						   ["type",
 						    "unavailable"],
+						   ["id",
+						    presenceid],
 						   ["from",
 						    this._connection.jid + "/" + this._connection.resource],
 						   ["to",
@@ -53,7 +57,12 @@ Speeqe.Chat.prototype = {
 			       ]);
 	presence.appendChild(x);
 	this._connection.send(presence);
-	
+	this._connection.addHandler(call_back,
+				    null,
+				    "presence",
+				    null,
+				    presenceid,
+				    null);
     },
     //private function to send xmpp message
     _buildAndSendMessage: function(to,message,type) {

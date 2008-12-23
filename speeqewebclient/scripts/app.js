@@ -104,7 +104,7 @@ Speeqe.Application.prototype = {
 	    app.joinchat(app._chatroom);
 
 	}
-	else if (status == Strophe.Status.DISCONNECTED)
+	else if (status == Strophe.Status.DISCONNECTED || status == Strophe.Status.CONNFAIL)
 	{
 	    app._connected = false;
 	    app._connection.jid = "";
@@ -112,6 +112,7 @@ Speeqe.Application.prototype = {
 	    app._chatroom = null;
 	    title = "!! " + document.title;
 	    document.title = title;
+	    app._statusview.toggleStatusElement("#status_disconnected");	    
 	}
 	else if (status == Strophe.Status.DISCONNECTING)
 	{
@@ -130,15 +131,16 @@ Speeqe.Application.prototype = {
 	    $("#rosteritem"+this._roster[i].id).remove();
 	    delete this._roster[i];    
 	}
-	this.leave();
-	this._connection.disconnect();
+	this.leave(function() {
+	    app._connection.disconnect();
+	});
     },
     
-    leave: function ()
+    leave: function (call_back)
     {
 	if(this._chat)
 	{
-	    this._chat.leave();
+	    this._chat.leave(call_back);
 	}
 	
     },
