@@ -477,6 +477,7 @@ var Speeqe = {
 			if(app._connection.do_anonymous)
 			    {
 				app.disconnect();
+				app._connection.disconnect();
 			    }
 			
 		    }
@@ -486,6 +487,7 @@ var Speeqe = {
 		if(app)
 		{
 		    app.disconnect();
+		    app._connection.disconnect();
 		    
 		}
 	    };
@@ -494,6 +496,7 @@ var Speeqe = {
 		if(app)
 		    {
 			app.disconnect();
+			app._connection.disconnect();
 		    }
 	    });
 	    
