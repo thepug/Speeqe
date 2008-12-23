@@ -37,12 +37,18 @@ Speeqe.helpDialogInit = function() {
 
     
     //Press Escape event!  
-    $(document).keypress(function(e){  
+    $(document).keypress(function(e){
+	var f1_keycode = 112;
+	if(jQuery.browser.safari)
+	{
+	    f1_keycode = 63236;
+	}
+	
 	if(e.keyCode==27 && Speeqe.helpDialogStatus==1)
 	{  
 	    Speeqe.closeHelpDialog();  
 	}
-	if(e.keyCode == 112)
+	if(e.keyCode == f1_keycode)
 	{
 	    Speeqe.loadHelpDialog();
 	    return false;	 
