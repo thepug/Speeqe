@@ -36,7 +36,7 @@ Speeqe.RosterItem.prototype =  {
 	var lu_nick = $(stanza).attr("from").split("/")[1];
 	
 	var roster_item = app._roster[lu_nick];
-	if (vcard)
+	if (vcard.length > 0)
 	{
 	    roster_item.vcard = vcard;
 	    app._rosteritemview.updateVcard(roster_item);
