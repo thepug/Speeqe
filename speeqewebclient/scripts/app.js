@@ -382,11 +382,11 @@ Speeqe.Application.prototype = {
 				    my_app._rosteritemview.show(roster_item,
 								nick);
 				    
-				    var roster_item_id = "#rosteritem" + roster_item.id + " .roster_user_name";
-				    $(roster_item_id).click(function() {
+				    var roster_item_id = "#rosteritem" + roster_item.id;
+				    $(roster_item_id + " .roster_user_name").click(function() {
 					my_app.completeNick($(this).text());
 				    });
-
+				    my_app.createRosterPopup($(roster_item_id));
 				    
 				}
 				else
@@ -430,13 +430,13 @@ Speeqe.Application.prototype = {
 
 					my_app._rosteritemview.show(roster_item,nick);
 					
-					var roster_item_selector = "#rosteritem" + roster_item.id;
-					roster_item_selector += "  .roster_user_name";
+					var roster_item_id = "#rosteritem" + roster_item.id;
+					var roster_item_selector = "  .roster_user_name";
 
 					$(roster_item_selector).click(function() {
 					    my_app.completeNick($(this).text());
 					});
-
+					my_app.createRosterPopup($(roster_item_id));
 
 				    }
 				    roster_item.getAvatar();
@@ -465,6 +465,86 @@ Speeqe.Application.prototype = {
 	msg_text += nick_elem;
 	$("#send_chat_message").attr("value",msg_text);
 	$("#send_chat_message").focus();
+    },
+    createRosterPopup: function(roster_elem) {
+	// options
+	var distance = 1;
+	var time = 250;
+	var hideDelay = 500;
+
+	var hideDelayTimer = null;
+
+	// tracker
+	var beingShown = false;
+	var shown = false;
+
+	var trigger = roster_elem;
+	var popup = $('.rostervcard', roster_elem).css('opacity', 0);
+
+	// set the mouseover and mouseout on both element
+	$([trigger.get(0), popup.get(0)]).mouseover(function () {
+	  
+	    // stops the hide event if we move from the trigger to the
+	    // popup element
+	    if (hideDelayTimer)
+	    {
+		clearTimeout(hideDelayTimer);
+	    }
+	    // don't trigger the animation again if we're being shown,
+	    // or already visible
+	    if (beingShown || shown)
+	    {
+		return;
+	    }
+	    else
+	    {
+		beingShown = true;
+		var top = $(this).css("top");
+		var left = $(this).css("left");
+		// reset position of popup box
+		popup.css({
+                   top: top,
+		   left: left,
+		   display: 'block' // brings the popup back in to view
+		   })
+
+		// (we're using chaining on the popup) now animate
+		// it's opacity and position
+		.animate({
+                   top: '-=' + distance + 'px',
+		   opacity: 1
+			    }, time, 'swing', function() {
+				// once the animation is complete, set
+				// the tracker variables
+				beingShown = false;
+				shown = true;
+			    });
+	    }
+	}).mouseout(function () {
+	  
+	    // reset the timer if we get fired again - avoids double animations
+	    if (hideDelayTimer)
+	    {
+		clearTimeout(hideDelayTimer);
+	    }
+	    // store the timer so that it can be cleared in the
+	    // mouseover if required
+	    hideDelayTimer = setTimeout(function () {
+		hideDelayTimer = null;
+		popup.animate({
+          top: '-=' + distance + 'px',
+		   opacity: 0
+		   }, time, 'swing', function () {
+		       // once the animate is complete, set the
+		       // tracker variables
+		       shown = false;
+		       // hide the popup entirely after the effect
+		       // (opacity alone doesn't do the job)
+		       popup.css('display', 'none');
+		   });
+	    }, hideDelay);
+	});
+
     },
     connected: function () {
 	return this._connected;

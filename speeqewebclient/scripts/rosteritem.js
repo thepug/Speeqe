@@ -32,14 +32,21 @@ Speeqe.RosterItem.prototype =  {
 
     _onVCardResult: function(stanza) {
 	var binval = $(stanza).find("BINVAL").text();
+	var vcard = $(stanza).find("vCard");
+	var lu_nick = $(stanza).attr("from").split("/")[1];
+	
+	var roster_item = app._roster[lu_nick];
+	if (vcard)
+	{
+	    roster_item.vcard = vcard;
+	    app._rosteritemview.updateVcard(roster_item);
+	}
 	if (binval)
 	{
 	    var type = $(stanza).find("TYPE").text();
 	    try
 		{
-		    var lu_nick = $(stanza).attr("from").split("/")[1];
 
-		    roster_item = app._roster[lu_nick];
 		    nick = roster_item._nick;
 
 		    elemid = ["#onlineavatar",roster_item.id];

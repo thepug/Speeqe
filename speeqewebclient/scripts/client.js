@@ -554,7 +554,7 @@ var Speeqe = {
 	this.id = Speeqe.ROSTER_ID++;
 	this._nick = "";
 	this.sha1 = "f2f8ab835b10d66f9233518d1047f3014b3857cf";
-	
+	this.vcard = $("<vCard xmlns='vcard-temp' />");
 	if(nick)
 	{
 	    this._nick = nick;

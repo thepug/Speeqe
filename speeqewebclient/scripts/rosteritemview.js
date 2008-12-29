@@ -49,5 +49,68 @@ Speeqe.RosterItemView.prototype =  {
 	}	
 
 	$("#online > ul").append(li_clone.get(0));
+	this.createVcard(roster_item,nick);
+    },
+    //create the vcard div that is displayed on roster item mouseover.
+    createVcard: function(roster_item,nick) {
+	var div_clone = $('#rosteritemvcardtemplate').clone();
+	if(div_clone)
+	{
+
+	    div_clone.attr("id","rosteritemvcard"+roster_item.id);
+	    div_clone.attr("style","display:none");
+
+	    div_clone.css("position","absolute");
+	    var username_elem = div_clone.find("#vcard_name");
+	    if(username_elem.length > 0)
+	    {
+		username_elem.removeAttr("id");
+		username_elem.text(nick);
+		div_clone.find("#vcard_name").removeAttr("id");
+	    }
+
+	    var userdomain_elem = div_clone.find("#vcard_domain");
+	    if(userdomain_elem.length > 0)
+	    {
+		userdomain_elem.removeAttr("id");
+		userdomain_elem.text(domainname);
+	    }
+
+	    
+	    var roster_elem = $("#rosteritem"+roster_item.id);
+	    roster_elem.append(div_clone);
+	}
+    },
+    updateVcard: function(roster_item) {
+	var vcard = roster_item.vcard;
+	var desc = $(vcard).find("DESC");
+	var email = $(vcard).find("EMAIL");
+	var url = $(vcard).find("URL");
+	var roster_id = "#rosteritemvcard"+roster_item.id;
+
+	var roster_elem = $(roster_id);
+
+	if(email.length > 0)
+	{
+	    var email_html_ar = ["<div>email:<a href=mailto:",
+				 email.text(),
+				 ">",
+				 email.text(),
+				 "</a></div>"];
+	    roster_elem.find("#vcard_email").empty().append($(email_html_ar.join("")));
+	}
+	if(desc.length > 0)
+	{
+	    roster_elem.find("#vcard_desc").text("description: "+desc.text());
+	}
+	if(url.length > 0)
+	{
+	    var url_html_ar = ["<div>homepage:<a href=",
+			       url.text(),
+			       " target='_blank'>",
+			       url.text(),
+			       "</a></div>"];
+	    roster_elem.find("#vcard_url").empty().append($(url_html_ar.join("")));
+	}	
     }
 };
