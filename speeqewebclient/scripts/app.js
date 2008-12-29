@@ -467,6 +467,9 @@ Speeqe.Application.prototype = {
 	$("#send_chat_message").focus();
     },
     createRosterPopup: function(roster_elem) {
+
+	if(! roster_elem) return;
+	if(roster_elem.length == 0) return;
 	// options
 	var distance = 1;
 	var time = 250;
