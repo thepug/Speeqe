@@ -431,7 +431,7 @@ Speeqe.Application.prototype = {
 					my_app._rosteritemview.show(roster_item,nick);
 					
 					var roster_item_id = "#rosteritem" + roster_item.id;
-					var roster_item_selector = "  .roster_user_name";
+					var roster_item_selector = roster_item_id + " .roster_user_name";
 
 					$(roster_item_selector).click(function() {
 					    my_app.completeNick($(this).text());
