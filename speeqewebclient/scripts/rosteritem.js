@@ -13,7 +13,7 @@ Speeqe.RosterItem.prototype =  {
 	var iqid = this._connection.getUniqueId("getavatar");
 	var iq = Strophe.xmlElement("iq", [
 					      ["id", iqid],
-					      ["from", this._connection.jid + "/" + this._connection.resource],
+					      ["from", this._connection.jid],
 					      ["to", this.jid],
 					      ["type", "get"]
 				       ]);

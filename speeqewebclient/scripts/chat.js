@@ -22,7 +22,7 @@ Speeqe.Chat.prototype = {
 	}
 	this._nick = this._nick.replace("@"+Speeqe.XMPP_DOMAIN,"");
 	var msg = Strophe.xmlElement("presence", [
-						     ["from", this._connection.jid + "/" + this._connection.resource],
+						     ["from", this._connection.jid],
 						     ["to", this._from + "/" + this._nick]
 					]);
 	var x = Strophe.xmlElement("x", [["xmlns", Strophe.NS.MUC]]);
@@ -48,7 +48,7 @@ Speeqe.Chat.prototype = {
 						   ["id",
 						    presenceid],
 						   ["from",
-						    this._connection.jid + "/" + this._connection.resource],
+						    this._connection.jid],
 						   ["to",
 						    this._from + "/" + this._nick]
 				      ]);
@@ -73,7 +73,7 @@ Speeqe.Chat.prototype = {
 	var msg = Strophe.xmlElement("message", 
 					[
 					 ["to", to],
-					 ["from", this._user + "/" + this._connection.resource],
+					 ["from", this._user],
 					 ["type", type],
 					 ["id", msgid]
 					 ]);
@@ -235,7 +235,7 @@ Speeqe.Chat.prototype = {
 	topic = Speeqe.htmlentities(topic);
 	var msg = Strophe.xmlElement("message", [
 						    ["to", this._from],
-						    ["from", this._user+"/" + this._connection.resource],
+						    ["from", this._user],
 						    ["type", "groupchat"]
 					]);
 	var subject = Strophe.xmlElement("subject", 
@@ -309,7 +309,7 @@ Speeqe.Chat.prototype = {
 	    this._nick = user;
 		   
 	    var msg = Strophe.xmlElement("presence", [
-						      ["from", this._connection.jid + "/" + this._connection.resource],
+						      ["from", this._connection.jid],
 						      ["to", this._from + "/" + this._nick]
 					 ]);
 	    var x = Strophe.xmlElement("x", [["xmlns", Strophe.NS.MUC]]);
