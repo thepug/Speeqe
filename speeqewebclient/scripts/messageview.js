@@ -105,7 +105,7 @@ Speeqe.MessageView.prototype = {
 	    /*Used to display when the user sends a private message.*/
 	    if(private_message && (!message || (message == "")))
 		{
-		    message = $(stanza).text();
+		    message = jQuery.trim($(stanza).text());
 		}
 	    
 	    if (!Speeqe.testSupportedTags(message))

@@ -211,7 +211,8 @@ if __name__ == '__main__':
     PASSWORD = sys.argv[2]
     HOST     = sys.argv[3]
     PORT     = sys.argv[4]
-    c = PunjabClient(USERNAME, PASSWORD, HOST, PORT)
+    URL      = sys.argv[5]
+    c = PunjabClient(USERNAME, PASSWORD, HOST, PORT, URL)
 
     c.startSessionAndAuth()
     print c.logged_in
