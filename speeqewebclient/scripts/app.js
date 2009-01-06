@@ -82,7 +82,7 @@ Speeqe.Application.prototype = {
 
 	    app._connection.resume();
 	    //Send presence to the server
-	    var presence = $pres({from:app._connection.jid}).c("priority",{priority:"-1"}).tree();
+	    var presence = $pres({from:app._connection.jid}).c("priority",{}).cnode(Strophe.xmlTextNode("-1")).tree();
 
 	    app._connection.send(presence);
 
