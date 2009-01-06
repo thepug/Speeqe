@@ -29,7 +29,7 @@ var Speeqe = {
 
 
     AVATAR_INSTANCE_STASH: 0,
-    
+    helpDialogHtml: " ",    
     _clear_text:true,
 
     Client: function() {
