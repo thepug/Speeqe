@@ -96,7 +96,7 @@ Speeqe.RosterItemView.prototype =  {
 	    var email_html_ar = ["<div>email:<a href=mailto:",
 				 email_display,
 				 ">",
-				 email_display,
+				 Speeqe.wbr(email_display),
 				 "</a></div>"];
 	    roster_elem.find("#vcard_email").empty().append($(email_html_ar.join("")));
 	}
