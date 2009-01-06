@@ -92,16 +92,20 @@ Speeqe.RosterItemView.prototype =  {
 
 	if(email.length > 0)
 	{
+	    var email_display = jQuery.trim(email.text());
 	    var email_html_ar = ["<div>email:<a href=mailto:",
-				 email.text(),
+				 email_display,
 				 ">",
-				 email.text(),
+				 email_display,
 				 "</a></div>"];
 	    roster_elem.find("#vcard_email").empty().append($(email_html_ar.join("")));
 	}
 	if(desc.length > 0)
 	{
-	    roster_elem.find("#vcard_desc").text("description: "+desc.text());
+	    var description_display = "description: " + desc.text();
+	    description_display = app.messageView().translateMessage(description_display,
+								   false);
+	    roster_elem.find("#vcard_desc").html(description_display);
 	}
 	if(url.length > 0)
 	{
