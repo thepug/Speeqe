@@ -93,12 +93,12 @@ Speeqe.RosterItemView.prototype =  {
 	if(email.length > 0)
 	{
 	    var email_display = jQuery.trim(email.text());
-	    var email_html_ar = ["<div>email:<a href=mailto:",
+	    var email_html_ar = ["email:<a href=mailto:",
 				 email_display,
 				 ">",
-				 Speeqe.wbr(email_display),
-				 "</a></div>"];
-	    roster_elem.find("#vcard_email").empty().append($(email_html_ar.join("")));
+				 Speeqe.urlwbr(email_display,14),
+				 "</a>"];
+	    roster_elem.find("#vcard_email").html(email_html_ar.join(""));
 	}
 	if(desc.length > 0)
 	{
@@ -109,12 +109,12 @@ Speeqe.RosterItemView.prototype =  {
 	}
 	if(url.length > 0)
 	{
-	    var url_html_ar = ["<div>homepage:<a href=",
+	    var url_html_ar = ["homepage:<a href=",
 			       url.text(),
 			       " target='_blank'>",
-			       url.text(),
-			       "</a></div>"];
-	    roster_elem.find("#vcard_url").empty().append($(url_html_ar.join("")));
+			       Speeqe.urlwbr(url.text(),14),
+			       "</a>"];
+	    roster_elem.find("#vcard_url").html(url_html_ar.join(""));
 	}	
     }
 };
