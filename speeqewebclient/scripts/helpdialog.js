@@ -15,8 +15,9 @@ Speeqe.helpDialogInit = function() {
          <h1>Speeqe Help.</h1>  \
          <p id=\"contactArea\">  \
              <h2>Keyboard shortcuts.</h2> \
-             F1 will bring up this screen. \
-             <br/><br/>  \
+             <ul><li>F1 will bring up this screen. </li>\
+             <li>TAB followed by character(s) will attempt to complete a nick name in the roster list.</li></ul>\
+             <br/>  \
              <h2>List of chat commands.</h2>  <ul><li>/help : brings up this screen.<li> \
              <li>/topic [topic] :changes the room topic if you have permission.</li>\
              <li>/join [room name]: opens a new window with the specified room.</li> \

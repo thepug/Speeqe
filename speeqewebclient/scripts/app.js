@@ -384,7 +384,7 @@ Speeqe.Application.prototype = {
 				    
 				    var roster_item_id = "#rosteritem" + roster_item.id;
 				    $(roster_item_id + " .roster_user_name").click(function() {
-					my_app.completeNick($(this).text());
+					my_app.completeNick("@"+$(this).text());
 				    });
 				    my_app.createRosterPopup($(roster_item_id));
 				    
@@ -434,7 +434,7 @@ Speeqe.Application.prototype = {
 					var roster_item_selector = roster_item_id + " .roster_user_name";
 
 					$(roster_item_selector).click(function() {
-					    my_app.completeNick($(this).text());
+					    my_app.completeNick("@"+$(this).text());
 					});
 					my_app.createRosterPopup($(roster_item_id));
 
