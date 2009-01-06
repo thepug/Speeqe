@@ -15,10 +15,10 @@ Speeqe.MessageView.prototype = {
      * links into live links and inline images. */
     translateMessage: function(message,auto_inline) {
 	//match and replace a link with html
+
 	message = this.htmlLink(message,auto_inline);
 	message = message.replace(/^\/me/,"");
 	message = message.replace(/\n/g,"<br />");
-
 	return message;
     },
 

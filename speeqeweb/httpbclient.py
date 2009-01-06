@@ -54,7 +54,7 @@ class PunjabClient:
         b['rid']      = str(self.rid)
         b['sid']      = str(self.sid)
         b['xml:lang'] = 'en'
-     
+
         if ext is not None:
             b.addChild(ext)
 

@@ -30,12 +30,31 @@ Speeqe.wbr = function(str, num) {
     }
     else
     {
-	return str.replace(RegExp("(\\s*\\S{" + num + "})(\\S)", "g"), 
-			   function(all,text,char){
-			       text = Speeqe.htmlentities(text);
-			       return text + "<wbr />" + char;
-			    
-			   });
+	//need to split to cover all lines
+	var strs = str.split("\n");
+
+	var retval = "";
+	jQuery.each(strs, function(i,val) {
+
+	    var rmatch = strs[i].match(RegExp("(\\s*\\S{" + num + "})(\\S)"));
+	    
+	    if(!rmatch)
+	    {
+		retval = retval + Speeqe.htmlentities(strs[i]) + "\n";
+	    }
+	    else
+	    {
+		retval = retval + strs[i].replace(RegExp("(\\s*\\S{" + num + "})(\\S)",
+							 "g"), 
+			       function(all,text,char){
+				   text = Speeqe.htmlentities(text);
+				   
+				   return text + "<wbr />" + char;
+				   
+			       }) + "\n";
+	    }
+	});
+	return retval;
     }
 }
 
@@ -64,7 +83,7 @@ Speeqe.showDraggable = function(selector,offset) {
     {
 	offset = 100;
     }
-    console.log(offset);
+
     var scrollTop = document.body.scrollTop;
     var scrollLeft = document.body.scrollLeft;
     
@@ -93,11 +112,12 @@ Speeqe.showDraggable = function(selector,offset) {
 //replace html greater than , less than with html equivelant 
 Speeqe.htmlentities = function(text)
 {
-
+    
     text = text.replace(/\&/g, "&amp;");
     text = text.replace(/</g,  "&lt;");
     text = text.replace(/>/g,  "&gt;");
     text = text.replace(/'/g,  "&#39;");
+    
     return text;
 }
 
