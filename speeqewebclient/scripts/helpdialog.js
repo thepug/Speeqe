@@ -23,6 +23,7 @@ Speeqe.helpDialogInit = function() {
              <li>/kick,/ban [user]: Removes user from the room. /ban does so permanently. </li> \
              <li>/unban [user]: Allows user to join the room again.</li>\
              <li>/nick [nickname]: Changes your nick name to the one specified. </li>\
+             <li>@nick [message]: Using the @ sign will send a private message to the specified user. </li>\
              </ul>" + Speeqe.helpDialogHtml
     +"<br/><br/>  \
              Press ESCAPE, Click on X (right-top) or Click Out from the popup to close the popup!  \
