@@ -102,30 +102,31 @@ Speeqe.MessageView.prototype = {
 	    message = $(stanza).find("body").text();
 	    me_style = message.match(/^\/me.+\S+/);
 
+
 	    /*Used to display when the user sends a private message.*/
-	    if(private_message && (!message || (message == "")))
-		{
-		    message = jQuery.trim($(stanza).text());
-		}
+	    if(private_message && message.length == 0)
+	    {
+		message = jQuery.trim($(stanza).text());
+	    }
 	    
 	    if (!Speeqe.testSupportedTags(message))
-		{
-		    message = this.translateMessage(message,true);
-		}
+	    {
+		message = this.translateMessage(message,true);
+	    }
 	    else
-		{
-		    //strip unsafe attributes from tags
-		    var elem = $(message);
-		    elem = this._handleSupportedTags(elem);
-		    message = elem;		    
-
-		}
+	    {
+		//strip unsafe attributes from tags
+		var elem = $(message);
+		elem = this._handleSupportedTags(elem);
+		message = elem;		    
+		
+	    }
 	}
 	else
 	{
 	    message = this.translateMessage(message,true);
 	}
-	
+	message = jQuery.trim(message);
 	if(message.length > 0)
 	{
 
