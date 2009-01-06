@@ -463,7 +463,7 @@ Speeqe.Application.prototype = {
     completeNick: function(nick_elem) {
 	var msg_text = $("#send_chat_message").attr("value");
 	msg_text += nick_elem;
-	$("#send_chat_message").attr("value",msg_text);
+	$("#send_chat_message").attr("value",msg_text+" ");
 	$("#send_chat_message").focus();
     },
     createRosterPopup: function(roster_elem) {
