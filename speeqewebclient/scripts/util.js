@@ -40,7 +40,12 @@ Speeqe.wbr = function(str, num) {
 	    
 	    if(!rmatch)
 	    {
-		retval = retval + Speeqe.htmlentities(strs[i]) + "\n";
+		var newline = "\n";
+		if(strs.length == 1)
+		{
+		    newline = "";
+		}
+		retval = retval + Speeqe.htmlentities(strs[i]) + newline;
 	    }
 	    else
 	    {
