@@ -32,7 +32,11 @@ Speeqe.wbr = function(str, num) {
     {
 	//need to split to cover all lines
 	var strs = str.split("\n");
-
+	var newline = "\n";
+	if(strs.length == 1)
+	{
+	    newline = "";
+	}
 	var retval = "";
 	jQuery.each(strs, function(i,val) {
 
@@ -40,11 +44,7 @@ Speeqe.wbr = function(str, num) {
 	    
 	    if(!rmatch)
 	    {
-		var newline = "\n";
-		if(strs.length == 1)
-		{
-		    newline = "";
-		}
+
 		retval = retval + Speeqe.htmlentities(strs[i]) + newline;
 	    }
 	    else
@@ -56,7 +56,7 @@ Speeqe.wbr = function(str, num) {
 				   
 				   return text + "<wbr />" + char;
 				   
-			       }) + "\n";
+			       }) + newline;
 	    }
 	});
 	return retval;
