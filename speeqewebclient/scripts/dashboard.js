@@ -16,7 +16,7 @@ Speeqe.dashBoardInit = function() {
     var dashboard_html = "<div id=\"dashboard\"> \
                         <div id=\"left-control\" class=\"control item\"> \
                                 <ul> \
-                                        <li><a href=\"http://www.speeqe.com\" target=\"_blank\" ><img src=\"/images/dashboard/logo.png\" alt=\"Speeqe Logo\" width=\"30\" height=\"27\" /></a></li> \
+                                        <li><a href=\"http://"+Speeqe.HTTP_DOMAIN+"\" target=\"_blank\" ><img src=\"/images/dashboard/logo.png\" alt=\"Speeqe Logo\" width=\"30\" height=\"27\" /></a></li> \
                                         <li class=\"button\"> \
                                                 <p><span id=\"dashboard_user\">Offline</span> <span id=\"dashboard_available\">is available</span></p> \
                                                 <ul> \
