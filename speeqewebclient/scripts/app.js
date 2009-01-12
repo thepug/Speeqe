@@ -162,8 +162,7 @@ Speeqe.Application.prototype = {
 	    {
 		nickname = nickname.split("/")[0];
 	    }
-	    this._chat = new Speeqe.Chat(jid,
-					 chatname,
+	    this._chat = new Speeqe.Chat(chatname,
 					 this._connection,
 					 nickname);
 	    

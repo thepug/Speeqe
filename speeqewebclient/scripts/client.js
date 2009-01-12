@@ -561,8 +561,8 @@ var Speeqe = {
 	}
     },
     /*Handles xmpp chat. See chat.js for implementation.*/
-    Chat: function(user,from,conn,nick) {
-	this._user = user;
+    Chat: function(from,conn,nick) {
+
 	this._from = from;
 	//add the default speeqe chat sever
 	if(from.indexOf("@") == -1)

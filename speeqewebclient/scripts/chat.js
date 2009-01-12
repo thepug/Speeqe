@@ -73,7 +73,7 @@ Speeqe.Chat.prototype = {
 	var msg = Strophe.xmlElement("message", 
 					[
 					 ["to", to],
-					 ["from", this._user],
+					 ["from", this._connection.jid],
 					 ["type", type],
 					 ["id", msgid]
 					 ]);
@@ -235,7 +235,7 @@ Speeqe.Chat.prototype = {
 	topic = Speeqe.htmlentities(topic);
 	var msg = Strophe.xmlElement("message", [
 						    ["to", this._from],
-						    ["from", this._user],
+						    ["from", this._connection.jid],
 						    ["type", "groupchat"]
 					]);
 	var subject = Strophe.xmlElement("subject", 
