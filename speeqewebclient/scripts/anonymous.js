@@ -2,7 +2,8 @@
   Copyright 2007-2008 Nathan Zorn OGG, LLC
   See LICENSE.txt 
 */
-Speeqe.NAMES = ["bush",
+Speeqe.NAMES = ["obama",
+	        "bush",
 		"cheney",
 		"ford",
 		"nixon",
