@@ -30,7 +30,8 @@ anonymous.js for more details.
 
 */
 /* list of anonymous nicks
-Speeqe.NAMES = ["bush",
+Speeqe.NAMES = ["obama",
+	        "bush",
 		"cheney",
 		"ford",
 		"nixon",
