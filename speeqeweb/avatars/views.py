@@ -20,20 +20,12 @@ DEFAULT_AVATAR = settings.DOCUMENT_ROOT + '/images/defaultavatar.png'
 
 def handler404(*args, **kwargs):
     from django.views.defaults import page_not_found
-    if 'avatar-service' in args[0].path:
-        kwargs['template_name'] = 'avatars/404.html'
-        return page_not_found(*args, **kwargs)
-    else:
-        return page_not_found(*args, **kwargs)
+    return page_not_found(*args, **kwargs)
 
 
 def handler500(*args, **kwargs):
     from django.views.defaults import server_error
-    if 'avatar-service' in args[0].path:
-        kwargs['template_name'] = 'avatars/500.html'
-        return server_error(*args, **kwargs)
-    else:
-        return server_error(*args, **kwargs)
+    return server_error(*args, **kwargs)
 
 
 def clean_mime(mime):
