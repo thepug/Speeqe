@@ -68,13 +68,14 @@ class PunjabClient:
         data = ''
         # start new session
         bxml = b.toXml()
-        
+
         conn = httplib.HTTPConnection(self.host+":"+self.port)
         conn.request("POST", self.url, bxml, self.headers)
         response = conn.getresponse()
         if response.status == 200:
             data = response.read()
         conn.close()
+
         return parser.parse(data)
 
     def startSessionAndAuth(self, hold = '1', wait = '70', headers = None):
@@ -92,6 +93,8 @@ class PunjabClient:
         b['window']   = '5'
         b['xml:lang'] = 'en'
 
+        b['xmlns:xmpp'] = 'jabber:client'
+        b['xmpp:version'] = '1.0'
         
         retb, elems = self.sendBody(b)
         if type(retb) != str and retb.hasAttribute('authid') and retb.hasAttribute('sid'):
@@ -127,9 +130,14 @@ class PunjabClient:
                 if len(elems)>0:
                     
                     if elems[0].name == 'success':
-                        retb, elems = self.sendBody(self.buildBody())
-                        
-                        if elems[0].firstChildElement().name == 'bind':
+                        body = self.buildBody()
+                        body['xmpp:restart'] = 'true'
+
+                        retb, elems = self.sendBody(body)
+                        if len(elems) == 0:
+                            retb, elems = self.sendBody(self.buildBody())
+
+                        if len(elems) > 0 and elems[0].firstChildElement().name == 'bind':
                             
                             iq = domish.Element(('jabber:client','iq'))
                             
@@ -209,9 +217,22 @@ class PunjabClient:
 if __name__ == '__main__':
     USERNAME = sys.argv[1]
     PASSWORD = sys.argv[2]
-    HOST     = sys.argv[3]
-    PORT     = sys.argv[4]
-    URL      = sys.argv[5]
+    HOST = None
+    try:
+        HOST     = sys.argv[3]
+    except IndexError:
+        pass
+    PORT = None
+    try:
+        PORT     = sys.argv[4]
+    except IndexError:
+        pass
+    URL = None
+    try:
+        URL      = sys.argv[5]
+    except IndexError:
+        pass
+    
     c = PunjabClient(USERNAME, PASSWORD, HOST, PORT, URL)
 
     c.startSessionAndAuth()
