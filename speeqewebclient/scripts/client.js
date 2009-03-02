@@ -248,6 +248,19 @@ var Speeqe = {
 		    Speeqe.loadHelpDialog();
 		});
 
+		$("#show_joinleave").click(function() {
+		    var chatwindow = $("#chatWindow_chatpane");
+		    
+		    if (chatwindow.hasClass('joinleave'))
+		    {
+			chatwindow.removeClass('joinleave');
+		    }
+		    else
+		    {
+			chatwindow.addClass('joinleave');
+		    }
+		});
+		
 		$("#configure_chat").click(function() {
 		    $(this).parent("ul").parent("li").click();
 		    if(app)

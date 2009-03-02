@@ -44,6 +44,7 @@ Speeqe.dashBoardInit = function() {
                                                 <ul> \
                                                         <li id='search_room'>Search Room</span></li> \
                                                         <li id='configure_chat'><span>Configure Room</span></li> \
+                                                        <li id='show_joinleave'><span>Toggle join/leave messages.</span></li> \
                                                 </ul> \
                                         </li> \
                                 </ul> \

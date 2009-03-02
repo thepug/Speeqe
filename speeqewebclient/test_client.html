@@ -463,7 +463,7 @@
         </div>
       </div>
       <div id="chat">
-        <div id="chatWindow_chatpane" class='direction-up'>
+        <div id="chatWindow_chatpane" class='direction-up joinleave'>
           <div id="post_template" style="display: none;">
             <!-- This div is used to post messages. They will always show in the
                  chatWindow_chatpan div. Leave it hidden. -->
@@ -491,6 +491,10 @@
             </div>
           </div>
         </div>
+	<div id='room_message_template' style='display:none;'>
+	   <p id='nick'><p>
+	</div>
+	<div id='room_messages' style='display:none;'></div>
         <div id="chatbox">
           <div id="chatbox_inner">
             <textarea id="send_chat_message" cols="40" rows="2"> type and hit enter </textarea>

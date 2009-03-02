@@ -183,6 +183,7 @@ Speeqe.Application.prototype = {
 
 	if (app._chat)
 	{
+
 	    var type = $(stanza).attr('type');
 	  
 	    if ('error' != type)
@@ -343,6 +344,7 @@ Speeqe.Application.prototype = {
 				{
 				    $("#rosteritem"+roster_item.id).remove();
 				    delete my_app._roster[nick];
+				    my_app._rosteritemview.showJoinLeave(nick,"left");
 				}
 			    }
 			}
@@ -403,6 +405,7 @@ Speeqe.Application.prototype = {
 				{
 				    $("#rosteritem"+roster_item.id).remove();
 				    delete my_app._roster[nick];
+				    my_app._rosteritemview.showJoinLeave(nick,"left");
 				}
 			    }
 
@@ -449,6 +452,7 @@ Speeqe.Application.prototype = {
 					{
 					    $("#rosteritem"+roster_item.id).remove();
 					    delete my_app._roster[nick];
+					    my_app._rosteritemview.showJoinLeave(nick,"left");
 					}
 				}
 			    }

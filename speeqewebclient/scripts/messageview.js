@@ -301,7 +301,7 @@ Speeqe.MessageView.prototype = {
 	var kick_message_ar = ["<message from='",
 			       $(stanza).attr("from"),			       
 			       "' to='4@dev.speeqe.com/3' id='1' type='groupchat'><x xmlns='jabber:x:event'><composing/></x></message>"
-			       ]
+	];
 	var kick_message_jq = $(kick_message_ar.join(""));
 	var body_elem = document.createElement("body");
 	var body_text = document.createTextNode("/me was "+kick_or_ban+" from the room.");
