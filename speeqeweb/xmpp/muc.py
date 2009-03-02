@@ -63,3 +63,6 @@ def listrooms():
     except Exception, ex:
         print str(ex)
     return retval
+
+if __name__ == '__main__':
+    print listrooms()
