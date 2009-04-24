@@ -278,8 +278,9 @@ var Speeqe = {
 		$('#configure_room_form_close').click(function() {
 		    $("#configure_room_form_message").empty();
 		    $("#configure_room_form_input").empty();
-		    $("#configure_room_form").hide();
-
+		    $("#configure_room_form").hide("fast",function(){
+			app.messageView().scrollTop();
+		    });
 		});
 
 		$("#configure_room_form_input").submit(function()
@@ -358,7 +359,10 @@ var Speeqe = {
 			
 		$('#close').click(function() {
 		    $("#form_message").empty();
-		    $("#layer1").hide();
+		    $("#layer1").hide("fast",function(){
+			app.messageView().scrollTop();
+		    });
+		    return true
 		});
 		
 		//Add a debug log submit form, floating dialog 
@@ -435,7 +439,9 @@ var Speeqe = {
 		$('#debug_log_close').click(function() {
 		    $("#debug_log_form_description").attr("value","")
 		    $("#debug_log_form_message").empty();
-		    $("#debug_log_layer1").hide();
+		    $("#debug_log_layer1").hide("fast",function(){
+			app.messageView().scrollTop();
+		    });
 		    $("#debug_log_form_submit_desc").attr("value","");
 		});
 		//Add a login floating dialog (use for preferences in
@@ -448,8 +454,11 @@ var Speeqe = {
 		
 		$('#room_password_dialog_close').click(function() {
 		    $("#room_password_dialog_form_message").empty();
-		    $("#room_password_dialog").hide();
+		    $("#room_password_dialog").hide("fast",function() {
+			app.messageView().scrollTop();		    
+		    });
 		    $("#room_password_dialog_password").attr("value","");
+		    
 		    app.disconnect();
 		});
 		$("#room_password_dialog_form").submit(function() {

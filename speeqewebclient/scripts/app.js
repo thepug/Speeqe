@@ -179,6 +179,9 @@ Speeqe.Application.prototype = {
 	    this._chatroom_view.displayJoiningStatus();
 	}
     },
+    messageView: function() {
+	return this._message_view;
+    },
     _onMessage: function(stanza) {
 
 	if (app._chat)
