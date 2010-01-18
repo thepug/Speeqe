@@ -15,7 +15,7 @@ Speeqe.helpDialogInit = function() {
          <h1>Speeqe Help.</h1>  \
          <p id=\"contactArea\">  \
              <h2>Keyboard shortcuts.</h2> \
-             <ul><li>F1 will bring up this screen. </li>\
+             <ul> \
              <li>TAB followed by character(s) will attempt to complete a nick name in the roster list.</li></ul>\
              <br/>  \
              <h2>List of chat commands.</h2>  <ul><li>/help : brings up this screen.<li> \
@@ -40,22 +40,10 @@ Speeqe.helpDialogInit = function() {
     
     //Press Escape event!  
     $(document).keypress(function(e){
-	var f1_keycode = 112;
-	if(jQuery.browser.safari)
-	{
-	    f1_keycode = 63236;
-	}
-	
 	if(e.keyCode==27 && Speeqe.helpDialogStatus==1)
 	{  
 	    Speeqe.closeHelpDialog();  
 	}
-	if(e.keyCode == f1_keycode)
-	{
-	    Speeqe.loadHelpDialog();
-	    return false;	 
-	}
-
     });
     //Click the x event!  
     $("#popupContactClose").click(function(){  

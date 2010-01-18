@@ -126,18 +126,22 @@ Speeqe.RosterItemView.prototype =  {
 	if (chatwindow.hasClass('joinleave'))
 	{
 	    var room_avatar = '/avatar-service/lookup/?sha1=f2f8ab835b10d66f9233518d1047f3014b3857cf';
-	    var join_message_ar = ["<message from='"+nick+"' to='4@dev.speeqe.com/3' id='1' type='groupchat'><x xmlns='jabber:x:event'><composing/></x></message>"];
-	    var join_message_jq = $(join_message_ar.join(""));
-	    var body_elem = document.createElement("body");
-	    var body_text = document.createTextNode("/me has "+status+" the room.");
-	    body_elem.appendChild(body_text);
-	    
-	    join_message_jq.append(body_elem);
-
-	    app.messageView().displayMessage(nick,
-					     room_avatar,
-					     join_message_jq.get(0),
-					     false);
+	    var join_message_ar = ["<message from='",
+                                   nick,
+                                   "' to='4@dev.speeqe.com/3' id='1' type='groupchat'><x xmlns='jabber:x:event'><composing/></x><body>/me has ",
+                                   status,
+                                   " the room.</body></message>"];
+            try {
+                var join_message_jq = Speeqe.text_to_xml(join_message_ar.join(""));
+	        app.messageView().displayMessage(nick,
+					         room_avatar,
+					         join_message_jq,
+					         false);
+            }
+            catch(e)
+            {
+                console.error(e);
+            }
 	}
 
 	var msg_template = $('#room_message_template').clone();

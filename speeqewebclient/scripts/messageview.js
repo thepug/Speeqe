@@ -23,7 +23,6 @@ Speeqe.MessageView.prototype = {
     },
 
     displayMessage: function(user,srcurl,stanza,current_user) {
-
 	var stamp = null;
 	//search for an existing time stamp in the message
 	$(stanza).find("x").each(function () {
@@ -243,7 +242,7 @@ Speeqe.MessageView.prototype = {
 	    }
 
 	}
-	if(! app.winFocus)
+	if (! app.winFocus)
 	{
 	    //if this window is out of focus attach a notification of
 	    //new messages
@@ -251,7 +250,10 @@ Speeqe.MessageView.prototype = {
 	}
 	else
 	{
-	    document.title = $(stanza).attr('from').split("/")[0];
+            if ($(stanza).attr('from'))
+            {
+	        document.title = $(stanza).attr('from').split("/")[0];
+            }
 	}
 	/*if window has grown too large chop off the
 	  last message.*/

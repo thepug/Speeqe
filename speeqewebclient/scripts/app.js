@@ -5,6 +5,30 @@
 
 var APP_DEFAULT_WAIT = 60
 var APP_DEFAULT_HOLD = 1
+Speeqe.text_to_xml = function(text) {
+    var doc = null;
+    if (window.DOMParser) {
+        var parser = new DOMParser();
+        doc = parser.parseFromString(text, 'text/xml');
+    } else if (window.ActiveXObject) {
+        doc = new ActiveXObject("MSXML2.DOMDocument");
+        doc.async = false;
+        doc.loadXML(text);
+    } else {
+        throw {
+            type: 'DomParserError',
+            message: 'No DOMParser object found.'
+        };
+    }
+    var elem = doc.documentElement;
+    if ($(elem).filter('parsererror').length > 0) {
+        throw {
+            type: 'DomParserError',
+            message: 'Couldn\'t parse input.'
+        };
+    }
+    return elem;
+};
 
 Speeqe.Application.prototype = {
    
@@ -83,9 +107,7 @@ Speeqe.Application.prototype = {
 	    app._connection.resume();
 	    //Send presence to the server
 	    var presence = $pres({from:app._connection.jid}).c("priority",{}).cnode(Strophe.xmlTextNode("-1")).tree();
-
-	    app._connection.send(presence);
-
+            app._connection.send(presence);
 	    //Add handlers for messages and user presence
 	    app._connection.addHandler(app._onMessage,
 				       null,
@@ -100,6 +122,7 @@ Speeqe.Application.prototype = {
 				       null,
 				       null,
 				       null);
+
 	    //join the chat room
 	    app.joinchat(app._chatroom);
 
@@ -183,7 +206,6 @@ Speeqe.Application.prototype = {
 	return this._message_view;
     },
     _onMessage: function(stanza) {
-
 	if (app._chat)
 	{
 
@@ -264,14 +286,8 @@ Speeqe.Application.prototype = {
 		var error_message = "Error: Must send more than just /me.";
 		var kick_message_ar = ["<message from='",
 				       this._chatroom,			       
-				       "' to='4@dev.speeqe.com/3' id='1'><x xmlns='jabber:x:event'><composing/></x></message>"];
-		
-		var estanza = $(kick_message_ar.join(""));
-		var body_elem = document.createElement("body");
-		var body_text = document.createTextNode(error_message);
-		body_elem.appendChild(body_text);
-
-		estanza.append(body_elem);
+				       "' to='4@dev.speeqe.com/3' id='1'><x xmlns='jabber:x:event'><composing/></x><body>",kick_message_ar.join(""),"</body></message>"];		
+                var estanza = Speeqe.text_to_xml(kick_message_ar.join(""));
 		this._message_view.displayErrorMessage(estanza);
 	    }
 	}
