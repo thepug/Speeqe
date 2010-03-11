@@ -581,7 +581,6 @@ var Speeqe = {
 	{
 	    this._from = this._from + "@" + Speeqe.CHAT_SERVER;
 	}
-	this._from = Strophe.escapeJid(this._from);
 	this._connection = conn;
 	this._nick = nick;
 	this._queue = [];

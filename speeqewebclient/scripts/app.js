@@ -172,7 +172,6 @@ Speeqe.Application.prototype = {
     {
 	var nickname = this._connection.jid;
 	var jid = this._connection.jid;
-
 	if(this.anonymous)
 	{
 	    nickname = Speeqe.generate_anonymous_nick()+"@"+Speeqe.XMPP_DOMAIN;
@@ -180,17 +179,15 @@ Speeqe.Application.prototype = {
 	}
 	if (!this._chat)
 	{
-
 	    if(nickname.split("/").length > 0)
 	    {
 		nickname = nickname.split("/")[0];
 	    }
+            
 	    this._chat = new Speeqe.Chat(chatname,
 					 this._connection,
 					 nickname);
-	    
 	}
-
 	this._chat.join();
 	this._chatroom_view.displayJoiningStatus();
 
