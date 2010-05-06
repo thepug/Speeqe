@@ -65,25 +65,22 @@ Speeqe.Chat.prototype = {
 				    null);
     },
     //private function to send xmpp message
-    _buildAndSendMessage: function(to,message,type) {
-	text = Speeqe.htmlentities(message);
-	    
-	    
+    _buildAndSendMessage: function(to, message, type) {
 	var msgid = this._connection.getUniqueId();
 	var msg = Strophe.xmlElement("message", 
-					[
+				     [
 					 ["to", to],
 					 ["from", this._connection.jid],
 					 ["type", type],
 					 ["id", msgid]
-					 ]);
+				     ]);
 	msg.appendChild(Strophe.xmlElement("body", 
-					      [["xmlns", 
-						"jabber:client"]], 
-					      text));
+					   [["xmlns", 
+					     "jabber:client"]], 
+					   message));
 	
 	x = Strophe.xmlElement("x", 
-				  [["xmlns", "jabber:x:event"]]);
+			       [["xmlns", "jabber:x:event"]]);
 	x.appendChild(Strophe.xmlElement("composing"));
 	msg.appendChild(x);
 	this._messages.push(msg);
