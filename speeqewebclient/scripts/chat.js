@@ -13,7 +13,7 @@ Speeqe.NS_MUC_ADMIN = Strophe.NS.MUC + "#admin";
 Speeqe.Chat.prototype = {
     
     //join a multi user chat room by sending presence to the room
-    join: function ()
+    join: function (onMessage, onPresence)
     {
 	var password = null;
 	if(arguments.length > 0)
@@ -21,75 +21,40 @@ Speeqe.Chat.prototype = {
 	    password = arguments[0];
 	}
 	this._nick = this._nick.replace("@"+Speeqe.XMPP_DOMAIN,"");
-	var msg = Strophe.xmlElement("presence", [
-						     ["from", this._connection.jid],
-						     ["to", this._from + "/" + this._nick]
-					]);
-	var x = Strophe.xmlElement("x", [["xmlns", Strophe.NS.MUC]]);
-	if(password)
-	{
-	    var password_elem = Strophe.xmlElement("password", [],password);
-	    x.appendChild(password_elem);
-	    
-	}
-	msg.appendChild(x);
-
-	this._connection.send(msg);
+        this._connection.muc.join(this._from, 
+                                  this._nick,
+                                  onMessage,
+                                  onPresence);
     },
 
     //leave a multi user chat room by sending unavailable presence
     leave: function (call_back)
     {
-
-	var presenceid = this._connection.getUniqueId();
-	presence = Strophe.xmlElement("presence", [
-						   ["type",
-						    "unavailable"],
-						   ["id",
-						    presenceid],
-						   ["from",
-						    this._connection.jid],
-						   ["to",
-						    this._from + "/" + this._nick]
-				      ]);
-	x = Strophe.xmlElement("x", [
-				     ["xmlns", Strophe.NS.MUC]
-			       ]);
-	presence.appendChild(x);
-	this._connection.send(presence);
-	this._connection.addHandler(call_back,
-				    null,
-				    "presence",
-				    null,
-				    presenceid,
-				    null);
+        this._connection.muc.leave(this._from, this._nick, call_back);
     },
     //private function to send xmpp message
     _buildAndSendMessage: function(to, message, type) {
-	var msgid = this._connection.getUniqueId();
-	var msg = Strophe.xmlElement("message", 
-				     [
-					 ["to", to],
-					 ["from", this._connection.jid],
-					 ["type", type],
-					 ["id", msgid]
-				     ]);
-	msg.appendChild(Strophe.xmlElement("body", 
-					   [["xmlns", 
-					     "jabber:client"]], 
-					   message));
-	
-	x = Strophe.xmlElement("x", 
-			       [["xmlns", "jabber:x:event"]]);
-	x.appendChild(Strophe.xmlElement("composing"));
-	msg.appendChild(x);
-	this._messages.push(msg);
+        if (type !== "groupchat")
+        {
+            var msgid = this._connection.getUniqueId();
+	    var msg = $msg({to: room_nick,
+                            from: this._connection.jid,
+                            type: type,
+                            id: msgid})
+                .c("body",
+                   {xmlns: Strophe.NS.CLIENT}).t(message);
+            msg.up().c("x", {xmlns: "jabber:x:event"}).c("composing");
+            this._connection.send(msg);
+        }
+        else
+        {
+            this._connection.muc.message(to, null, message);
+        }
+	this._messages.push(message);
 	while (this._messages.length > Speeqe.CHAT_MESSAGE_HISTORY)
 	{
 	    this._messages.splice(0,1);
 	}
-	
-	this._connection.send(msg);
     },    
 
     //send a chat message to the multi user chat room
@@ -140,151 +105,38 @@ Speeqe.Chat.prototype = {
     //request to configure the multi user chat room
     configure: function () {
 	//send iq to start room configuration
-	var iqid = this._connection.getUniqueId("configureroom");
-	var iq = Strophe.xmlElement("iq", [
-					      ["id", iqid],
-					      ["to", this._from],
-					      ["type", "get"]
-				       ]);
-	var query = Strophe.xmlElement("query", [
-						    ["xmlns", 
-						     Speeqe.NS_MUC_OWNER]
-					  ]);
-
-	iq.appendChild(query);
-	this._connection.send(iq);
-	return iqid;
+	return this._connection.muc.configure(this._from);
     },
     
     cancelConfiguration: function() {
-    	//send iq to cancel room configuration
-	var iqid = this._connection.getUniqueId("cancelconfigureroom");
-	var iq = Strophe.xmlElement("iq", [
-					      ["id", iqid],
-					      ["to", this._from],
-					      ["type", "set"]
-				       ]);
-	var query = Strophe.xmlElement("query", [
-						    ["xmlns", 
-						     Speeqe.NS_MUC_OWNER]
-					  ]);
-	var x = Strophe.xmlElement("x", [["xmlns", "jabber:x:data"],
-					    ["type","cancel"]]);
-	query.appendChild(x);
-	iq.appendChild(query);
-	this._connection.send(iq);
-	return iqid;
+	return this._connection.muc.cancelConfigure(this._from);
     },
     
     //send the configuration form with changed settings 
     saveConfiguration: function(config) {
-	var iqid = this._connection.getUniqueId("saveroom");
-	var iq = Strophe.xmlElement("iq", [
-					      ["id", iqid],
-					      ["to", this._from],
-					      ["type", "set"]
-				       ]);
-	var query = Strophe.xmlElement("query", [
-						    ["xmlns", 
-						     Speeqe.NS_MUC_OWNER]
-					  ]);
-	//attach configured form
-	var x = Strophe.xmlElement("x", [["xmlns", "jabber:x:data"],
-					    ["type","submit"]]);
-	
-
-	
-	
-	jQuery.each(config, function(i,item) {
-	    //attach room persistent setting
-	    x.appendChild(item);
-	});
-
-
-	query.appendChild(x);
-	iq.appendChild(query);
-	this._connection.send(iq);
-	return iqid;
-    },
-    
+	return this._connection.muc.saveConfiguration(this._from, config);
+    },    
     createInstantRoom: function() {
-	//send iq to start room 
-	var iqid = this._connection.getUniqueId("createinstantroom");
-	var iq = Strophe.xmlElement("iq", [
-					      ["id", iqid],
-					      ["to", this._from],
-					      ["type", "set"]
-				       ]);
-	var query = Strophe.xmlElement("query", [
-						    ["xmlns", 
-						     Speeqe.NS_MUC_OWNER]
-					  ]);
-	var x = Strophe.xmlElement("x", [["xmlns", "jabber:x:data"],
-					    ["type","submit"]]);
-	query.appendChild(x);
-	iq.appendChild(query);
-	this._connection.send(iq);
-	return iqid;
+	return this._connection.muc.createInstantRoom(this._from);
     },
-
     setTopic: function(topic) {
-	//sets the topic of conversation
-	topic = Speeqe.htmlentities(topic);
-	var msg = Strophe.xmlElement("message", [
-						    ["to", this._from],
-						    ["from", this._connection.jid],
-						    ["type", "groupchat"]
-					]);
-	var subject = Strophe.xmlElement("subject", 
-					    [["xmlns", 
-					      "jabber:client"]], 
-					    topic);
-	msg.appendChild(subject);
-	this._connection.send(msg);
-	
-    },
-    
+	this._connection.muc.setTopic(this._from,topic);
+    },    
     kickUser: function(user) {
 	this._modifyUser(user,"none","member");
     },
-
     banUser: function(userreason) {
 	var userwithreason = userreason.split(" ");
 	var user = userwithreason[0];
 	var reason = userwithreason[1];
 	this._modifyUser(user,null,"outcast",reason);
-    },
-    
-    _modifyUser: function(nick,role,affiliation,reason) {
-	var iqid = this._connection.getUniqueId("modechange");
-	var iq = Strophe.xmlElement("iq", [
-					      ["id", iqid],
-					      ["to", this._from],
-					      ["type", "set"]
-				       ]);
-	var query = Strophe.xmlElement("query", [
-						    ["xmlns",
-						     Speeqe.NS_MUC_ADMIN]
-					  ]);
-	var item = Strophe.xmlElement("item", [
-						  ["nick", nick]
-					 ]);
-	if (role !== null)
-	{
-	    item.setAttribute("role", role);
-	}
-	if (affiliation !== null)
-	{
-	    item.setAttribute("affiliation", affiliation);
-	}
-	if (reason !== null)
-	{
-	    item.appendChild(Strophe.xmlElement("reason", reason));
-	}
-	query.appendChild(item);
-	iq.appendChild(query);
-	this._connection.send(iq);
-	
+    },    
+    _modifyUser: function(nick, role, affiliation, reason) {
+        this._connection.muc.modifyUser(this._from,
+                                        nick,
+                                        role,
+                                        affiliation,
+                                        reason);
     },
     //open up a new window for the new chat room.
     newRoom: function(room) {
@@ -304,38 +156,16 @@ Speeqe.Chat.prototype = {
 	if(Speeqe.ENABLE_NICK_CHANGE)
 	{
 	    this._nick = user;
-		   
-	    var msg = Strophe.xmlElement("presence", [
-						      ["from", this._connection.jid],
-						      ["to", this._from + "/" + this._nick]
-					 ]);
-	    var x = Strophe.xmlElement("x", [["xmlns", Strophe.NS.MUC]]);
-	    
-	    msg.appendChild(x);
-	    
-	    this._connection.send(msg);
+            this._connection.muc.changeNick(this._from, user);
 	}
     },
 
     unBanUser: function(user) {
-	
-	var iqid = this._connection.getUniqueId("unban");
-	var iq = Strophe.xmlElement("iq", [
-					      ["id", iqid],
-					      ["to", this._from],
-					      ["type", "set"]
-				       ]);
-	query = Strophe.xmlElement("query", [
-                                                ["xmlns", 
-						 Speeqe.NS_MUC_ADMIN]
-				      ]);
-	item = Strophe.xmlElement("item", [
-					      ["affiliation", "none"],
-					      ["jid", jid]
-				     ]);
-	query.appendChild(item);
-	iq.appendChild(query);
-	this._connection.send(iq);
+	this._connection.muc.modifyUser(this._from,
+                                        user,
+                                        null,
+	                                "none",
+                                        null);
     },
 
     sendPrivateMessage: function(user,message) {

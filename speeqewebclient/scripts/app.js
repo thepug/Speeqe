@@ -108,21 +108,19 @@ Speeqe.Application.prototype = {
 	    //Send presence to the server
 	    var presence = $pres({from:app._connection.jid}).c("priority",{}).cnode(Strophe.xmlTextNode("-1")).tree();
             app._connection.send(presence);
-	    //Add handlers for messages and user presence
-	    app._connection.addHandler(app._onMessage,
-				       null,
-				       "message",
-				       null,
-				       null,
-				       null);
-	    
-	    app._connection.addHandler(app._onPresence,
-				       null,
-				       "presence",
-				       null,
-				       null,
-				       null);
-
+            /*
+            app._connection.addHandler(app._onMessage,
+                                       null,
+                                       "message",
+                                       null,
+                                       null,
+                                       null);           
+            app._connection.addHandler(app._onPresence,
+                                       null,
+                                       "presence",
+                                       null,
+                                       null,
+                                       null);*/
 	    //join the chat room
 	    app.joinchat(app._chatroom);
 
@@ -165,7 +163,7 @@ Speeqe.Application.prototype = {
 	{
 	    this._chat.leave(call_back);
 	}
-	
+	app._connection.flush();
     },
     
     joinchat: function(chatname) 
@@ -188,7 +186,7 @@ Speeqe.Application.prototype = {
 					 this._connection,
 					 nickname);
 	}
-	this._chat.join();
+	this._chat.join(app._onMessage, app._onPresence);
 	this._chatroom_view.displayJoiningStatus();
 
     },
@@ -204,8 +202,7 @@ Speeqe.Application.prototype = {
     },
     _onMessage: function(stanza) {
 	if (app._chat)
-	{
-
+	{           
 	    var type = $(stanza).attr('type');
 	  
 	    if ('error' != type)
@@ -293,124 +290,163 @@ Speeqe.Application.prototype = {
     },
 
     _onPresence: function(stanza) {
-
 	if (app._chat)
 	{
 	    var my_app = app;
 
 	    $(stanza).find("x").each( function(i,xquery) {
-		
-		//Handle only MUC user protocol
-		var xmlns = $(xquery).attr("xmlns");
-
-		if (xmlns && xmlns.match(Strophe.NS.MUC))
+		var error = $(stanza).find("error");
+                
+		if (error.length > 0)
 		{
-
-		    var error = $(stanza).find("error");
-
-		    if (error.length > 0)
+		    if(error.attr("code") == '409') //409 is nick conflict
 		    {
-			if(error.attr("code") == '409') //409 is nick conflict
-			{
-			    if(my_app._chat)
-				console.log("error 409");		    
-			    //nick conflict so tack on another character
-			    my_app._chat._nick = my_app._chat._nick + "_";
-			    my_app._chat.join(my_app._chatroom);
-			}
-			else if(error.attr("code") == '401') //401 auth required
-			{
-			    //display password dialog
-			    my_app._chatroom_view.password();
-			}
-			else
-			{
-			    //display error message
-			    my_app._chatroom_view.error(my_app._chatroom,
-						      my_app._chat._nick,
-						      stanza);
-			    my_app.disconnect();
-			}
-
+			if(my_app._chat)
+			    console.log("error 409");		    
+			//nick conflict so tack on another character
+			my_app._chat._nick = my_app._chat._nick + "_";
+			my_app._chat.join(my_app._chatroom);
+		    }
+		    else if(error.attr("code") == '401') //401 auth required
+		    {
+			//display password dialog
+			my_app._chatroom_view.password();
 		    }
 		    else
 		    {
-
-			//Search for status code
-			var status = $(stanza).find("status").attr("code");
-			if('201' == status)
+			//display error message
+			my_app._chatroom_view.error(my_app._chatroom,
+						    my_app._chat._nick,
+						    stanza);
+			my_app.disconnect();
+		    }
+                    
+		}
+		else
+		{
+                    
+		    //Search for status code
+		    var status = $(stanza).find("status").attr("code");
+		    if('201' == status)
+		    {
+			my_app._chat.createInstantRoom();
+		    }
+		    if('307' == status || '301' == status)
+		    {
+			//test if user is kicked, otherwise show the message
+			var message_to = $(stanza).attr("from").split("/")[1];
+			my_app._message_view.displayKickBan(stanza);
+			if(message_to == my_app._chat._nick)
 			{
-			    my_app._chat.createInstantRoom();
+			    my_app._chatroom_view.statusDisconnect(stanza);
+			    my_app.disconnect();
 			}
-			if('307' == status || '301' == status)
+			else
 			{
-			    //test if user is kicked, otherwise show the message
-			    var message_to = $(stanza).attr("from").split("/")[1];
-			    my_app._message_view.displayKickBan(stanza);
-			    if(message_to == my_app._chat._nick)
+			    
+			    var roster_item = my_app._roster[nick]; 
+			    if(roster_item)
 			    {
-				my_app._chatroom_view.statusDisconnect(stanza);
-				my_app.disconnect();
+				$("#rosteritem"+roster_item.id).remove();
+				delete my_app._roster[nick];
+				my_app._rosteritemview.showJoinLeave(nick,"left");
+			    }
+			}
+		    }
+		    var room = $(stanza).attr("from").split("/")[0];
+		    //room presence contains an 'item'
+		    var fulljid = $(stanza).find("item").attr("jid");
+                    
+		    if(room == my_app._chatroom)
+		    {
+			var nick = $(stanza).attr("from").split("/")[1];
+			if(my_app._chat._nick == nick)
+			{
+			    my_app._chatroom_view.show(my_app._chatroom,
+						       my_app._chat._nick);
+			}
+			my_app._chatroom_view.hideJoiningStatus();
+			my_app._statusview.toggleStatusElement("#status_connected");	    
+		    }
+                    
+		    if (fulljid)
+		    {
+			var jid = fulljid.split("/")[0];
+			var nick = $(stanza).attr("from").split("/")[1];
+			var fullnick = $(stanza).attr("from");
+			if((!$(stanza).attr("type")) || ("available" == $(stanza).attr("type")))
+			{
+			    
+			    var roster_item = my_app._roster[nick];
+			    if(!roster_item)
+			    {
+				roster_item = new Speeqe.RosterItem(my_app._connection,
+								    fullnick,
+								    nick);
+				my_app._roster[nick] = roster_item;
+				
+				my_app._rosteritemview.show(roster_item,
+							    nick);
+				
+				var roster_item_id = "#rosteritem" + roster_item.id;
+				$(roster_item_id + " .roster_user_name").click(function() {
+				    my_app.completeNick("@"+$(this).text());
+				});
+				my_app.createRosterPopup($(roster_item_id));
+				
 			    }
 			    else
+			    {//update existing user with presence changes
+			    }
+			    roster_item.getAvatar();
+			    
+			    
+			}
+			else if (("error"==$(stanza).attr("type")) || ("unavailable" == $(stanza).attr("type")))
+			{
+			    
+			    var roster_item = my_app._roster[nick]; 
+			    if(roster_item)
 			    {
-				
-				var roster_item = my_app._roster[nick]; 
-				if(roster_item)
-				{
-				    $("#rosteritem"+roster_item.id).remove();
-				    delete my_app._roster[nick];
-				    my_app._rosteritemview.showJoinLeave(nick,"left");
-				}
+				$("#rosteritem"+roster_item.id).remove();
+				delete my_app._roster[nick];
+				my_app._rosteritemview.showJoinLeave(nick,"left");
 			    }
 			}
-			var room = $(stanza).attr("from").split("/")[0];
-			//room presence contains an 'item'
-			var fulljid = $(stanza).find("item").attr("jid");
-
-			if(room == my_app._chatroom)
+                        
+		    }
+		    else 
+		    {
+			/*Handle anonymous rooms. Default avatar and only nick shows.*/
+                        
+			if (room == my_app._chatroom)
 			{
-			    var nick = $(stanza).attr("from").split("/")[1];
-			    if(my_app._chat._nick == nick)
-			    {
-				my_app._chatroom_view.show(my_app._chatroom,
-							   my_app._chat._nick);
-			    }
-			    my_app._chatroom_view.hideJoiningStatus();
-			    my_app._statusview.toggleStatusElement("#status_connected");	    
-			}
-
-			if (fulljid)
-			{
-			    var jid = fulljid.split("/")[0];
 			    var nick = $(stanza).attr("from").split("/")[1];
 			    var fullnick = $(stanza).attr("from");
-			    if((!$(stanza).attr("type")) || ("available" == $(stanza).attr("type")))
+                            
+			    if("unavailable" != $(stanza).attr("type"))
 			    {
-					
 				var roster_item = my_app._roster[nick];
 				if(!roster_item)
 				{
 				    roster_item = new Speeqe.RosterItem(my_app._connection,
 									fullnick,
 									nick);
-				    my_app._roster[nick] = roster_item;
 				    
-				    my_app._rosteritemview.show(roster_item,
-								nick);
+				    my_app._roster[nick] = roster_item;
+                                    
+				    my_app._rosteritemview.show(roster_item,nick);
 				    
 				    var roster_item_id = "#rosteritem" + roster_item.id;
-				    $(roster_item_id + " .roster_user_name").click(function() {
+				    var roster_item_selector = roster_item_id + " .roster_user_name";
+                                    
+				    $(roster_item_selector).click(function() {
 					my_app.completeNick("@"+$(this).text());
 				    });
 				    my_app.createRosterPopup($(roster_item_id));
-				    
+                                    
 				}
-				else
-				    {//update existing user with presence changes
-				    }
 				roster_item.getAvatar();
-				
 				
 			    }
 			    else if (("error"==$(stanza).attr("type")) || ("unavailable" == $(stanza).attr("type")))
@@ -422,54 +458,6 @@ Speeqe.Application.prototype = {
 				    $("#rosteritem"+roster_item.id).remove();
 				    delete my_app._roster[nick];
 				    my_app._rosteritemview.showJoinLeave(nick,"left");
-				}
-			    }
-
-			}
-			else 
-			{
-			    /*Handle anonymous rooms. Default avatar and only nick shows.*/
-
-			    if (room == my_app._chatroom)
-			    {
-				var nick = $(stanza).attr("from").split("/")[1];
-				var fullnick = $(stanza).attr("from");
-
-				if("unavailable" != $(stanza).attr("type"))
-				{
-				    var roster_item = my_app._roster[nick];
-				    if(!roster_item)
-				    {
-					roster_item = new Speeqe.RosterItem(my_app._connection,
-										fullnick,
-										nick);
-					
-					my_app._roster[nick] = roster_item;
-
-					my_app._rosteritemview.show(roster_item,nick);
-					
-					var roster_item_id = "#rosteritem" + roster_item.id;
-					var roster_item_selector = roster_item_id + " .roster_user_name";
-
-					$(roster_item_selector).click(function() {
-					    my_app.completeNick("@"+$(this).text());
-					});
-					my_app.createRosterPopup($(roster_item_id));
-
-				    }
-				    roster_item.getAvatar();
-				    
-				}
-				else if (("error"==$(stanza).attr("type")) || ("unavailable" == $(stanza).attr("type")))
-				{
-				    
-				    var roster_item = my_app._roster[nick]; 
-				    if(roster_item)
-					{
-					    $("#rosteritem"+roster_item.id).remove();
-					    delete my_app._roster[nick];
-					    my_app._rosteritemview.showJoinLeave(nick,"left");
-					}
 				}
 			    }
 			}
