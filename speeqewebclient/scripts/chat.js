@@ -37,7 +37,7 @@ Speeqe.Chat.prototype = {
         if (type !== "groupchat")
         {
             var msgid = this._connection.getUniqueId();
-	    var msg = $msg({to: room_nick,
+	    var msg = $msg({to: to,
                             from: this._connection.jid,
                             type: type,
                             id: msgid})
