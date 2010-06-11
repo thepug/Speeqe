@@ -34,6 +34,11 @@ Speeqe.Chat.prototype = {
     },
     //private function to send xmpp message
     _buildAndSendMessage: function(to, message, type) {
+        // don't send blank messages
+        if ($.trim(message) === "")
+        {
+            return;
+        }
         if (type !== "groupchat")
         {
             var msgid = this._connection.getUniqueId();
