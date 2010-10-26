@@ -235,13 +235,15 @@ def login(request):
 					      'next': redirect_to})
 	return ret_response
 
-def client(request,room_name=None,theme_name=None):
-	"""Start up the chat client with the requested room """
+def client(request,room_name=None,virtual_name=None,theme_name=None):
+	"""Start up the chat client with the requested room """        
 	room = room_name
 	if not room:
 		#default room is speeqers
 		room = request.GET.get('room',"speeqers")
-		
+        if virtual_name:
+                room = virtual_name.replace("."+settings.HTTP_DOMAIN,"")
+
 	if not theme_name:
 		theme = request.GET.get('theme',room)
 	else:
