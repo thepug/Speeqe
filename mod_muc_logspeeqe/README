@@ -1,0 +1,16 @@
+This module is exactly like mod_muc_log except that it uses ecouch library to 
+log the message to couchdb. The couchdb is assumed to be setup on the local 
+machine and accessible by the default ecouch configuration.
+
+An example mod_muc_logspeeqe configuration in ejabberd.cfg
+{mod_muc_logspeeqe,  [
+                  {access_log, muc},
+                  {dirtype, plain},
+                  {outdir, "/usr/local/var/www/muc/"},
+                  {timezone, universal},
+                  {spam_prevention, true},
+                  {top_link, {"http://www.speeqe.com/muc/", "Speeqe.com"}}
+                 ]},
+
+See documentation for mod_muc_log in the ejabberd project.
+http://www.ejabberd.im/mod_muc_log
