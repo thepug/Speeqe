@@ -4,6 +4,7 @@
     <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1" />
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+    <link href="/css/jplayer.blue.monday.css" rel="stylesheet" type="text/css" />
     <style type="text/css">
       body {
           color: #000;
@@ -302,6 +303,8 @@
     <script type="text/javascript" src="/speeqewebclient/scripts/jquery.cookie.js"></script>
     <script type="text/javascript" src="/speeqewebclient/scripts/jquery.form.js"></script>
     <script type="text/javascript" src="/speeqewebclient/scripts/jquery.ui.min.js"></script>
+    <script type="text/javascript" src="/speeqewebclient/scripts/jquery.jplayer.min.js"></script>
+    <script type="text/javascript" src="/speeqewebclient/scripts/jplayer.js"></script>
     <script type="text/javascript"
             src="/speeqewebclient/scripts/strophe.js"></script>
     <script type="text/javascript" src="/speeqewebclient/scripts/strophe.muc.js"></script>
@@ -355,6 +358,39 @@
         </form>
         <div id='form_message' class='error'>
         </div>
+      </div>
+    </div>
+    <div id="thejplayer">
+      <div id="jquery_jplayer"></div>
+      <a href="#" id="jplayer_hide">x</a>
+      <div class="jp-playlist-player"> 
+	<div class="jp-interface"> 
+	  <ul class="jp-controls">
+	    <li><a href="#" id="jplayer_play" class="jp-play" tabindex="1">play</a></li> 
+	    <li><a href="#" id="jplayer_pause" class="jp-pause" tabindex="1">pause</a></li> 
+	    <li><a href="#" id="jplayer_stop" class="jp-stop" tabindex="1">stop</a></li> 
+	    <li><a href="#" id="jplayer_volume_min" class="jp-volume-min" tabindex="1">min volume</a></li> 
+	    <li><a href="#" id="jplayer_volume_max" class="jp-volume-max" tabindex="1">max volume</a></li> 
+	    <li><a href="#" id="jplayer_previous" class="jp-previous" tabindex="1">previous</a></li> 
+	    <li><a href="#" id="jplayer_next" class="jp-next" tabindex="1">next</a></li> 
+	  </ul> 
+	<div class="jp-progress"> 
+	  <div id="jplayer_load_bar" class="jp-load-bar"> 
+	  <div id="jplayer_play_bar" class="jp-play-bar"></div> 
+	</div> 
+      </div> 
+      <div id="jplayer_volume_bar" class="jp-volume-bar"> 
+        <div id="jplayer_volume_bar_value" class="jp-volume-bar-value"></div> 
+      </div> 
+      <div id="jplayer_play_time" class="jp-play-time"></div> 
+	<div id="jplayer_total_time" class="jp-total-time"></div> 
+      </div> 
+      <div id="jplayer_playlist" class="jp-playlist">
+	<ul> 
+	  <!-- The function JPlayer.displayPlayList() uses this unordered list --> 
+	  <li></li> 
+	</ul>
+      </div> 
       </div>
     </div>
     <div id="debug_log_layer1">
