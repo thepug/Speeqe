@@ -1,0 +1,290 @@
+body {
+   color: #000;
+   margin: 0px;
+   background: #fff url("/images/default_theme/sidebar.png") repeat-y;
+   font-family: 'Lucida Grande' , Verdana, sans-serif;
+}
+
+#container {
+   font-size: .85em;
+   margin: -12px 0px 0px 0px;
+   width: 100%;
+}
+
+#header {
+   color: #fff;
+   background: #333;
+   margin: auto;
+   position: fixed;
+   top: 40px;
+   z-index: 2;
+   width: 100%;
+   height: 38px;
+   background: url("/images/default_theme/topbg.jpg");
+   overflow:auto;
+}
+
+#header h1 {
+   font-family: arial, sans, helvetica, clean, sans-serif;
+   font-size: 1.2em;
+   padding: 5px 10px;
+}
+
+#header #menu {
+   padding: 10px;
+   margin: 0px;
+   float: right;
+   list-style: none;
+}
+
+#header #menu li {
+   float: left;
+   margin: 3px;
+}
+
+#header #menu li a, #header a {
+   color: #fff;
+   text-decoration: none;
+}
+
+#sidebar {
+   width: 187px;
+   padding: 5px 5px 5px 5px;
+   position: fixed;
+   top: 80px;
+   left: 0px;
+   overflow: auto;
+   height: 72%;
+}
+
+#sidebar h2 {
+   font-family: arial, sans, helvetica, clean, sans-serif;
+   font-size: 1.2em;
+}
+
+#chat {
+   padding-top: 90px;
+   padding-left: 210px;
+   padding-bottom: 70px;
+}
+
+.message_block {
+   padding: 5px;
+   width: 98%;
+}
+
+.message_block p {
+   margin-top: 0;
+   margin-bottom: 5px;
+   /* padding-right: 230px; */
+}
+
+.post {
+   clear: both;
+}
+
+.date {
+   float: right;
+   color: #ccc;
+   padding: 0px 10px 5px;
+}
+
+.message_block .date {
+   visibility: hidden;
+}
+
+.message_block:hover .date {
+   visibility: visible;
+}
+
+#messagepost {
+   margin: 0px 100px 0px 0px;
+   line-height: 140%;
+}
+
+.message_user_name,
+.message_user_at,
+.message_user_domain {
+   color: blue;
+   font-weight: bold;
+   font-size: 1.1em;
+}
+
+.current_user .message_user_name,
+.current_user .message_user_at,
+.current_user .message_user_domain {
+   color: #999;
+}
+
+.private_message {
+   color: red;
+}
+
+.roster_user_at,
+.roster_user_domain,
+.message_user_at,
+.message_user_domain {
+   display: none;
+}
+
+#chatbox {
+   z-index: 2;
+   width: 100%;
+   background: url("/images/default_theme/botbg.jpg");
+   height: 49px;
+   margin: auto;
+   position: fixed;
+   bottom: 0px;
+   left: 0px;
+   padding: 10px 10px 10px 0px;
+}
+
+#chatbox_inner {
+   margin-left: 200px;
+}
+
+#send_chat_message {
+   width: 98%;
+   height: 45px;
+   margin: 0px;
+   border: 1px solid #ccc;
+   background: #fff url("/images/default_theme/inputbg.png");
+}
+
+#roster_name {
+   width: 120px;
+   overflow: hidden;
+}
+
+.clear {
+   clear: both;
+}
+
+#roster_item {
+   padding: 1px 0px;
+   margin: 1px 0px;
+   list-style-type: none;
+}
+
+#send_chat {
+   background: url("/images/default_theme/post.png") no-repeat;
+   width: 100px;
+   padding: 0px 0px 0px 20px;
+   font-weight: bold;
+   color: #000;
+}
+
+#status_disconnected,
+#status_authentication_failed,
+#status_connect_failed {
+   color: red;
+   display: none;
+}
+
+#status_connected,
+#chat_joining_room,
+#status_authenticating {
+   color: green;
+   display:none;
+}
+
+#online ul li {
+   padding: 0px 0px 3px 0px;
+}
+
+.useronline img {
+   border: 1px solid #ccc;
+   margin: 0px 3px 0px 0px;
+   float: left;
+}
+
+.rostervcard {
+   font-size: 90%;
+   background-color: #999;
+   z-index:50;
+   width: 180px;
+}
+
+.rostername {
+   float: left;
+   padding: 7px 0px 0px 0px;
+   width: 130px;
+   overflow-y: visible;
+   white-space: nowrap;
+}
+
+#room_topic {
+   font-size: 90%;
+}
+
+#speeqepowered {
+   position: fixed;
+   bottom: 20px;
+   left: 10px;
+   z-index: 3;
+   border: none;
+}
+
+#layer1, #noscript, #debug_log_layer1,#configure_room_form, #room_password_dialog {
+   position: absolute;
+   left: 200px;
+   top: 100px;
+   width: 280px;
+   font-size: 90%;
+   background-color: #999;
+   border: 1px solid #000;
+   z-index: 50;
+}
+#configure_room_form {
+   width: 380px;
+}
+#layer1_handle, #debug_log_layer1_handle,#configure_room_form_handle,#room_password_dialog_handle {
+   background-color: #5588bb;
+   padding: 2px;
+   text-align: center;
+   font-size: 80%;
+   color: #FFFFFF;
+   vertical-align: middle;
+}
+
+#layer1_content, #debug_log_layer1_content,#configure_room_form_content,#room_password_dialog_content {
+   padding: 5px;
+}
+
+.leftinput {
+   display: block;
+   width: 100px;
+   margin-bottom: 10px;
+}
+
+.rightinput {
+   margin-top: -28px;
+   float: right;
+   margin-bottom: 10px;
+}
+
+#prefs_input {
+   margin-top: 20px;
+}
+
+#close, #debug_log_close,#configure_room_form_close {
+   float: right;
+   text-decoration: none;
+   color: #FFFFFF;
+}
+
+.action_indicator {
+   display: none;
+}
+
+.me_command {
+   font-style: italic;
+}
+
+.me_command .action_indicator {
+   display: inline;
+}
+
+.me_command .nick_suffix {
+   display: none;
+}
