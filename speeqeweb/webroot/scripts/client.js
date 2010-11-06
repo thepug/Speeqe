@@ -207,6 +207,7 @@ var Speeqe = {
 		/*
 		  Start the XMPP Client with the given username and password.
 		*/
+		
 		$("#login_form_connect,").click(function() {
 		    if (app == null)
 		    {
@@ -215,6 +216,7 @@ var Speeqe = {
 		    
 		    if(app.connected() == false)
 		    {
+
 			if($("#login_form_username").attr("value") != 'username' && $("#login_form_password").attr("value") != "password" )
 			{
 			    app.run($("#login_form_username").attr("value"),
@@ -479,7 +481,12 @@ var Speeqe = {
 			document.onfocusin = my_client.handle_focus;
 		    }
 		}
-		
+		if ($("#login_form_connect").length == 0) {
+		  // For now we connect if the client does not have a login form active.
+		  if(app.connected() == false) {		    
+		    app.run();
+		  }
+		}
 	    });
 	    
 	    

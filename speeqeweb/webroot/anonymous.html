@@ -185,12 +185,14 @@
       #status_authentication_failed,
       #status_connect_failed {
           color: red;
+          display: none;
       }
 
       #status_connected,
       #chat_joining_room,
       #status_authenticating {
           color: green;
+          display:none;
       }
 
       #online ul li {
@@ -405,16 +407,7 @@
     </div>
     <div id="container">
       <div id="header">
-        <ul id="menu">
-        <form id="login_form">
-          <label>Username:</label><input id='login_form_username' type='text' />
-          <label>Password:</label><input id='login_form_password' type='password' />
-          <a id='login_form_connect' href='#'><img border='0' src="/images/connect.png" alt='connect' /></a>
 
-        </form>          <li>
-	  
-	  </li>
-        </ul>
         <h1>
           <span id="roomname"></span>@<span id="roomdomainname"></span> <span id="outer_room_topic" style="display:none;">(<span id="room_topic"></span>)</span>
         </h1>
@@ -424,8 +417,6 @@
       <div id="sidebar">
 
         <div id="chatstatus">
-          <h2>welcome</h2>
-          <strong id="login_username"></strong>
           <br />
           <span id="status_disconnected"><a href="javascript:this.location.reload();"><img
             src="/images/default_theme/disconnected.png" alt="disconnected" border="0" /></a>
@@ -440,7 +431,7 @@
         </div>
 
         <div id="online" class="following">
-          <h2>speeqers</h2>
+          <h2 id='online_roomname'></h2>
           <ul id="roster_item">
             <!--This li is used to list users in the room. Leave it hidden. -->
             <li id="rosteritemtemplate" style="display: none;">
