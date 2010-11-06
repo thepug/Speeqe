@@ -808,8 +808,8 @@ calc_hour_offset(TimeHere) ->
 	TimeHereHour - TimeZeroHour.
 
 init_ecouch() ->
-    ok = application:start(inets),
-    ok = application:start(ecouch).
+    application:start(inets),
+    application:start(ecouch).
 
 get(DatabaseName) ->
     get(DatabaseName, "", []).
