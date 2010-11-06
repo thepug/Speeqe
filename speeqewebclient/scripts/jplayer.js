@@ -141,6 +141,11 @@ Speeqe.Jplayer = function() {
         $("#jplayer_hide").click(function() {
             $("#thejplayer").hide();
         });
+        $("#thejplayer").draggable({
+            zIndex: 20,
+            opacity: 0.7,
+            handle: '#jquery_player_handle'
+        });
     });
     var obj = {
         setFile: function(filename) {

@@ -19,7 +19,12 @@
         left: 800px;
         top: 100px;
         width: 280px;
-        z-index:50;
+}
+#jquery_player_handle {
+    background-color:#eee;
+    width:418px;
+    border:1px solid #009be3;
+    border-bottom:none;
 }
 div.jp-single-player,
 div.jp-playlist-player {
