@@ -28,10 +28,14 @@ Speeqe.RosterItemView.prototype =  {
 	var li_clone = $('#rosteritemtemplate').clone();
 	li_clone.attr("id","rosteritem"+roster_item.id);
 	li_clone.attr("style","display:block");
-	li_clone.find("#onlineavatar").attr("src",'/avatar-service/lookup/?sha1=f2f8ab835b10d66f9233518d1047f3014b3857cf');
-	li_clone.find("#onlineavatar").attr("id",'onlineavatar'+roster_item.id);
-	li_clone.find("#onlineavatar").attr("alt",displaynick);
-	
+	var online_avatar = li_clone.find("#onlineavatar");
+	online_avatar.attr("src",'/avatar-service/lookup/?sha1=f2f8ab835b10d66f9233518d1047f3014b3857cf');
+	online_avatar.attr("id",'onlineavatar'+roster_item.id);
+	online_avatar.attr("alt",displaynick);
+	online_avatar.error(function () {
+	    $(this).unbind("error").attr("src", "/images/defaultavatar.png");
+	  });
+
 	li_clone.find("#roster_name").text(displaynick);
 	li_clone.find("#roster_name").removeAttr("id");
 	var username_elem = li_clone.find("#roster_user_name");

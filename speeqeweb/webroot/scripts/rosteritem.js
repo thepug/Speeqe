@@ -34,13 +34,13 @@ Speeqe.RosterItem.prototype =  {
 	var binval = $(stanza).find("BINVAL").text();
 	var vcard = $(stanza).find("vCard");
 	var lu_nick = $(stanza).attr("from").split("/")[1];
-	
 	var roster_item = app._roster[lu_nick];
 	if (vcard.length > 0)
 	{
 	    roster_item.vcard = vcard;
 	    app._rosteritemview.updateVcard(roster_item);
 	}
+
 	if (binval)
 	{
 	    var type = $(stanza).find("TYPE").text();
@@ -76,7 +76,7 @@ Speeqe.RosterItem.prototype =  {
 		{
 		    console.error(ex);
 		}
-	}
+	} 
 
 	return true;
     }

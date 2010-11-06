@@ -80,8 +80,9 @@ Speeqe.AvatarService.prototype = {
 
 	    
 	    elem.attr("src", img_url.join(""));
-	    elem.width(img_width + "px");
+	    elem.width(img_width + "px");	    
 	    elem.height(img_height + "px");
+	 
 	    if (img_width < 30)
 	    {
 		elem.css("margin-left",
