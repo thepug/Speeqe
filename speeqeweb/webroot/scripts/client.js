@@ -239,7 +239,9 @@ var Speeqe = {
 		$("#show_help_dialog").click(function() {
 		    Speeqe.loadHelpDialog();
 		});
-
+                $("#jplayer_show").bind('click', function() {
+                    $("#thejplayer").show();
+                });
 		$("#show_joinleave").click(function() {
 		    var chatwindow = $("#chatWindow_chatpane");
 		    

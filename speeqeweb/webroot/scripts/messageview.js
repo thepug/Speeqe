@@ -193,7 +193,8 @@ Speeqe.MessageView.prototype = {
 	    }
 
 	    var chatwindow = $("#chatWindow_chatpane");
-	    Speeqe.scaleImage(post_clone);
+	    // process media
+            Speeqe.scaleImage(post_clone);
 
 	    if (chatwindow.hasClass('direction-up'))
 	    {
@@ -416,7 +417,7 @@ Speeqe.MessageView.prototype = {
     
     htmlLink: function(text,auto_inline) {
 	var imgurl = /((?:ht|f)tps?:\/\/.+\.(png|jpeg|jpg|gif|bmp)$)/ig;
-	var mp3url = /((?:ht|f)tps?:\/\/.+\.(mp3)$)/ig;
+	var mp3url = /((?:ht|f)tps?:\/\/.+\.(mp3|ogg)$)/ig;
 	var linksReg = /((?:ht|f)tps?:\/\/[\S|\?]+)/g;
 	var ahtmlReg = /<a.+href.+>.+<\/a>.*/g;
         var retval = "";
@@ -458,14 +459,14 @@ Speeqe.MessageView.prototype = {
 	    }
             else if (mp3match)
             {
-		var newEl = ["<embed type='application/x-shockwave-flash\" src=\"http://www.google.com/reader/ui/3247397568-audio-player.swf?audioUrl=",
-			     mp3match[0],
-			     "\" width=\"400\" height=\"27\" allowscriptaccess=\"never\" quality=\"best\" bgcolor=\"#ffffff\" wmode=\"window\" flashvars=\"playerMode=embedded\" /><br /><a href=\"",
-			     mp3match[0],
-			     "\" >",
-			     mp3match[0],
-			     "</a>"];
-
+                var newEl = ["<a target=\"_blank\" href=\"",
+                             mp3match[0],
+                             "\">",
+                             mp3match[0],
+                             "</a>"];
+                $("#thejplayer").show();
+                Speeqe.Jplayer.setFile(mp3match[0]);
+                //$("#jquery_jplayer").remove();
                 retval += text_val.replace(new RegExp(mp3match[0],"g"),
                                            newEl.join(""));
 	    }
