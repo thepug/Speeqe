@@ -461,7 +461,7 @@ def submit_log(request):
 			file_date = datetime.datetime.now().strftime('%a_%d_%b_%Y_%T')
 			file_name = "/"+file_date+"_log.html"
 			f = open(settings.LOG_ROOT+file_name,'w')
-			f.write("<html><head><link rel=\"stylesheet\" type=\"text/css\" src=\"/speeqewebclient/scripts/firebug/firebug.css\"></link></head><body>"+log+"</body></html>")
+			f.write("<html><head><link rel=\"stylesheet\" type=\"text/css\" src=\"/scripts/firebug/firebug.css\"></link></head><body>"+log+"</body></html>")
 			f.close()
 			log_url = "http://" + settings.HTTP_DOMAIN + "/debuglogs/" + file_name
 			message = description + "\n\n" + log_url

@@ -68,7 +68,7 @@ ROOT_URLCONF = 'speeqeweb.urls'
 
 TEMPLATE_DIRS = (
     '/usr/local/lib/python2.5/site-packages/speeqeweb/templates',
-    '/usr/local/var/www/speeqewebclient',
+    '/usr/local/var/www/speeqeweb/webroot',
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.

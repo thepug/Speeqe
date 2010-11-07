@@ -57,7 +57,7 @@ FEATURED_ROOMS = {'Speeqers':'http://speeqers.speeqe.com',
 TEMPLATE_DIRS = (
     '/usr/local/lib/python2.5/site-packages/speeqeweb/templates',
     '/lib/python/speeqeweb/templates',    
-    '/var/www/speeqewebclient',
+    '/var/www/speeqeweb/webroot',
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
