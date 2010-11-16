@@ -8,7 +8,11 @@
 <!--[if lt IE 7]>
 <link rel="stylesheet" href="/css/style_ie6.css" type="text/css" media="screen" />
 <![endif]-->
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
+<script type="text/javascript">
+// If googleapis failed, load locally
+!window.jQuery && document.write(unescape('%3Cscript src="js/libs/jquery-1.4.2.js"%3E%3C/script%3E'))
+</script>
 
 <script type="text/javascript">
       $(document).ready(function(){
