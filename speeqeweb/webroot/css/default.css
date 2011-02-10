@@ -197,6 +197,13 @@ body {
    margin: 0px 3px 0px 0px;
    float: left;
 }
+.useronline canvas {
+   width: 30px;
+   height: 30px;
+   border: 1px solid #ccc;
+   margin: 0px 3px 0px 0px;
+   float: left;
+}
 
 .rostervcard {
    font-size: 90%;

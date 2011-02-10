@@ -49,14 +49,12 @@ Speeqe.AvatarService.prototype = {
 	 * @private
 	 */
 	_avatar_cb: function (req, elemID, jid)
-	{
-	    
+	{	    
 	    var elem = $(elemID);
 	    if (!elem)
 	    {
 		return;
 	    }
-
 	    var sha1 = req.split("|")[0];
 
 	    var img_width  = parseInt(req.split("|")[1], 10);
@@ -77,29 +75,13 @@ Speeqe.AvatarService.prototype = {
 
 	    jid.sha1 = sha1;
 	    var img_url = [this.service,"?sha1=",sha1];
-
-	    
-	    elem.attr("src", img_url.join(""));
-	    elem.width(img_width + "px");	    
-	    elem.height(img_height + "px");
-	 
-	    if (img_width < 30)
-	    {
-		elem.css("margin-left",
-			 Math.floor((30 - img_width) / 2) + "px");
-	    }
-	    if (img_height < 30)
-	    {
-		elem.css("margin-top",
-			 Math.floor((30 - img_height) / 2) + "px");
-	    }
-	    if (Speeqe.IE6)
-	    {
-		elem.attr("src","/images/blank.gif");
-		var filter = ["progid:DXImageTransform.Microsoft.AlphaImageLoader(src='",this.service,"'?sha1=",sha1,"',sizingMethod='scale')"];
-		elem.css("filter",filter.join(""));
-	    }
-
-
+	    app._rosteritemview.drawAvatar(elem,
+                                           {
+                                               src:img_url,
+                                               width: img_width,
+                                               height: img_height,
+                                               data: false,
+                                               sha1: sha1
+                                           });
 	}
 }
