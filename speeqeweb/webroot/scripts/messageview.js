@@ -31,6 +31,7 @@ Speeqe.MessageView.prototype = {
 		stamp = $(this).attr('stamp');
 	    }
 	});
+	user = Strophe.unescapeNode(user);
 	var time = "";
 	var year = "";
 	var month = "";
@@ -38,8 +39,7 @@ Speeqe.MessageView.prototype = {
 	var hour = "";
 	var minute = "";
 	var second = "";
-	
-	if (stamp)
+        if (stamp)
 	{
 	    
 	    ymdhms = stamp.split("T");
@@ -83,7 +83,6 @@ Speeqe.MessageView.prototype = {
 	}
 	var cleannick = user.replace("@","at");	
 	cleannick = cleannick.replace(new RegExp(".","g"),"dot");
-	
 	//remove domain
 	if (Speeqe.XMPP_DOMAIN !== null)
 	{

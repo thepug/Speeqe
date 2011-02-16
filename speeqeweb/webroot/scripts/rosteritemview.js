@@ -11,6 +11,7 @@ Speeqe.RosterItemView.prototype =  {
     */
     show: function(roster_item,nick) {
         //if nick has our domain, erase
+        nick = Strophe.unescapeNode(nick);
         var displaynick = nick.replace("@"+Speeqe.XMPP_DOMAIN,
                                        "");
         var usernamedomain = displaynick.split('@');
@@ -214,11 +215,12 @@ Speeqe.RosterItemView.prototype =  {
     showJoinLeave: function(nick,status) {
         //test if we are to display message along with chat messages.
         var chatwindow = $("#chatWindow_chatpane");        
+        var cleannick = Strophe.unescapeNode(nick);
         if (chatwindow.hasClass('joinleave'))
         {
             var room_avatar = '/avatar-service/lookup/?sha1=f2f8ab835b10d66f9233518d1047f3014b3857cf';
             var join_message_ar = ["<message from='",
-                                   nick,
+                                   cleannick,
                                    "' to='4@dev.speeqe.com/3' id='1' type='groupchat'><x xmlns='jabber:x:event'><composing/></x><body>/me has ",
                                    status,
                                    " the room.</body></message>"];
@@ -237,7 +239,7 @@ Speeqe.RosterItemView.prototype =  {
         }
         
         var msg_template = $('#room_message_template').clone();
-        msg_template.find("#nick").text(nick);
+        msg_template.find("#nick").text(cleannick);
         $('#room_messages').append(msg_template.get(0));
     }
 };
