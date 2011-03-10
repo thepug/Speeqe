@@ -47,7 +47,18 @@
         var app= new Speeqe.Application;
         var client = new Speeqe.Client();
         client.init();
-      -->
+         $(function() {
+		if ($("#login_form_connect").length == 0) 
+                {
+                    // For now we connect if the client does not have a
+                    // login form active.
+		    if(app.connected() === false) 
+                    {		    
+		        app.run();
+		    }
+		}
+         });
+        -->
     </script>
     
   </head>
