@@ -48,6 +48,7 @@ Speeqe.RosterItemView.prototype =  {
             }
             if (img)
             {
+                li_clone.find('.useronline').children('canvas').remove();
                 li_clone.find('.useronline')
                     .prepend('<canvas id="rostercanvas'+
                              roster_item.id+
