@@ -61,6 +61,7 @@
 		lang,
 		timezone,
 		spam_prevention,
+                couch_dbname,
 		top_link}).
 
 %%====================================================================
@@ -76,7 +77,7 @@ start_link(Host, Opts) ->
 
 start(Host, Opts) ->
     Proc = gen_mod:get_module_proc(Host, ?PROCNAME),
-    X = init_ecouch(),
+    _X = init_ecouch(),
     ChildSpec =
 	{Proc,
 	 {?MODULE, start_link, [Host, Opts]},
@@ -123,6 +124,7 @@ init([Host, Opts]) ->
     Timezone = gen_mod:get_opt(timezone, Opts, local),
     Top_link = gen_mod:get_opt(top_link, Opts, {"/", "Home"}),
     NoFollow = gen_mod:get_opt(spam_prevention, Opts, true),
+    DbName = gen_mod:get_opt(couch_dbname, Opts, "muc_log"),
     Lang = case ejabberd_config:get_local_option({language, Host}) of
 	       undefined ->
 		   "";
@@ -137,6 +139,7 @@ init([Host, Opts]) ->
 		lang = Lang,
 		timezone = Timezone,
 		spam_prevention = NoFollow,
+                couch_dbname = DbName,
 		top_link = Top_link}}.
 
 %%--------------------------------------------------------------------
@@ -288,7 +291,8 @@ add_message_to_log(Nick1, Message, RoomJID, Opts, State) ->
 	   lang = Lang,
 	   timezone = Timezone,
 	   spam_prevention = NoFollow,
-	   top_link = TopLink} = State,
+	   couch_dbname = DbName,
+           top_link = TopLink} = State,
     Room = get_room_info(RoomJID, Opts),
 
     TimeStamp = case Timezone of
@@ -334,7 +338,7 @@ add_message_to_log(Nick1, Message, RoomJID, Opts, State) ->
     % Build message
     Text = case Message of
 	       roomconfig_change ->
-		   RoomConfig = roomconfig_to_string(Room#room.config, Lang),
+		   _RoomConfig = roomconfig_to_string(Room#room.config, Lang),
 		   io_lib:format("<font class=\"mrcm\">~s</font><br/>", 
 				 [?T("Chatroom configuration modified")]);
 	       join ->  
@@ -398,9 +402,26 @@ add_message_to_log(Nick1, Message, RoomJID, Opts, State) ->
     % Close file
     file:close(F),
     %Add room log to couchdb
-    {ok, {obj, [{"ok", true}, {"id", BinId}, {"rev", BinRev}]}} = ecouch:doc_create("muc_log", {obj, [{"timestamp",list_to_atom(STimeStamp)},{"message",list_to_atom(lists:flatten(Text))},{"nick",list_to_atom(Nick)},{"room",list_to_atom(Room#room.jid)}]}),
-    {ok, {{_, 200, _}, _, Body}} = get("muc_log", binary_to_list(BinId)),    
-    {ok, {obj, [{"_id", BinId}, {"_rev", BinRev},{_,_},{_,_},{_,_},{_,_}]}, []} = rfc4627:decode(Body),
+    {ok, 
+     {obj, 
+      [{"ok", true}, 
+       {"id", BinId}, 
+       {"rev", BinRev}]}} = 
+        ecouch:doc_create(DbName, 
+                          {obj, 
+                           [{"timestamp",
+                             list_to_atom(STimeStamp)},
+                            {"message",
+                             list_to_atom(lists:flatten(Text))},
+                            {"nick",
+                             list_to_atom(Nick)},
+                            {"room",
+                             list_to_atom(Room#room.jid)}]}),
+    {ok, {{_, 200, _}, _, Body}} = 
+        ecouch:doc_get(DbName, binary_to_list(BinId)),    
+    {ok, {obj, [{"_id", BinId}, 
+                {"_rev", BinRev},
+                {_,_},{_,_},{_,_},{_,_}]}, []} = rfc4627:decode(Body),
     ok.
 
 
@@ -811,49 +832,3 @@ init_ecouch() ->
     application:start(inets),
     application:start(ecouch).
 
-get(DatabaseName) ->
-    get(DatabaseName, "", []).
-    
-get(DatabaseName, DocId) ->
-    get(DatabaseName, DocId, []).
-    
-get(DatabaseName, DocId, Parameters) ->
-    Url = make_url(DatabaseName, DocId, Parameters),
-    http:request(get, {Url, []}, [], []).
-
-put(DatabaseName, Body) ->
-    put(DatabaseName, "", [], Body).
-put(DatabaseName, DocId, Body) ->
-    put(DatabaseName, DocId, [], Body).
-put(DatabaseName, DocId, Parameters, Body) ->
-    Url = make_url(DatabaseName, DocId, Parameters),
-    http:request(put, {Url, [], "application/javascript", Body}, [], []).
-delete(DatabaseName) ->
-    delete(DatabaseName, "", []).
-    
-delete(DatabaseName, DocId) ->
-    delete(DatabaseName, DocId, []).
-    
-delete(DatabaseName, DocId, Parameters) ->
-    Url = make_url(DatabaseName, DocId, Parameters),
-
-    http:request(delete, {Url, []}, [], []).
-
-make_url(DatabaseName, DocId, Parameters) ->
-    Url = case DocId of
-            "" -> "http://127.0.0.1:5984/" ++ DatabaseName;
-            _ -> "http://127.0.0.1:5984/" ++ DatabaseName ++ "/" ++ DocId
-        end,
-            
-    Url ++ params_to_string(Parameters).
-    
-params_to_string(TupleList) ->
-    case params_to_string(TupleList, "") of
-        "" -> "";
-        Str -> "?" ++ Str
-    end.
-    
-params_to_string([], Acc) ->
-    Acc;
-params_to_string([{Key, Value}|TupleList], Acc) ->
-    params_to_string(TupleList, lists:flatten(io_lib:format("~s=~s&~s", [Key,Value,Acc]))).
