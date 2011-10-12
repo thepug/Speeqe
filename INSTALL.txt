@@ -1,2 +1,1 @@
-See http://code.stanziq.com/speeqe/wiki/SpeeqeSetup
-
+See https://github.com/thepug/speeqe/wiki
