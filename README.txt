@@ -8,9 +8,6 @@ Copyright 2007-2010, Nathan Zorn
 GENERAL INFORMATION
 	
 Speeqe is a web based client to XMPP/MUC rooms. 
-For more information about speeqe see the following URL :
-	
-http://code.stanziq.com/speeqe
 	
 	
 CONTRIBUTORS
