@@ -7,7 +7,17 @@ Copyright 2007-2010, Nathan Zorn
 
 GENERAL INFORMATION
 	
-Speeqe is a web based client to XMPP/MUC rooms. 
+Speeqe is a web based client to XMPP/MUC rooms.
+For more information about speeqe see the following URL :
+
+https://github.com/thepug/Speeqe/wiki
+
+
+RUNNING INSTANCES
+
+For a list of running speeqe instances see the following URL :
+
+https://github.com/thepug/Speeqe/wiki/SpeeqeInstances
 	
 	
 CONTRIBUTORS
